@@ -7,6 +7,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import os
 import numpy as np
+from time import time 
+from collections import OrderedDict
 
 file_dir = 'E:\\Reddit'
 sub_dir = 'data'
@@ -132,6 +134,7 @@ def RC():
         print 'RC done!'
     
 def Visualize():
+    t = time() 
     filename = 'parent_comment.txt'
     filepath_name = os.path.join(file_dir, sub_dir, filename)
     edges=[]
@@ -141,15 +144,164 @@ def Visualize():
             edge = line.split('\t')
             edge[1] = edge[1].strip('\n')
             edges.append(edge)
+            '''
             count+=1
             if count >1000:
                 break
-    #print edges    
+            '''
+    g = nx.Graph(edges)
+    #nx.draw(g)
+    nx.draw_networkx(g)
+    #plt.show()
+    print "V total run time:"
+    print time()-t
+
+
+def Visualize0():
+    t = time() 
+    filename = 'test.txt'
+    filepath_name = os.path.join(file_dir, sub_dir, filename)
+    edges=[]
+    count = 0
+    with open(filepath_name,'r') as ps:
+        for line in ps:
+            edge = line.split('\t')
+            edge[1] = edge[1].strip('\n')
+            edges.append(edge)
+            '''
+            count+=1
+            if count >1000:
+                break
+            '''
+    g = nx.Graph(edges)
+    #nx.draw(g)
+    nx.draw_networkx(g)
+    #plt.show()
+    print "V0 total run time:"
+    print time()-t
+
+def Visualize1():
+    t = time() 
+    filename = 'test.txt'
+    filepath_name = os.path.join(file_dir, sub_dir, filename)
+    edges=[]
+    count = 0
+    ndtype = 'i, i' 
+    names = 'a, b'
+    ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')
+    
+    edges = zip(ps['a'], ps['b'])
+
+    g = nx.Graph(edges)
+    #nx.draw(g)
+    nx.draw_networkx(g)
+    #plt.show()
+
+    print "V1 total run time:"
+    print time()-t
+    
+def Visualize2():
+    t = time() 
+    filename = 'parent_comment.txt'
+    filepath_name = os.path.join(file_dir, sub_dir, filename)
+    edges=[]
+    count = 0
+    ndtype = 'S10, S10' 
+    names = 'a, b'
+    ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')
+    
+    #edges = zip(ps['a'], ps['b'])
+    edges = zip(range(2002),range(2002))
+    print len(edges)
     g = nx.Graph(edges)
     #nx.draw(g)
     nx.draw_networkx(g)
     plt.show()
+    print 'v2'
+    print "total run time:"
+    print time()-t
 
+def Visualize3():
+   
+    filename = 'parent_comment.txt'
+    test_file = 'test.txt'
+    ttt=  open(test_file,'a+')
+    filepath_name = os.path.join(file_dir, sub_dir, filename)
+    edges=[]
+    count = 0
+    ndtype = 'S10, S10' 
+    names = 'a, b'
+    ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')
+    length = len(ps['a'])
+    print length
+    newa = ps['b']
+    print newa
+    #p = np.array(range(length))
+    #print p.shape
+    
+    #nn = zip(ps['a'],range(length))
+    #ddd = np.array(list(zip(newa,p)))
+    
+    #ids = dict(ddd)
+    print {k: v for v, k in enumerate(newa)}
+    print (zip(newa,range(len(newa))))
+    #ids = dict(nn)
+
+    #for key,value in ids.items():
+    #    ttt.write(str(value)+'\n')
+    #print ids
+    '''
+    print len(edges)
+    t = time() 
+    g = nx.Graph(edges)
+    #nx.draw(g)
+    nx.draw_networkx(g)
+    plt.show()
+    print 'v2'
+    print "total run time:"
+    print time()-t
+    '''
+def Visualize4():
+   
+    filename = 'parent_comment.txt'
+    filepath_name = os.path.join(file_dir, sub_dir, filename)
+    test_file = 'test.txt'
+    test_output=  open(test_file,'a+')
+    ndtype = 'S10, S10' 
+    names = 'a, b'
+    ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')
+    ids = ps['a']
+    pids =ps['b']
+    ids_pids = np.append(ids,pids)
+
+    id_set = set(ids_pids)
+    
+    #convert list to dict
+
+    id_dict = dict(zip(id_set,range(len(id_set))))
+
+    '''
+     replace elements in a list using dictionary lookup
+    
+    '''
+    ids_rep = [id_dict[x] if x in id_dict else x for x in ids]
+    pids_rep = [id_dict[x] if x in id_dict else x for x in pids]
+
+    edges = zip(ids_rep,pids_rep)
+
+    for item in edges:
+        test_output.write('%i\t%i\n' %(item[0],item[1]))
+    test_output.close()
+    t = time()
+    g = nx.Graph(edges)
+    #nx.draw(g)
+    nx.draw_networkx(g)
+    #plt.show()
+    
+    print 'v2'
+    print "total run time:"
+    print time()-t
+    
 def idTest():
     filename = 'subreddits_index-id.txt'
     filepath_name = os.path.join(file_dir, sub_dir, filename)
@@ -191,10 +343,12 @@ def idTest2():
     print 'RC_body done!'
 
 if __name__ == '__main__':
-    #Visualize()
+    Visualize()
+    Visualize0()
+    Visualize1()
     #Comment()
     #Subreddits()     
     #RC_MonthlyCount()
     #RC()
-    idTest2()
+    #idTest2()
     print 'All done!'

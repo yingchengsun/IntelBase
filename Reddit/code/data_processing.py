@@ -13,6 +13,10 @@ import numpy as np
 
 file_dir = 'E:\\Reddit'
 
+"""hei hei hei
+
+lala
+"""
 def ReadFile(filetype = 'RS_', year = 2005, month = 1, ext = '.bz2'):
     sub_dir = 'raw_data'
     filename = filetype + str(year) + '-' + str(month).zfill(2) + ext
@@ -41,7 +45,6 @@ def ReadFile(filetype = 'RS_', year = 2005, month = 1, ext = '.bz2'):
 (u'title', u'New miner in town, should I use CPU or GPU?'), (u'url', u'https://www.reddit.com/r/xdag/comments/80rgry/new_miner_in_town_should_i_use_cpu_or_gpu/'), 
 (u'whitelist_status', None)]
 '''
-
 def RS():
     filetype = 'RS_v2_'
     year = 2008
@@ -59,11 +62,71 @@ def RS():
         outfile_newsubr_dname = open(prefix+'_newSubr-dname.txt','a+')
         #outfile_index_author = open(prefix+'_index-author.txt','a+')
         #outfile_index_score_time_gilded_numofcomm_subreddit = open(prefix+'_index-score-time-gilded-numofcomm-subreddit.txt','a+')
+        fff=open(prefix+'_fff.txt','a+')
         infile_subr_ids = np.genfromtxt(subreddit_file, dtype='S10')
-        newSubr_file = np.genfromtxt(prefix+'_newSubr-id.txt', dtype='S10')
-        
+     
+        index = 0
+        ids = dict(zip(infile_subr_ids,range(len(infile_subr_ids))))
+        length = len(ids)
+        for line in file_object:
+            data_item = json.loads(line, object_pairs_hook=OrderedDict)
+            
+            score = int(data_item['score'])
+            time = int(data_item['created_utc'])
+            gilded = int(data_item['gilded'])
+            numofcomm = int(data_item['num_comments'])
+           
+            subreddit_id = data_item['subreddit_id'].split('_', 1)[-1]
+            subreddit_id=(subreddit_id.encode('utf-8'))
+            #outfile_newsubr_id.write((u'%s\n' %(subreddit_id)).encode('utf-8'))
+            
+            #print ids
+            #if  len(np.where(infile_subr_ids == subreddit_id)[0]) == 0:
 
+            if not ids.has_key(subreddit_id):
+                #print subreddit_id
+                fff.write(subreddit_id+'\n')
+                ids[subreddit_id]=length
+                length +=1
+                #fff.write('%s\n' %(subreddit_id))
+             
+            index = index+1
+            if index%10000 == 0:
+                print index,' recodes have been processed!'
+    finally:
+        fff.close()
+        file_object.close()
+        #outfile_id.close()
+        outfile_newsubr_id.close()
+        outfile_newsubr_dname.close()
+        #outfile_index_author.close()
+        #outfile_index_score_time_gilded_numofcomm_subreddit.close()
+
+    print 'In total: ' + str(index) +' RS recodes have been processed !'
+    
+def RSS():
+    filetype = 'RS_v2_'
+    year = 2008
+    month = 1
+    ext = '.zip'
+
+    file_object = ReadFile(filetype, year, month, ext)
+    prefix = file_dir+'\\data\\'+filetype+str(year)+'-'+str(month).zfill(2)
+    
+    subreddit_file = file_dir+'\\data\\'+'subreddits_id.txt'
+
+    try: 
+        outfile_id  = open(prefix+'_id.txt','a+')
+        outfile_newsubr_id = open(prefix+'_newSubr-id.txt','a+')
+        outfile_newsubr_dname = open(prefix+'_newSubr-dname.txt','a+')
+        #outfile_index_author = open(prefix+'_index-author.txt','a+')
+        #outfile_index_score_time_gilded_numofcomm_subreddit = open(prefix+'_index-score-time-gilded-numofcomm-subreddit.txt','a+')
+        infile_subr_ids = np.genfromtxt(subreddit_file, dtype='S10')
+        #newSubr_file = np.genfromtxt(prefix+'_newSubr-id.txt', dtype='S10')
+
+        '''
         print len(newSubr_file)
+        newSubr_file.value_counts()
         nn = np.unique(newSubr_file)
         print len(nn)
         diff = set(nn)-set(infile_subr_ids)
@@ -73,25 +136,30 @@ def RS():
         infile_subr_ids = np.append(infile_subr_ids,np.array(list(diff)))
         print infile_subr_ids
         '''
-        #index = 0
-        #for line in file_object:
-            #data_item = json.loads(line, object_pairs_hook=OrderedDict)
+        fff=open(prefix+'_fff.txt','a+')
+        count = 0
+        for line in file_object:
+            data_item = json.loads(line, object_pairs_hook=OrderedDict)
             
             score = int(data_item['score'])
             time = int(data_item['created_utc'])
             gilded = int(data_item['gilded'])
             numofcomm = int(data_item['num_comments'])
            
-            #subreddit_id = data_item['subreddit_id'].split('_', 1)[-1]
-            #subreddit_id=(subreddit_id.encode('utf-8'))
+            subreddit_id = data_item['subreddit_id'].split('_', 1)[-1]
+            subreddit_id=(subreddit_id.encode('utf-8'))
             #outfile_newsubr_id.write((u'%s\n' %(subreddit_id)).encode('utf-8'))
-            
+            ids = dict(zip(infile_subr_ids,range(len(infile_subr_ids))))
+            #print ids
             #if  len(np.where(infile_subr_ids == subreddit_id)[0]) == 0:
-                
-                outfile_newsubr_id.write((u'%s\n' %(subreddit_id)).encode('utf-8'))
-                outfile_newsubr_dname.write((u'%s\n' %(data_item['subreddit'])).encode('utf-8'))
-                infile_subr_ids = np.append(infile_subr_ids,subreddit_id)
-                '''
+
+            if not ids.has_key(subreddit_id):
+                print subreddit_id
+                fff.write('%s\n' %(subreddit_id))
+                #outfile_newsubr_id.write((u'%s\n' %(subreddit_id)).encode('utf-8'))
+                #outfile_newsubr_dname.write((u'%s\n' %(data_item['subreddit'])).encode('utf-8'))
+                #infile_subr_ids = np.append(infile_subr_ids,subreddit_id)
+               
                 
             #subreddit_index = (np.where(infile_subr_ids == subreddit_id))[0][0]
             
@@ -99,10 +167,9 @@ def RS():
             #outfile_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
             #outfile_index_author.write((u'%i\t%s\n' %(index, data_item['author'])).encode('utf-8'))
             #outfile_index_score_time_gilded_numofcomm_subreddit.write((u'%i\t%i\t%i\t%i\t%i\t%i\n' %(index, score, time, gilded, numofcomm, subreddit_index)).encode('utf-8'))
-            
-            #index+=1
-            #if index%10000 == 0:
-                #print index,' recodes have been processed!'
+            count = count+1
+            if count%10000 == 0:
+                print count,' recodes have been processed!'
     finally:
         file_object.close()
         #outfile_id.close()

@@ -113,6 +113,25 @@ plt.show()
 '''
 
 #t = '        rootfs                            1777284\n1443560\t333724  82% /'
+'''
 data = '988128\t\t444'
 kwargs = dict(delimiter="\t",comments='%', dtype=int,names="a,b,c",missing_values={0:None, 'b':" ", 2:"???"},filling_values={0:0, 'b':0, 2:-999})
 print np.genfromtxt(BytesIO(data), **kwargs)
+'''
+
+from time import time 
+t = time() 
+list = ['a','b','is','python','jason','hello','hill','with','phone','test', 
+'dfdf','apple','pddf','ind','basic','none','baecr','var','bana','dd','wrd'] 
+#list = dict.fromkeys(list,list) 
+print zip(list,range(len(list)))
+list = dict(zip(list,range(len(list))))
+if not list.has_key('name'):
+    print 'fuck'
+filter = [] 
+for i in range (1000000): 
+    for find in ['is','hat','new','list','old','.']: 
+        if find not in list: 
+            filter.append(find) 
+print "total run time:"
+print time()-t
