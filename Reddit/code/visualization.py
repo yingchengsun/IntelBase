@@ -168,11 +168,33 @@ def idTest():
    
     print 'RC_body done!'
 
+def idTest2():
+    filename = 'subreddits_id.txt'
+    filepath_name = os.path.join(file_dir, sub_dir, filename)
+    ndtype = 'S10' 
+    names = 'id'
+    try:
+        id = np.genfromtxt(filepath_name, dtype=ndtype)
+
+        #print np.array([s['id']]).T
+        print id
+
+
+        index = np.where(id=='3f9eq')  
+        print index
+        print index[0]
+        print type(index[0][0])
+
+    finally:
+        print 'stop'
+   
+    print 'RC_body done!'
+
 if __name__ == '__main__':
     #Visualize()
     #Comment()
     #Subreddits()     
     #RC_MonthlyCount()
     #RC()
-    idTest()
+    idTest2()
     print 'All done!'

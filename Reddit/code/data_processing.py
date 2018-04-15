@@ -8,7 +8,8 @@ import zipfile
 import os
 import json
 from collections import OrderedDict
-from Reddit.LDA import stop
+import numpy as np
+
 
 file_dir = 'E:\\Reddit'
 
@@ -50,38 +51,67 @@ def RS():
     file_object = ReadFile(filetype, year, month, ext)
     prefix = file_dir+'\\data\\'+filetype+str(year)+'-'+str(month).zfill(2)
     
+    subreddit_file = file_dir+'\\data\\'+'subreddits_id.txt'
+
     try: 
         outfile_id  = open(prefix+'_id.txt','a+')
-        outfile_author = open(prefix+'_author.txt','a+')
-        outfile_index_score_time_gilded_numofcomm_subreddit = open(prefix+'_index-score-time-gilded-numofcomm-subreddit.txt','a+')
-        index = 1
-        for line in file_object:
-            data_item = json.loads(line, object_pairs_hook=OrderedDict)
-            '''
-            body = data_item['body']
-            if body:
-                body =' '.join(data_item['body'].split())
-            '''
+        outfile_newsubr_id = open(prefix+'_newSubr-id.txt','a+')
+        outfile_newsubr_dname = open(prefix+'_newSubr-dname.txt','a+')
+        #outfile_index_author = open(prefix+'_index-author.txt','a+')
+        #outfile_index_score_time_gilded_numofcomm_subreddit = open(prefix+'_index-score-time-gilded-numofcomm-subreddit.txt','a+')
+        infile_subr_ids = np.genfromtxt(subreddit_file, dtype='S10')
+        newSubr_file = np.genfromtxt(prefix+'_newSubr-id.txt', dtype='S10')
+        
+
+        print len(newSubr_file)
+        nn = np.unique(newSubr_file)
+        print len(nn)
+        diff = set(nn)-set(infile_subr_ids)
+        print len(diff)
+        print diff
+        print infile_subr_ids
+        infile_subr_ids = np.append(infile_subr_ids,np.array(list(diff)))
+        print infile_subr_ids
+        '''
+        #index = 0
+        #for line in file_object:
+            #data_item = json.loads(line, object_pairs_hook=OrderedDict)
+            
             score = int(data_item['score'])
             time = int(data_item['created_utc'])
             gilded = int(data_item['gilded'])
             numofcomm = int(data_item['num_comments'])
-            gilded = int(data_item['gilded'])
+           
+            #subreddit_id = data_item['subreddit_id'].split('_', 1)[-1]
+            #subreddit_id=(subreddit_id.encode('utf-8'))
+            #outfile_newsubr_id.write((u'%s\n' %(subreddit_id)).encode('utf-8'))
             
-            outfile_id.write((u'%i\t%s\n' %(index, id)).encode('utf-8'))
-            outfile_author.write((u'%i\t%s\n' %(index, data_item['author'])).encode('utf-8'))
-            #outfile_index_score_time_gilded_numofcomm_subreddit.write(u'%i\t%i\t%i\t%i\t%i\t%i\n' %(index, score, time, parent, submission, subreddit)).encode('utf-8'))
+            #if  len(np.where(infile_subr_ids == subreddit_id)[0]) == 0:
+                
+                outfile_newsubr_id.write((u'%s\n' %(subreddit_id)).encode('utf-8'))
+                outfile_newsubr_dname.write((u'%s\n' %(data_item['subreddit'])).encode('utf-8'))
+                infile_subr_ids = np.append(infile_subr_ids,subreddit_id)
+                '''
+                
+            #subreddit_index = (np.where(infile_subr_ids == subreddit_id))[0][0]
+            
 
-            if index%100000 == 0:
-                print index,' recodes have been processed!'
+            #outfile_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
+            #outfile_index_author.write((u'%i\t%s\n' %(index, data_item['author'])).encode('utf-8'))
+            #outfile_index_score_time_gilded_numofcomm_subreddit.write((u'%i\t%i\t%i\t%i\t%i\t%i\n' %(index, score, time, gilded, numofcomm, subreddit_index)).encode('utf-8'))
             
-            index+=1
+            #index+=1
+            #if index%10000 == 0:
+                #print index,' recodes have been processed!'
     finally:
         file_object.close()
-        outfile_id.close()
-        outfile_author.close()
-        outfile_index_score_time_gilded_numofcomm_subreddit.close()
-        print 'In total: ' + str(index-1) +' RC recodes have been processed !'
+        #outfile_id.close()
+        outfile_newsubr_id.close()
+        outfile_newsubr_dname.close()
+        #outfile_index_author.close()
+        #outfile_index_score_time_gilded_numofcomm_subreddit.close()
+
+    #print 'In total: ' + str(index) +' RS recodes have been processed !'
 
 '''
 [(u'author', u'vortex30'), (u'author_flair_css_class', None), (u'author_flair_text', None), 
@@ -150,13 +180,13 @@ def Subreddits():
     file_object = infile.open(infile.getinfo(infile.namelist()[0]))
 
     try: 
-        #outfile_index_title_description = open(file_dir+'\\data\\subreddits_index-title-publicDescription.txt','a+')
-        outfile_index_id = open(file_dir+'\\data\\subreddits_index-id.txt','a+')
+        outfile_index_title_description = open(file_dir+'\\data\\subreddits_index-title-publicDescription.txt','a+')
+        #outfile_id = open(file_dir+'\\data\\subreddits_id.txt','a+')
         outfile_index_dname_subscribers_time = open(file_dir+'\\data\\subreddits_index-dname-subscribers-time.txt','a+')
-        index = 1
+        index = 0
         for line in file_object:
             data_item = json.loads(line, object_pairs_hook=OrderedDict)
-            '''
+            
             title = data_item['title']
             if title:
                 title =' '.join(data_item['title'].split())
@@ -164,28 +194,29 @@ def Subreddits():
             public_description = data_item['public_description']
             if public_description:
                 public_description =' '.join(data_item['public_description'].split())    
-            '''
+            
             if data_item['subscribers']:
                 subscribers = int(data_item['subscribers'])
             time = int(data_item['created_utc'])
-        
-            #outfile_index_title_description.write((u'%i\t%s\t%s\n' %(index, title, public_description )).encode('utf-8'))
-            outfile_index_id.write((u'%i\t%s\n' %(index, data_item['id'])).encode('utf-8'))
-            #outfile_index_dname_subscribers_time.write((u'%i\t%s\t%i\t%i\n' %(index, data_item['display_name'].strip('\n'), subscribers, time)).encode('utf-8'))
+            
+            outfile_index_title_description.write((u'%i\t%s\t%s\n' %(index, title, public_description )).encode('utf-8'))
+            #outfile_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
+            outfile_index_dname_subscribers_time.write((u'%i\t%s\t%i\t%i\n' %(index, data_item['display_name'].strip('\n'), subscribers, time)).encode('utf-8'))
+            index+=1
             
             if index%100000 == 0:
                 print index,' recodes have been processed!'
-            index+=1
+            
             
     finally:
         file_object.close()
-        #outfile_index_title_description.close()
-        outfile_index_id.close()
+        outfile_index_title_description.close()
+        #outfile_id.close()
         outfile_index_dname_subscribers_time.close()
-    print 'In total: ' + str(index-1) +' subreddits recodes have been processed !'
+    print 'In total: ' + str(index) +' subreddits recodes have been processed !'
 
 
 if __name__ == "__main__":
-    #RS()
+    RS()
     #RC()
-    Subreddits()
+    #Subreddits()
