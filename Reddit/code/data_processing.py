@@ -14,7 +14,7 @@ import numpy as np
 file_dir = 'E:\\Reddit'
 
 
-def ReadFile(filetype = 'RS_', year = 2005, month = 1, ext = '.bz2'):
+def read_file(filetype = 'RS_', year = 2005, month = 1, ext = '.bz2'):
     sub_dir = 'raw_data'
     filename = filetype + str(year) + '-' + str(month).zfill(2) + ext
     filepath_name = os.path.join(file_dir, sub_dir, filename)
@@ -48,7 +48,7 @@ def RS():
     month = 1
     ext = '.zip'
 
-    file_object = ReadFile(filetype, year, month, ext)
+    file_object = read_file(filetype, year, month, ext)
     prefix = file_dir+'\\data\\'+filetype+str(year)+'-'+str(month).zfill(2)
     
     subreddit_file = file_dir+'\\data\\'+'subreddits_id.txt'
@@ -107,7 +107,7 @@ def RSS():
     month = 1
     ext = '.zip'
 
-    file_object = ReadFile(filetype, year, month, ext)
+    file_object = read_file(filetype, year, month, ext)
     prefix = file_dir+'\\data\\'+filetype+str(year)+'-'+str(month).zfill(2)
     
     subreddit_file = file_dir+'\\data\\'+'subreddits_id.txt'
@@ -190,7 +190,7 @@ def RC():
     year = 2008
     month = 1
     ext = '.bz2'
-    file_object = ReadFile(filetype, year, month, ext)
+    file_object = read_file(filetype, year, month, ext)
     prefix = file_dir+'\\data\\'+filetype+str(year)+'-'+str(month).zfill(2)
     try: 
         #outfile_body = open(prefix+'_body.txt','a+')
