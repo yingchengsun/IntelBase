@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent nav-active active">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li class="active"><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="doc-title"><strong>Admin</strong> Builder</h2>
+              <p>Admin Builder is a Javascript script which allows you to quickly create your admin template.</p>
+              <p>It's an easy way to customize your admin.</p>
+              <p>Admin Builder also allows for basic content editing, allowing users to changes text, icons and other contents.</p>
+              <div class="alert alert-info media">
+                <div class="media-left">
+                  <i class="icon-pencil icon-circle"></i>
+                </div>
+                <div class="media-body width-100p">
+                  <h4 class="alert-title">Only Html version</h4>
+                  <p>Admin Builder work only with Html version and not allow to build custom AngularJS version.</p>
+                </div>
+              </div>
+              <p>
+                <a class="btn btn-primary" href="../admin-builder/index.html" target="_blank">Go to Admin Builder</a>
+              </p>
+              <h2><strong>Customize</strong> your admin template</h2>
+              <h3><strong>Step 1. Left or Right side</strong></h3>
+              <p>First of all, you have to define if you want sidebar on the left or in the right side. In general, right side is used for specific languages, such as Arabic.</p>
+              <h3><strong>Step 2. Choose sidebar main style</strong></h3>
+              <p>We have created 3 differents styles. Each style come with a collapsed option.</p>
+              <p><strong>Large Sidebar</strong>: it's default  sidebar with 240px width.</p>
+              <p><strong>Condensed Sidebar</strong>: with 190px width, this sidebar offer bigger icons and menu element. It could be interesting if you don't have too many menu elements.</p>
+              <p><strong>Light Sidebar</strong>: 220px width. It's lighter because it's separated from page corner and less "visible".</p>
+              <h3><strong>Step 3. Sidebar content</strong></h3>
+              <p>Each sidebar comes with 2 main options: top content and footer content.</p>
+              <p><strong>Top content</strong>: you can choose between 4 possibilities here: <br>
+                => Big User Image / Small User Image / Search and Icon / No Top Content.
+              </p>
+              <p><strong>Footer content</strong>: you can choose between 4 possibilities here too:<br>
+                => Folders List / Sparkline Bar Charts / Progress Bar Charts / No Footer Content.
+              </p>
+              <h3><strong>Step 4. Sidebar behaviour</strong></h3>
+              <p>Here you have 3 main options depending of what you are looking for and your needs:</p>
+              <p><strong>Sidebar Fixed / Fluid</strong>: common behaviour for sidebar, it permit you to define if you want that your sidebar move with page content or not.</p>
+              <p><strong>Sidebar on Hover</strong>: here is a good way to have more space for your page content and to access easily to sidebar menu. Indeed, sidebar is completly hidden and will appear only if your mouse is in a left corner(or right if choose right sidebar).</p>
+              <p><strong>Submenu on Hover</strong>: here sidebar is visible, but submenu show out of sidebar with mouse over. So, you don't have to click to show submenu.</p>
+              <h3><strong>Step 5. topbar Style</strong></h3>
+              <p>Topbar have 2 styles:</p>
+              <p><strong>Topbar with Icons</strong>: if you just want quick access to main function, you may choose this topbar.</p>
+              <p><strong>Topbar with Menu</strong>: if you need a top menu with access to menu and submenu elements, choose this one.</p>
+              <h3><strong>Step 6. theme colors: 28 variations</strong></h3>
+              <p>Default color is dark, but we know that sometimes other colors could be useful, and maybe you want to let your users choose their own style.</p>
+              <p>An admin template, in general, have 3 main parts: sidebar, topbar and main content. So, we wanted to give you the possibility to choose color for each part.</p>
+              <p>For that reason, we have added <strong>7 main colors</strong>, that you can apply in 4 differents ways, with <strong> 28 variations</strong> in total.</p>
+              <p>You can change background color too with 7 colors.</p>
+              <h2><strong>Edit</strong> text and icons</h2>
+              <p>You can modify text, links and icons by right clicking on sidebar and topbar elements</p>
+              <p>You can also remove and add sidebar menu / submenu.</p>
+              <p>If you click on settings icon in sidebar at the left of "Navigation" title, a submenu will appear. Here you can reorder menu elements, and remove elements as well.</p>
+              <h2><strong>Export</strong> your template</h2>
+              <p>When you have made all your style choices and edit your sidebar / topbar content, you are ready to export your admin template in order to use it in your project.</p>
+              <p>Just click on button "Export Admin Template".</p>
+              <p>A modal window will appear and you will be able to choose your file name.</p>
+              <p>Once you have click on save, your page template will be downloaded inside your-custom-admin folder.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>

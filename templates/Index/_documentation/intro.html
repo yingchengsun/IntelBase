@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li class="nav-active active"><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#">
+                <i class="fa fa-table"></i>
+                <span>
+                  <span>Tables</span>
+              </a>
+              <ul class="children collapse">
+              <li><a href="table-layout.html"> Table Layouts</a></li>
+              <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+          <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+      <!-- BEGIN PAGE CONTENT -->
+      <div class="page-content">
+      <div class="row">
+      <div class="col-md-8">
+      <h2 class="doc-title">Welcome to <strong>Make</strong> Admin Template</h2>
+      <h3>Thank you for purchasing this theme!</h3>
+      <p>If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://themeforest.net/user/themes-lab" target="_blank">here</a>. Thank you again!</p>
+      <p class="f-18"><strong>Rate the theme please!</strong>
+      </span>
+      </p>
+      I will appreciate a lot if you rate the theme I have tried to give you the best result as possible and will improve the theme with your comments and suggestions.
+      <h2>FAQ</h2>
+      <h4><strong>What scripts do I need to include to get a specific plugin working?</strong></h4>
+      You can find CSS and Javascript files that you have to include for each plugin in the plugins page of the doc <a href="plugins.html"> here</a>.
+      <h4><strong>What are the mandatory plugins which need to be included in every file?</strong></h4>
+      Please see the blank page (page-blank.html) to see the mandatory includes.
+      <h4><strong>How can I customize the theme or add new pages?</strong></h4>
+      You can easily add your own modification with the <code>custom.css</code> file and <code>custom.js</code> file. To create a new page, you can use <code>page-blank.html</code> layout. More detail in the doc <a href="customization.html" target="_blank">here</a>.
+      <h2>Overview</h2>
+      <p>Make is a responsive and multipurpose admin and frontend theme powered with <a href="http://getbootstrap.com" target="_blank">Twitter Bootstrap Framework 3</a>. Make can be used for any type of web applications: custom admin panels, admin
+      dashboards, CMS, CRM, SAAS and websites: business, corporate, portfolio, blog. Make has a sleek, clean and intuitive flat style design which makes your next project look awesome and yet user friendly. Make has a huge collection of
+      plugins and UI components and works seamlessly on all major web browsers, tablets and phones.</p>
+      <p>We put a lot of love and effort to make Make a useful tool for everyone.</p>
+      <p>We are keen to release continuous long term updates and many of new features will be coming soon in the future releases. Once you purchased Make, you will be entitled to free download of all future updates for the same license.</p>
+      <hr>
+      <p>
+      <strong>Author</strong>: <a href="http://themeforest.net/user/themes-lab" target="_blank">Themes Labs</a>
+      <br><strong>Contact</strong>: <a href="mailto:support@themes-lab.com">support@themes-labs.com</a>
+      <br><strong>Version</strong>: 3.1
+      <br><strong>Created On</strong>: 04/03/2015
+      <br><strong>Updated On</strong>: 04/10/2016
+      <br>
+      </p>
+      <hr>
+      <p>
+      <a class="btn btn-primary" target="_blank" href="http://themes-lab.com/Make/admin/index.html">
+      Live Preview 
+      </a>
+      </p>
+      <h2>Features list</h2>
+      <ol>
+      <li>Responsive layout (desktops, tablets, mobile devices)</li>
+      <li>HTML5 / CSS3 / LESS</li>
+      <li>Based on Twitter Bootstrap Framework 3</li>
+      <li>Admin Builder to create your own structure</li>
+      <li>Page Builder to create your own page content</li>
+      <li>Fixed / Fluid sidebar and topbar</li>
+      <li>4 sidebar styles: default, condensed, light and collapsed</li>
+      <li>Sidebar On Top layout</li>
+      <li>Sidebar Submenu on Hover layout</li>
+      <li>Boxed Layout</li>
+      <li>Quickview sidebar with chat, notes and settings</li>
+      <li>Various widgets</li>
+      <li>5 charts library: ChartJs, HighCharts / HighStocks, Morris, D3, Sparkline</li>
+      <li>User Interface Elements
+        <ul>
+          <li>Custom icons &amp; buttons</li>
+          <li>Notifications</li>
+          <li>Custom modals with transition effects</li>
+          <li>Custom notifications with various status, positions and options</li>
+          <li>Tooltips &amp; popovers</li>
+          <li>Nestable and sortable list</li>
+          <li>File trees</li>
+          <li>Custom panels / Draggable panels</li>
+        </ul>
+      </li>
+      <li>Tables
+        <ul>
+        <li>Various styles of tables: contextual, striped, bordered, hover</li>
+        <li>Editable tables: remove, edit or add data on the fly</li>
+        <li>Filter Tables</li>
+        <li>Reorder columns</li>
+        <li>Fixed columns</li>
+        <li>Hide/show columns</li>
+        </ul>
+      </li>
+      <li>Forms
+        <ul>
+        <li>Custom form style</li>
+        <li>Datepicker / Timepicker / Modal date and time picker</li>
+        <li>Custom slider and switch</li>
+        <li>WYSIWYG editor</li>
+        <li>Dynamically editable elements (inline)</li>
+        <li>Multi file upload: dropzone and jquery file upload</li>
+        <li>Wizard</li>
+        <li>Custom wizard style</li>
+        <li>Validation</li>
+        </ul>
+      </li>
+      <li>Custom pages
+        <ul>
+          <li>Timeline</li>
+          <li>Gallery Sortable</li>
+          <li>Medias manager</li>
+          <li>Lockscreen page</li>
+          <li>Error page: 404, 500</li>
+          <li>Contact Page</li>
+           <li>Coming Soon Page</li>
+        </ul>
+      </li>
+      <li>User Manage
+        <ul>
+          <li>User profile</li>
+          <li>Login page version 1 &amp; 2</li>
+          <li>Signup page version 1 &amp; 2</li>
+          <li>Session Timeout</li>
+        </ul>
+      </li>
+      <li>Mailbox
+        <ul>
+          <li>Inbox</li>
+          <li>Send Message</li>
+        </ul>
+      </li>
+      <li>eCommerce
+        <ul>
+          <li>Pricing table builder</li>
+          <li>Shopping Cart</li>
+          <li>Invoice</li>
+        </ul>
+      </li>
+      <li>Maps
+        <ul>
+          <li>Google Maps</li>
+          <li>Vector Maps with AmCharts</li>
+        </ul>
+      </li>
+      <li>Line/Bar/Pie charts</li>
+      <li>Bootstrap plugins</li>
+      <li>Image croping</li>
+      <li>Google Maps</li>
+      </ol>
+
+      <h2>Styles</h2> 
+      <div class="alert alert-info"> <b>Heads up!</b> We use 3 CSS files in this theme: a style file, ui file and theme file. All CSS files are created via Less version. So you can easily modify style with less version or directly in style file if you don't want to use LESS.</div>
+      <div>
+      <h3>Stylesheets</h3>
+      <p>Here's a list of the stylesheet files we are using with this template, you can find more information opening each file:</p>
+      </div>
+      <div>
+      <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+      <th>File Name</th>
+      <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td><code>style.css</code></td>
+      <td>The main CSS file of the template. You will find all general style for sidebar, topbar and page content.</td>
+      </tr>
+      <tr>
+      <td><code>ui.css</code></td>
+      <td>This file content all user interface style, such as button, form, table, modals...</td>
+      </tr>
+      <tr>
+      <td><code>theme.css</code></td>
+      <td>Theme file define all color variations. There are 7 main colors with 4 variations for each color, so 28 variations in total.</td>
+      </tr>
+      </tbody>
+      </table>
+      </div>
+
+      <h2>Javascript</h2> 
+      <p>Here's a list of the script files we are using with this template, you can find more information opening each file.</p>
+      <p>Sometimes specific pages need specific script files. Pease see demo pages and / or plugins page too see which scripts need to be included: <a href="plugins.html">plugins.html</a>.</p>
+      <div>
+      <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+      <th>File Name</th>
+      <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td><code>jquery-1.11.js</code></td>
+      <td>Main Jquery file.</td>
+      </tr>
+      <tr>
+      <td><code>jquery-migrate-1.2.1.js</code></td>
+      <td>This plugin can be used to detect and restore APIs or features that have been deprecated in jQuery and removed .</td>
+      </tr>
+      <tr>
+      <td><code>jquery-ui-1.10.4.min.js</code></td>
+      <td>jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library. </td>
+      </tr>
+      <tr>
+      <td><code>bootstrap.min.js</code></td>
+      <td>Bootstrap JS file.</td>
+      </tr>
+      <tr>
+      <td><code>jquery.cookies.min.js</code></td>
+      <td>Create local cookie.</td>
+      </tr>
+      <tr>
+      <td><code>jquery.blockUI.min.js</code></td>
+      <td>Simulate synchronous behavior when using AJAX.</td>
+      </tr>
+      <tr>
+      <td><code>jqueryTranslator.min.js</code></td>
+      <td>Translate Plugin with JSON data.</td>
+      </tr>
+      <tr>
+      <td><code>bootbox.min.js</code></td>
+      <td>Modal with user validation and callback.</td>
+      </tr>
+      <tr>
+      <td><code>jquery.mCustomScrollbar.concat.min.js</code></td>
+      <td>Custom scrollbar.</td>
+      </tr>
+      <tr>
+      <td><code>bootstrap-hover-dropdown.min.js</code></td>
+      <td>Show Dropdown on Mouseover.</td>
+      </tr>
+      <tr>
+      <td><code>sparkline.min.js</code></td>
+      <td>This jQuery plugin generates small inline charts directly in the browser using data supplied either inline in the HTML, or via javascript.</td>
+      </tr>
+      <tr>
+      <td><code>retina.min.js</code></td>
+      <td>Script to adapt image for retina screen.</td>
+      </tr>
+      <tr>
+      <td><code>select2.min.js</code></td>
+      <td>Custom select input.</td>
+      </tr>
+      <tr>
+      <td><code>icheck.min.js</code></td>
+      <td>Custom checkbox &amp; radio inputs.</td>
+      </tr>
+      <tr>
+      <td><code>backstretch.min.js</code></td>
+      <td>Background image and image slider.</td>
+      </tr>
+      <tr>
+      <td><code>bootstrap-progressbar.min.js</code></td>
+      <td>Animated progress bar.</td>
+      </tr>
+      <tr>
+      <td><code>builder.js</code></td>
+      <td>Theme builder script.</td>
+      </tr>
+      <tr>
+      <td><code>sidebar_hover.js</code></td>
+      <td>Manage sidebar hover effect.</td>
+      </tr>
+      <tr>
+      <td><code>notes.js</code></td>
+      <td>Note widget script.</td>
+      </tr>
+      <tr>
+      <td><code>quickview.js</code></td>
+      <td>Manage quickview sidebar.</td>
+      </tr>
+      <td><code>search.js</code></td>
+      <td>Search full overlay script.</td>
+      </tr>
+      <td><code>plugins.js</code></td>
+      <td>Main Plugin Initialization Script.</td>
+      </tr>
+      <td><code>application.js</code></td>
+      <td>Manage application script.</td>
+      </tr>
+      </tbody>
+      </table>
+      </div>
+      </div>
+      </div>
+      <div class="footer">
+      <div class="copyright">
+      <p class="pull-left sm-pull-reset">
+      <span>Copyright <span class="copyright">©</span> 2016 </span>
+      <span>THEMES LAB</span>.
+      <span>All rights reserved. </span>
+      </p>
+      <p class="pull-right sm-pull-reset">
+      <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+      </p>
+      </div>
+      </div>
+      </div>
+      <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>

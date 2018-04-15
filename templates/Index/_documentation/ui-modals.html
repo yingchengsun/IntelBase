@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent nav-active active">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li class="active"><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="doc-title"><strong>Modal</strong></h2>
+              <p>Modals use default Bootstrap modal. For more information about it, please read documentation here:</p>
+              <p><a href="http://getbootstrap.com/javascript/#modals" target="_blank" class="btn btn-primary">Bootstrap Modals Documentation</a></p>
+              <h2><strong>Basic</strong> Markup</h2>
+              <p>Hereis a basic html of modal:</p>
+              <pre class="prettyprint linenums m-t-20">
+&lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;panel-content&quot;&gt;
+        &lt;h1&gt;&lt;strong&gt;Simple&lt;/strong&gt; Portlets&lt;/h1&gt;
+        &lt;p&gt;Example of panel with no header and footer.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+              <h2>Modal <strong>Styles</strong></h2>
+              <p>We have added new styles that you can create simply by adding a class to your modal.</p>
+              <h3><strong>Slide Left / Right</strong> Modal</h3>
+              <p>Just add <code>modal-slideleft</code> or <code>modal-slideright</code> class to your modal to create it:</p>
+              <pre class="prettyprint linenums m-t-20">
+&lt;div class=&quot;modal fade modal-slideleft&quot; id=&quot;modal-slideleft&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot; aria-hidden=&quot;true&quot;&gt;
+  &lt;div class=&quot;modal-dialog&quot;&gt;
+    &lt;div class=&quot;modal-content&quot;&gt;
+      &lt;div class=&quot;modal-body&quot;&gt;
+        &lt;div class=&quot;row&quot;&gt;
+          &lt;div class=&quot;col-md-12&quot;&gt;
+            &lt;h2 class=&quot;c-primary m-b-30&quot;&gt;Are you sure you want to proceed?&lt;/h2&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-embossed btn-block&quot; data-dismiss=&quot;modal&quot;&gt;Yes, I'm sure&lt;/button&gt;
+            &lt;button type=&quot;button&quot; data-dismiss=&quot;modal&quot; class=&quot;btn btn-white btn-block&quot;&gt;Oops, I prefer not!&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+              <h3><strong>Slide Top / Bottom</strong> Modal</h3>
+              <p>Just add <code>modal-bottomfull</code> or <code>modal-topfull</code> class to your modal to create it:</p>
+              <pre class="prettyprint linenums m-t-20">
+&lt;div class=&quot;modal fade&quot; id=&quot;modal-topfull&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot; aria-hidden=&quot;true&quot;&gt;
+  &lt;div class=&quot;modal-dialog modal-topfull&quot;&gt;
+    &lt;div class=&quot;modal-content&quot;&gt;
+      &lt;div class=&quot;modal-header&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;modal&quot; aria-hidden=&quot;true&quot;&gt;&lt;i class=&quot;icons-office-52&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+        &lt;h4 class=&quot;modal-title&quot;&gt;&lt;strong&gt;Top Fullwidth&lt;/strong&gt; modal&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-body&quot;&gt;
+        My content...
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-footer&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-embossed&quot; data-dismiss=&quot;modal&quot;&gt;Close&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-embossed&quot; data-dismiss=&quot;modal&quot;&gt;Save changes&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+              <h3><strong>Image</strong> Modal</h3>
+              <p>If you just want to display an image in a modal window, you can use bootstap modal and add <code>modal-image</code> class.</p>
+              <p>You can add a title to your image. Title will be display at the bottom of image with shadow style.</p>
+              <pre class="prettyprint linenums m-t-20">
+ &lt;div class=&quot;modal fade modal-image&quot; id=&quot;modal-image&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot; aria-hidden=&quot;true&quot;&gt;
+  &lt;div class=&quot;modal-dialog&quot;&gt;
+    &lt;div class=&quot;modal-content&quot;&gt;
+      &lt;div class=&quot;modal-header&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;modal&quot; aria-hidden=&quot;true&quot;&gt;&lt;i class=&quot;icons-office-52&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-body&quot;&gt;
+        &lt;img src=&quot;assets/images/gallery/transport3.jpg&quot; alt=&quot;picture 1&quot; class=&quot;img-responsive&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-footer&quot;&gt;
+        &lt;p class=&quot;font-nothing f-20&quot;&gt;Title of your image&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>

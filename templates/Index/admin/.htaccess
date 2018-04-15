@@ -1,0 +1,10 @@
+Options +FollowSymlinks
+AddDefaultCharset UTF-8
+RewriteEngine On
+
+RewriteBase /
+RewriteRule ^$ http://themes-lab.com/make/start.html [L]
+RewriteRule ^layout1/$ http://themes-lab.com/make/admin/layout1/dashboard.html [L]
+RewriteRule ^layout2/$ http://themes-lab.com/make/admin/layout2/dashboard.html [L]
+RewriteRule ^layout3/$ http://themes-lab.com/make/admin/layout3/dashboard.html [L]
+RewriteRule ^layout4/$ http://themes-lab.com/make/admin/layout4/dashboard.html [L]

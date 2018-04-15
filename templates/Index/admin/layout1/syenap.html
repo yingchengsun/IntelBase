@@ -1,0 +1,1574 @@
+<html data-livestyle-extension="available">
+  <head>
+    <style type="text/css">.gm-style .gm-style-mtc label,.gm-style .gm-style-mtc div{font-weight:400}</style>
+    <style type="text/css">.gm-style-pbc{transition:opacity ease-in-out;background-color:rgba(0,0,0,0.45);text-align:center}.gm-style-pbt{font-size:22px;color:white;font-family:Roboto,Arial,sans-serif;position:relative;margin:0;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}</style>
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <style type="text/css">.gm-style .gm-style-cc span,.gm-style .gm-style-cc a,.gm-style .gm-style-mtc div{font-size:10px}</style>
+    <style type="text/css">@media print {  .gm-style .gmnoprint, .gmnoprint {    display:none  }}@media screen {  .gm-style .gmnoscreen, .gmnoscreen {    display:none  }}</style>
+    <style type="text/css">.gm-style{font-family:Roboto,Arial,sans-serif;font-size:11px;font-weight:400;text-decoration:none}.gm-style img{max-width:none}</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="../assets/global/images/favicon.png" type="image/png">
+    <title>Syenap - Behaviour, Insight, Action</title>
+    <link href="../assets/global/css/style.css" rel="stylesheet">
+    <!-- MANDATORY -->
+    <link href="../assets/global/css/theme.css" rel="stylesheet">
+    <!-- MANDATORY -->
+    <link href="../assets/global/css/ui.css" rel="stylesheet">
+    <!-- MANDATORY -->
+    <link href="../assets/global/plugins/datatables/dataTables.min.css" rel="stylesheet">
+    <link href="../assets/global/plugins/ion-slider/style.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <SCRIPT src="../assets/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></SCRIPT><![ENDIF]-->
+    <script type="text/javascript">//<![CDATA[
+      window.onload=function(){
+      // Cache selectors
+      var lastId,
+          topMenu = $("#top-menu"),
+          topMenuHeight = topMenu.outerHeight()+15,
+          // All list items
+          menuItems = topMenu.find("a"),
+          // Anchors corresponding to menu items
+          scrollItems = menuItems.map(function(){
+            var item = $($(this).attr("href"));
+            if (item.length) { return item; }
+          });
+      
+      // Bind click handler to menu items
+      // so we can get a fancy scroll animation
+      menuItems.click(function(e){
+        var href = $(this).attr("href"),
+            offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+        $('html, body').stop().animate({ 
+            scrollTop: offsetTop
+        }, 300);
+        e.preventDefault();
+      });
+      
+      // Bind to scroll
+      $(window).scroll(function(){
+         // Get container scroll position
+         var fromTop = $(this).scrollTop()+topMenuHeight;
+         
+         // Get id of current scroll item
+         var cur = scrollItems.map(function(){
+           if ($(this).offset().top < fromTop)
+             return this;
+         });
+         // Get the id of the current element
+         cur = cur[cur.length-1];
+         var id = cur && cur.length ? cur[0].id : "";
+         
+         if (lastId !== id) {
+             lastId = id;
+             // Set/remove active class
+             menuItems
+               .parent().removeClass("active")
+               .end().filter("[href='#"+id+"']").parent().addClass("active");
+         }                   
+      });
+      }//]]> 
+    </script>
+    <style style="text/css">
+      #top-menu {
+      position: fixed;
+      z-index: 1;
+      background: none;
+      left: 1;
+      right: 0;
+      top: 0.1;
+      }
+      #top-menu a {
+      width: 4em;
+      text-align: center;
+      -webkit-transition: .5s all ease-out;
+      -moz-transition: .5s all ease-out;
+      transition: .5s all ease-out;
+      color: #ababab;
+      text-decoration: none;
+      }
+      #top-menu a:hover {
+      color: #000;
+      }
+      #top-menu div.active a {
+      border-top: 3px solid #319db5;
+      color: #319db5;
+      }
+      #MultiSiteSummaryandOverallRanking {
+      position: relative;
+      }
+      #ACFootfall {
+      position: relative;
+      }
+      #ACFootfall {
+      position: relative;
+      }
+      #AcGroupFootfall {
+      position: relative;
+      }
+      #AcTransactionNumbers {
+      position: relative;
+      }
+      #AcTransactionValues {
+      position: relative;
+      }
+      #AcWaitTime {
+      position: relative;
+      }
+    </style>
+    <script type="text/javascript">
+      function changestore(urlss){
+        var elem = document.getElementById("mp");
+        elem.value = urlss;
+      
+        document.getElementById("multi").submit();
+      }
+      
+    </script>
+    <style> .main-content .page-content {overflow: visible;}</style>
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="color-primary theme-sdtl fixed-topbar fixed-sidebar">
+    <section style="opacity: 1;">
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1><a href="default.asp">&nbsp;</a></h1>
+        </div>
+        <div class="sidebar-inner mCustomScrollbar _mCS_1">
+          <div class="mCustomScrollBox mCS-light-thin" id="mCSB_1" style="position:relative; height:100%; overflow:hidden; max-width:100%;">
+            <div class="mCSB_container mCS_no_scrollbar" style="position:relative; top:0;">
+              <div class="sidebar-top">
+                <div class="userlogged clearfix">
+                  <i class="icon icons-faces-users-01"></i>
+                  <div class="user-details">
+                    <h4>Saltzman, Ivan</h4>
+                  </div>
+                </div>
+              </div>
+              <ul class="nav nav-sidebar">
+                <li class="tm nav-parent active">
+                  <a href="#"><i class="fa fa-cogs"></i><span>MULTI SITE VIEW</span><span class="fa arrow"></span></a>
+                  <ul style="" class="children collapse">
+                    <li class="active"><a onclick="DtchangeDates('multisitesummary.asp')"><i class="fa fa-table"></i>Multi site summary</a></li>
+                    <li class=""><a onclick="DtchangeDates('multisitecomparison.asp')"><i class="icon-bar-chart"></i>Metrics comparison</a></li>
+                    <li class=""><a onclick="DtchangeDates('multisitecapacity.asp')"><i class="fa fa-th-large"></i>Multi site capacity</a></li>
+                  </ul>
+                </li>
+                <li class="tm nav-parent">
+                  <a href="#"><i class="fa fa-line-chart"></i><span>MULTI SITE TRENDS</span><span class="fa arrow"></span></a>
+                  <ul style="" class="children collapse">
+                    <li class=""><a onclick="DtchangeDates('multisitemetrics.asp')"><i class="fa fa-clock-o"></i>Metrics over time</a></li>
+                    <li class=""><a onclick="DtchangeDates('multisitescoring.asp')"><i class="fa fa-star"></i>Scoring over time</a></li>
+                  </ul>
+                </li>
+                <li class="tm nav-parent"><a onclick="DtchangeDates('multisitepotential.asp')"><i class="fa fa-plus-square-o"></i><span>MULTI SITE POTENTIAL</span></a>
+                </li>
+              </ul>
+              <div style="" class="sidebar-widgets">
+              </div>
+              <div style="" class="sidebar-footer clearfix">
+                <a class="pull-left toggle_fullscreen" href="#" data-rel="tooltip" data-placement="top" data-original-title="Fullscreen">
+                <i class="icon-size-fullscreen"></i></a>
+              </div>
+            </div>
+            <div class="mCSB_scrollTools" style="position: absolute; display: none;">
+              <div class="mCSB_draggerContainer">
+                <div class="mCSB_dragger" style="position: absolute; top: 0px;" oncontextmenu="return false;">
+                  <div class="mCSB_dragger_bar" style="position:relative;"></div>
+                </div>
+                <div class="mCSB_draggerRail"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN TOPBAR -->
+        <div class="topbar">
+          <div style="display: block;" class="header-left">
+            <div class="topnav"><a class="menutoggle" href="#" data-toggle="sidebar-collapsed"><span class="menu__handle"><span>Menu</span></span></a>
+              <img src="../assets/global/images/logo/Syenap_Logo.jpg" alt="">
+            </div>
+          </div>
+          <div class="header-right">
+            <ul class="header-menu nav navbar-nav">
+              <!-- BEGIN USER DROPDOWN -->
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                <i class="icon-globe"></i>&nbsp;
+                <span style="text-transform: capitalize;">&nbsp;Select Store</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#" onclick="changestoretosum('736842')"><span>Benmore</span></a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changestoretosum('71108230')"><span>Brooklyn</span></a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changestoretosum('73308230')"><span>Cresta</span></a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changestoretosum('62308230')"><span>Farrarmere</span></a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changestoretosum('68908230')"><span>Northgate</span></a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changestoretosum('4469128')"><span>Randpark</span></a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changestoretosum('66708230')"><span>Wonderboom</span></a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changestoretosum('64508230')"><span>Woodmead</span></a>
+                  </li>
+                </ul>
+              </li>
+              <!-- END USER DROPDOWN -->
+              <li>
+                <a href="default.asp">
+                <i class="icon-power"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+              </li>
+            </ul>
+          </div>
+          <!-- header-right -->   
+        </div>
+        <!-- END TOPBAR -->
+        <script lanaugauge="javascript">
+          function changestoretosum(urls){
+            var elem = document.getElementById("mp");
+            elem.value = urls;
+            document.getElementById("multi").submit();
+          }
+        </script>
+        <!-- BEGIN PAGE CONTENT -->
+        <script language="javascript">
+          function changeDates(){
+            window.location='/multisitesummary.asp?startdate=' + startdates.value+'&enddate='+enddates.value;
+          }
+          
+          function DefaultchangeDates(){
+            window.location='/multisitesummary.asp';
+          }
+        </script>
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="header">
+                <h2 id="note-editor-31">Multi site <strong>summary</strong></h2>
+                <div class="breadcrumb-wrapper">
+                  <ol class="breadcrumb">
+                    <li class="c-primary">MULTI SITE VIEW<br></li>
+                    <li class="active">Multi site summary<br></li>
+                  </ol>
+                </div>
+                <p style="display: block;" class="">Summary of sites for the selected date range.<br></p>
+              </div>
+            </div>
+          </div>
+          <script language="javascript">
+            function TpchangeDates(tp){
+                dt.elements["startdate"].value = "5/30/2016";
+                dt.elements["enddate"].value = "2016/8/30";
+                dt.elements["btntype"].value = tp;
+                dt.elements["cmpr"].value = "WTD";
+                document.dt.action = "/multisitesummary.asp";
+                document.dt.submit();
+            }
+            
+            
+            function DtchangeDates(pg){
+                dt.elements["startdate"].value = "5/30/2016";
+                dt.elements["enddate"].value = "2016/8/30";
+                dt.elements["cmpr"].value = "WTD";
+                document.dt.action = pg;
+                document.dt.submit();
+            }
+            
+            function RangechangeDates(){
+            
+            var dateArray = new Array("10/1/2014","11/1/2014","12/1/2014","1/1/2015","2/1/2015","3/1/2015","4/1/2015","5/1/2015","6/1/2015","7/1/2015","8/1/2015","9/1/2015","10/1/2015","11/1/2015","12/1/2015","1/1/2016","2/1/2016","3/1/2016","4/1/2016","5/1/2016","6/1/2016","7/1/2016","8/1/2016");
+            var str = document.getElementById("rangeSlider").value;
+            var partsOfStr = str.split(';');
+            var startdate;
+            var enddate;
+            startdate = (dateArray[partsOfStr[0]]);
+            enddate = (dateArray[partsOfStr[1]]);
+            enddate = new Date(enddate);
+            var thisMonth = enddate.getMonth()
+            enddate = new Date(enddate.getYear(), thisMonth + 1, 0 );
+            var dd = enddate.getDate();
+            var mm = enddate.getMonth()+1; //January is 0!
+            var yyyy = enddate.getFullYear() + 1900;
+            if(dd<10){
+                dd='0'+dd
+            } 
+            if(mm<10){
+                mm='0'+mm
+            } 
+            enddate = yyyy+'/'+mm+'/'+dd;
+            
+            dt.elements["startdate"].value = startdate;
+            dt.elements["enddate"].value = enddate;
+            dt.elements["btntype"].value = "c";
+            dt.elements["cmpr"].value = "WTD";
+            
+            document.dt.action = "/multisitesummary.asp";
+            document.dt.submit();
+            }
+            
+            function DefaultRangechangeDates()
+            {
+            dt.elements["startdate"].value = "";
+            dt.elements["enddate"].value = "";
+            document.dt.action = "/multisitesummary.asp";
+            document.dt.submit(); 
+            }
+            
+            function checkFilters()
+            {
+               var InvForm = document.forms.Arrayfilter;
+               var SelBranchVal = "";
+               var x = 0;
+            var urls = "";
+               for (x=0;x<InvForm.filters.length;x++)
+               {
+                  if (InvForm.filters[x].selected)
+                  {
+             var str = InvForm.filters[x].value;
+             var filt = str.replace(InvForm.filters[x].text, "");
+             filt = filt.replace("_","");
+             
+            if (urls != "") {
+              urls = urls + "&"
+            }
+            urls = urls +  filt + "="+InvForm.filters[x].text;
+                  }
+               }
+            dt.elements["startdate"].value = "5/30/2016";
+            dt.elements["enddate"].value = "2016/8/30";
+            dt.elements["btntype"].value = "c";
+            dt.elements["cmpr"].value = "WTD";
+            dt.elements["urls"].value = urls;
+            document.dt.action = "/multisitesummary.asp";
+            document.dt.submit(); 
+             }
+            
+            function cleancheckFilters()
+            {
+            var urls = "";
+            dt.elements["startdate"].value = "5/30/2016";
+            dt.elements["enddate"].value = "2016/8/30";
+            dt.elements["btntype"].value = "c";
+            dt.elements["cmpr"].value = "WTD";
+            dt.elements["urls"].value = urls;
+            document.dt.action = "/multisitesummary.asp";
+            document.dt.submit(); 
+             }
+            
+          </script>
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <table aria-describedby="DataTables_Table_0_info" role="grid" border="0">
+                <thead>
+                  <tr role="row">
+                    <td width="300px" colspan="1" rowspan="1" tabindex="0">
+                      <span class="irs irs-with-grid" id="irs-1"><span class="irs"><span class="irs-line"><span class="irs-line-left"></span><span class="irs-line-mid"></span><span class="irs-line-right"></span></span><span class="irs-min" style="visibility: visible; display: block;">October 2014</span><span class="irs-max" style="visibility: visible; display: none;">August 2016</span><span class="irs-from" style="visibility: visible; left: 221px; display: none;">May 2016</span><span class="irs-to" style="visibility: visible; left: 234px; display: none;">August 2016</span><span class="irs-single" style="visibility: visible; left: 177px; display: block;">May 2016 — August 2016</span><span class="irs-diapason" style="left: 248.182px; width: 36.8182px;"></span><span class="irs-slider from last" style="left: 233px;"></span><span class="irs-slider to" style="left: 270px;"></span></span><span class="irs-grid"><span class="irs-grid-pol small" style="left: 0px;"></span><span class="irs-grid-pol small" style="left: 15px;"></span><span class="irs-grid-pol small" style="left: 30px;"></span><span class="irs-grid-pol small" style="left: 45px;"></span><span class="irs-grid-pol small" style="left: 60px;"></span><span class="irs-grid-pol small" style="left: 75px;"></span><span class="irs-grid-pol small" style="left: 90px;"></span><span class="irs-grid-pol small" style="left: 105px;"></span><span class="irs-grid-pol small" style="left: 120px;"></span><span class="irs-grid-pol small" style="left: 135px;"></span><span class="irs-grid-pol small" style="left: 150px;"></span><span class="irs-grid-pol small" style="left: 165px;"></span><span class="irs-grid-pol small" style="left: 180px;"></span><span class="irs-grid-pol small" style="left: 195px;"></span><span class="irs-grid-pol small" style="left: 210px;"></span><span class="irs-grid-pol small" style="left: 225px;"></span><span class="irs-grid-pol small" style="left: 240px;"></span><span class="irs-grid-pol small" style="left: 255px;"></span><span class="irs-grid-pol small" style="left: 270px;"></span><span class="irs-grid-pol small" style="left: 285px;"></span><span class="irs-grid-pol small" style="left: 299px;"></span><span class="irs-grid-pol" style="left: 0px;"></span><span class="irs-grid-text" style="left: 0px; text-align: left;"></span><span class="irs-grid-pol" style="left: 75px;"></span><span class="irs-grid-text" style="left: 25px;"></span><span class="irs-grid-pol" style="left: 150px;"></span><span class="irs-grid-text" style="left: 100px;"></span><span class="irs-grid-pol" style="left: 225px;"></span><span class="irs-grid-text" style="left: 175px;"></span><span class="irs-grid-pol" style="left: 299px;"></span><span class="irs-grid-text" style="left: 199px; text-align: right;"></span></span></span><input class="range-slider" id="rangeSlider" data-type="double" data-from="19" data-to="22" data-values="October 2014,November 2014,December 2014,January 2015,February 2015,March 2015,April 2015,May 2015,June 2015,July 2015,August 2015,September 2015,October 2015,November 2015,December 2015,January 2016,February 2016,March 2016,April 2016,May 2016,June 2016,July 2016,August 2016" data-hasgrid="true" type="text" value="19;22" style="display: none;">
+                    </td>
+                    <td colspan="1" rowspan="1" tabindex="0">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td colspan="1" rowspan="1" tabindex="0">
+                      <button type="button" class="btn btn-white" onclick="RangechangeDates()">Change dates</button>
+                      <button type="button" class="btn btn-white" onclick="DefaultRangechangeDates()">Default</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" rowspan="1" tabindex="0">
+                      <strong>Display Date:</strong>
+                      May 2016  to :  August 2016
+                      <br>
+                      <strong>Filter: </strong> 
+                      None
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label>Filter</label>
+                <form name="Arrayfilter">
+                  <div class="select2-container select2-container-multi form-control" id="s2id_filters">
+                    <ul class="select2-choices">
+                      <li class="select2-search-field">    <label for="s2id_autogen1" class="select2-offscreen"></label>    <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" id="s2id_autogen1" placeholder="" style="width: 36px;">  </li>
+                    </ul>
+                    <div class="select2-drop select2-drop-multi select2-display-none">
+                      <ul class="select2-results">
+                        <li class="select2-no-results">No matches found</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <select multiple="" class="form-control" name="filters" id="filters" tabindex="-1" style="display: none;">
+                    <optgroup label="Country">
+                      <option value="Country_South Africa">South Africa</option>
+                    </optgroup>
+                    <optgroup label="Region">
+                    </optgroup>
+                    <optgroup label="Sub-Region">
+                    </optgroup>
+                    <optgroup label="Province">
+                      <option value="Province_Gauteng">Gauteng</option>
+                    </optgroup>
+                    <optgroup label="City">
+                      <option value="City_Johannesburg">Johannesburg</option>
+                      <option value="City_Pretoria">Pretoria</option>
+                    </optgroup>
+                    <optgroup label="Suburb">
+                      <option value="Suburb_Benmore">Benmore</option>
+                      <option value="Suburb_Brooklyn">Brooklyn</option>
+                      <option value="Suburb_Cresta">Cresta</option>
+                      <option value="Suburb_Farrarmere">Farrarmere</option>
+                      <option value="Suburb_Northgate">Northgate</option>
+                      <option value="Suburb_Randpark">Randpark</option>
+                      <option value="Suburb_Wonderboom">Wonderboom</option>
+                      <option value="Suburb_Woodmead">Woodmead</option>
+                    </optgroup>
+                    <optgroup label="Location">
+                      <option value="Location_Mall">Mall</option>
+                      <option value="Location_Open Center">Open Center</option>
+                    </optgroup>
+                    <optgroup label="Grade">
+                      <option value="Grade_A">A</option>
+                    </optgroup>
+                    <optgroup label="Type of Service">
+                      <option value="TypeofStore_Full">Full</option>
+                    </optgroup>
+                    <optgroup label="Channel Type">
+                      <option value="ChannelType_Franchisee">Franchisee</option>
+                      <option value="ChannelType_Owner">Owner</option>
+                    </optgroup>
+                  </select>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <br>
+              <button type="button" class="btn btn-white" onclick="checkFilters()">Apply Filter</button>
+              <button type="button" class="btn btn-white" onclick="cleancheckFilters()">Reset Filter</button>
+            </div>
+          </div>
+          <div class="row">
+          </div>
+          <script src="../assets/global/plugins/countup/countUp.min.js"></script>
+          <script language="javascript">
+            function ChangeCompareExecutive(){
+              var e = document.getElementById("Cmprfrm");
+              var cmpr = e.options[e.selectedIndex].value;
+              dt.elements["startdate"].value = "5/30/2016";
+              dt.elements["enddate"].value = "2016/8/30";
+              dt.elements["btntype"].value = "c";
+              dt.elements["cmpr"].value = cmpr;
+              document.dt.action = "/multisitesummary.asp";
+              document.dt.submit();
+            }
+            
+          </script>
+          <hr style="border-top: 1px solid #ccc;">
+          <div class="row">
+            <div class="col-md-12">
+              <h5 id="note-editor-31"><strong>Summary </strong> for the selected stores for 
+                <strong>
+                Week to Date</strong>
+                <br>
+                <em>Mon 29 Aug   to : Tue 30 Aug  compared with Mon 22 Aug   to : Tue 23 Aug 
+                </em>
+              </h5>
+              <div class="col-md-3" style="background-color:#397fb0;">
+                <div class="right">
+                  <p class="text" style="color:white">Total Visitors</p>
+                  <p class="number countup" data-from="0" data-to="0.1" style="color:white;font-size:20px">0</p>
+                  <p>
+                    <img src="images/green_up_arrow.png" border="0"><font color="lightgreen">0.0%</font>
+                    <font color="white"><em>(compared to previous period)</em></font>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-3" style="background-color:#ff9400;">
+                <div class="right">
+                  <p class="text" style="color:white">Conversion Rate</p>
+                  <p class="number countup" data-from="0" data-to="0.1" style="color:white;font-size:20px">0</p>
+                  <p>
+                    <img src="images/green_up_arrow.png" alt=" width=" 14"="" height="7" border="0"><font color="lightgreen">0.0%</font>
+                    <font color="white"><em>(compared to previous period)</em></font>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-3" style="background-color:#397fb0;">
+                <div class="right">
+                  <p class="text" style="color:white"> Transaction Values</p>
+                  <p class="number countup" data-from="0" data-to="0.1" style="color:white;font-size:20px">0</p>
+                  <p>
+                    <img src="images/green_up_arrow.png" alt=" width=" 14"="" height="7" border="0"><font color="lightgreen">0.0%</font>
+                    <font color="white"><em>(compared to previous period)</em></font>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="right">
+                  <div class="form-group">
+                    <label>Compare</label>
+                    <div class="select2-container form-control" id="s2id_Cmprfrm">
+                      <a href="javascript:void(0)" class="select2-choice" tabindex="-1">   <span class="select2-chosen" id="select2-chosen-2">Week to Date</span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow" role="presentation"><b role="presentation"></b></span></a><label for="s2id_autogen2" class="select2-offscreen"></label><input class="select2-focusser select2-offscreen" type="text" aria-haspopup="true" role="button" aria-labelledby="select2-chosen-2" id="s2id_autogen2">
+                      <div class="select2-drop select2-display-none form-white">
+                        <div class="select2-search select2-search-hidden select2-offscreen">       <label for="s2id_autogen2_search" class="select2-offscreen"></label>       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-owns="select2-results-2" id="s2id_autogen2_search" placeholder="">   </div>
+                        <ul class="select2-results" role="listbox" id="select2-results-2">   </ul>
+                      </div>
+                    </div>
+                    <select class="form-control " id="Cmprfrm" data-style="white" onchange="ChangeCompareExecutive()" tabindex="-1" title="" style="display: none;">
+                      <option value="WTD" selected="">Week to Date</option>
+                      <option value="MTD">Month to Date</option>
+                      <option value="YTD">Year to Date</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="top-menu">
+            <div class="active">
+              <a href="#">Summary</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="">
+              <a href="#AcFootfall">Map View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="">
+              <a href="#MultiSiteSummaryandOverallRanking">Overall Ranking</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="">
+              <a href="#AcTransactionNumbers">Growth Over Time</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+          </div>
+          <a id="AcFootfall"></a>
+          <hr style="border-top: 1px solid #ccc;">
+          <h5 id="note-editor-31">Multi Site <strong>Map View</strong></h5>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="panel">
+                <div class="panel-content">
+                  <p style="display: block;" class="">
+                  </p>
+                  <div id="map_wrapper" style="z-index:1">
+                    <div style="position: absolute;z-index:5; margin-top:10px; right:0"><img src="images/shades.png" width="67" height="241" alt=""></div>
+                    <div id="map_canvas" class="mapping" style="position: relative; overflow: hidden; background-color: rgb(229, 227, 223);">
+                      <div class="gm-style" style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0;">
+                        <div style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0; cursor: url(&quot;http://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;) 8 8, default;">
+                          <div style="position: absolute; left: 0px; top: 0px; z-index: 1; width: 100%; transform-origin: 861px 228px 0px; transform: matrix(1, 0, 0, 1, 0, 0); will-change: transform;">
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;">
+                              <div style="position: absolute; left: 0px; top: 0px; z-index: 0;">
+                                <div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;">
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 304px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 560px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 560px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 304px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 304px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 560px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 48px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 816px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 48px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 816px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 816px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 48px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 1072px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: -208px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: -208px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 1072px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: -208px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; position: absolute; left: 1072px; top: 333px;"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"></div>
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"></div>
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;">
+                              <div style="position: absolute; left: 0px; top: 0px; z-index: -1;">
+                                <div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;">
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 304px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 560px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 560px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 304px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 304px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 560px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 48px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 816px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 48px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 816px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 816px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 48px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 1072px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -208px; top: 77px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -208px; top: 333px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 1072px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -208px; top: -179px;"></div>
+                                  <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 1072px; top: 333px;"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 0;">
+                              <div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;">
+                                <div style="position: absolute; left: 304px; top: 77px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i597!3i594!4i256!2m3!1e0!2sm!3i363032054!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=50027" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 560px; top: 77px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i598!3i594!4i256!2m3!1e0!2sm!3i363032054!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=119478" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 560px; top: -179px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i598!3i593!4i256!2m3!1e0!2sm!3i363031165!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=107416" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 304px; top: -179px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i597!3i593!4i256!2m3!1e0!2sm!3i363031165!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=37965" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 304px; top: 333px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i597!3i595!4i256!2m3!1e0!2sm!3i363032054!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=103229" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 560px; top: 333px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i598!3i595!4i256!2m3!1e0!2sm!3i363032054!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=41609" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 48px; top: 77px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i596!3i594!4i256!2m3!1e0!2sm!3i363032054!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=111647" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 816px; top: 77px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i599!3i594!4i256!2m3!1e0!2sm!3i363031165!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=98998" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 48px; top: 333px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i596!3i595!4i256!2m3!1e0!2sm!3i363032054!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=33778" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 816px; top: -179px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i599!3i593!4i256!2m3!1e0!2sm!3i363031165!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=45796" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 816px; top: 333px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i599!3i595!4i256!2m3!1e0!2sm!3i363031165!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=21129" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 48px; top: -179px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i596!3i593!4i256!2m3!1e0!2sm!3i363031165!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=99585" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 1072px; top: 77px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i600!3i594!4i256!2m3!1e0!2sm!3i363032918!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=96650" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: -208px; top: 77px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i595!3i594!4i256!2m3!1e0!2sm!3i363031333!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=101863" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: -208px; top: 333px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i595!3i595!4i256!2m3!1e0!2sm!3i363031333!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=23994" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 1072px; top: -179px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i600!3i593!4i256!2m3!1e0!2sm!3i363032918!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=43448" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: -208px; top: -179px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i595!3i593!4i256!2m3!1e0!2sm!3i363031165!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=30134" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                                <div style="position: absolute; left: 1072px; top: 333px; transition: opacity 200ms ease-out;"><img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i10!2i600!3i595!4i256!2m3!1e0!2sm!3i363031165!3m9!2sfr!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=61996" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="gm-style-pbc" style="position: absolute; left: 0px; top: 0px; z-index: 2; width: 100%; height: 100%; transition-duration: 0.3s; opacity: 0; display: none;">
+                            <p class="gm-style-pbt">Utilisez deux doigts pour déplacer la carte</p>
+                          </div>
+                          <div style="position: absolute; left: 0px; top: 0px; z-index: 3; width: 100%; height: 100%;"></div>
+                          <div style="position: absolute; left: 0px; top: 0px; z-index: 4; width: 100%; transform-origin: 861px 228px 0px; transform: matrix(1, 0, 0, 1, 0, 0);">
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div>
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div>
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;"></div>
+                            <div style="position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;"></div>
+                          </div>
+                        </div>
+                        <div style="margin-left: 5px; margin-right: 5px; z-index: 1000000; position: absolute; left: 0px; bottom: 0px;">
+                          <a target="_blank" href="https://maps.google.com/maps?ll=-27.833469,30.353789&amp;z=10&amp;t=m&amp;hl=fr&amp;gl=US&amp;mapclient=apiv3" title="Cliquez ici pour afficher cette zone sur Google&nbsp;Maps" style="position: static; overflow: visible; float: none; display: inline;">
+                            <div style="width: 66px; height: 26px; cursor: pointer;"><img src="http://maps.gstatic.com/mapfiles/api-3/images/google4.png" draggable="false" style="position: absolute; left: 0px; top: 0px; width: 66px; height: 26px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div>
+                          </a>
+                        </div>
+                        <div style="padding: 15px 21px; border: 1px solid rgb(171, 171, 171); font-family: Roboto, Arial, sans-serif; color: rgb(34, 34, 34); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px; z-index: 10000002; display: none; width: 256px; height: 148px; position: absolute; left: 497px; top: 110px; background-color: white;">
+                          <div style="padding: 0px 0px 10px; font-size: 16px;">Données cartographiques</div>
+                          <div style="font-size: 13px;">Données cartographiques ©2016 AfriGIS (Pty) Ltd, Google</div>
+                          <div style="width: 13px; height: 13px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 12px; z-index: 10000; cursor: pointer;"><img src="http://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png" draggable="false" style="position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                        </div>
+                        <div class="gmnoprint" style="z-index: 1000001; position: absolute; right: 276px; bottom: 0px; width: 266px;">
+                          <div draggable="false" class="gm-style-cc" style="-webkit-user-select: none; height: 14px; line-height: 14px;">
+                            <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                              <div style="width: 1px;"></div>
+                              <div style="width: auto; height: 100%; margin-left: 1px; background-color: rgb(245, 245, 245);"></div>
+                            </div>
+                            <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"><a style="color: rgb(68, 68, 68); text-decoration: none; cursor: pointer; display: none;">Données cartographiques</a><span>Données cartographiques ©2016 AfriGIS (Pty) Ltd, Google</span></div>
+                          </div>
+                        </div>
+                        <div class="gmnoscreen" style="position: absolute; right: 0px; bottom: 0px;">
+                          <div style="font-family: Roboto, Arial, sans-serif; font-size: 11px; color: rgb(68, 68, 68); direction: ltr; text-align: right; background-color: rgb(245, 245, 245);">Données cartographiques ©2016 AfriGIS (Pty) Ltd, Google</div>
+                        </div>
+                        <div class="gmnoprint gm-style-cc" draggable="false" style="z-index: 1000001; -webkit-user-select: none; height: 14px; line-height: 14px; position: absolute; right: 164px; bottom: 0px;">
+                          <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                            <div style="width: 1px;"></div>
+                            <div style="width: auto; height: 100%; margin-left: 1px; background-color: rgb(245, 245, 245);"></div>
+                          </div>
+                          <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"><a href="https://www.google.com/intl/fr_US/help/terms_maps.html" target="_blank" style="text-decoration: none; cursor: pointer; color: rgb(68, 68, 68);">Conditions d'utilisation</a></div>
+                        </div>
+                        <div style="width: 25px; height: 25px; overflow: hidden; display: none; margin: 10px 14px; position: absolute; top: 0px; right: 0px;"><img src="http://maps.gstatic.com/mapfiles/api-3/images/sv9.png" draggable="false" class="gm-fullscreen-control" style="position: absolute; left: -52px; top: -86px; width: 164px; height: 175px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div>
+                        <div draggable="false" class="gm-style-cc" style="-webkit-user-select: none; height: 14px; line-height: 14px; position: absolute; right: 0px; bottom: 0px;">
+                          <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                            <div style="width: 1px;"></div>
+                            <div style="width: auto; height: 100%; margin-left: 1px; background-color: rgb(245, 245, 245);"></div>
+                          </div>
+                          <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"><a target="_new" title="Signaler à Google une erreur dans la carte routière ou les images" href="https://www.google.com/maps/@-27.8334687,30.3537893,10z/data=!10m1!1e1!12b1?source=apiv3&amp;rapsrc=apiv3" style="font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); text-decoration: none; position: relative;">Signaler une erreur cartographique</a></div>
+                        </div>
+                        <div class="gmnoprint gm-bundled-control gm-bundled-control-on-bottom" draggable="false" controlwidth="28" controlheight="93" style="margin: 10px; -webkit-user-select: none; position: absolute; bottom: 107px; right: 28px;">
+                          <div class="gmnoprint" controlwidth="28" controlheight="55" style="position: absolute; left: 0px; top: 38px;">
+                            <div draggable="false" style="-webkit-user-select: none; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px; cursor: pointer; width: 28px; height: 55px; background-color: rgb(255, 255, 255);">
+                              <div title="Zoom avant" style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;">
+                                <div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;"><img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl.png" draggable="false" style="position: absolute; left: 0px; top: 0px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 120px; height: 54px;"></div>
+                              </div>
+                              <div style="position: relative; overflow: hidden; width: 67%; height: 1px; left: 16%; top: 0px; background-color: rgb(230, 230, 230);"></div>
+                              <div title="Zoom arrière" style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;">
+                                <div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;"><img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl.png" draggable="false" style="position: absolute; left: 0px; top: -15px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 120px; height: 54px;"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="gm-svpc" controlwidth="28" controlheight="28" style="box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px; width: 28px; height: 28px; cursor: url(&quot;http://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;) 8 8, default; position: absolute; left: 0px; top: 0px; background-color: rgb(255, 255, 255);">
+                            <div style="position: absolute; left: 1px; top: 1px;"></div>
+                            <div style="position: absolute; left: 1px; top: 1px;">
+                              <div aria-label="Contrôle de Pegman dans Street View" style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px;"><img src="http://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png" draggable="false" style="position: absolute; left: -147px; top: -26px; width: 215px; height: 835px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                              <div aria-label="Pegman est au-dessus de la carte." style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="http://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png" draggable="false" style="position: absolute; left: -147px; top: -52px; width: 215px; height: 835px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                              <div aria-label="Contrôle de Pegman dans Street View" style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="http://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png" draggable="false" style="position: absolute; left: -147px; top: -78px; width: 215px; height: 835px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                            </div>
+                          </div>
+                          <div class="gmnoprint" controlwidth="28" controlheight="0" style="display: none; position: absolute;">
+                            <div title="Faire pivoter le plan à 90°" style="width: 28px; height: 28px; overflow: hidden; position: absolute; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; cursor: pointer; display: none; background-color: rgb(255, 255, 255);"><img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl4.png" draggable="false" style="position: absolute; left: -141px; top: 6px; width: 170px; height: 54px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                            <div class="gm-tilt" style="width: 28px; height: 28px; overflow: hidden; position: absolute; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; top: 0px; cursor: pointer; background-color: rgb(255, 255, 255);"><img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl4.png" draggable="false" style="position: absolute; left: -141px; top: -13px; width: 170px; height: 54px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                          </div>
+                        </div>
+                        <div class="gmnoprint" style="margin: 10px; z-index: 0; position: absolute; cursor: pointer; left: 0px; top: 0px;">
+                          <div class="gm-style-mtc" style="float: left;">
+                            <div draggable="false" title="Afficher un plan de ville" style="direction: ltr; overflow: hidden; text-align: center; position: relative; color: rgb(0, 0, 0); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 8px; border-bottom-left-radius: 2px; border-top-left-radius: 2px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; min-width: 21px; font-weight: 500; background-color: rgb(255, 255, 255); background-clip: padding-box;">Plan</div>
+                            <div style="z-index: -1; padding: 2px; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; position: absolute; left: 0px; top: 31px; text-align: left; display: none; background-color: white;">
+                              <div draggable="false" title="Afficher le relief sur la carte" style="color: rgb(0, 0, 0); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px 8px 6px 6px; direction: ltr; text-align: left; white-space: nowrap; background-color: rgb(255, 255, 255);">
+                                <span role="checkbox" style="box-sizing: border-box; position: relative; line-height: 0; font-size: 0px; margin: 0px 5px 0px 0px; display: inline-block; border: 1px solid rgb(198, 198, 198); border-radius: 1px; width: 13px; height: 13px; vertical-align: middle; background-color: rgb(255, 255, 255);">
+                                  <div style="position: absolute; left: 1px; top: -2px; width: 13px; height: 11px; overflow: hidden; display: none;"><img src="http://maps.gstatic.com/mapfiles/mv/imgs8.png" draggable="false" style="position: absolute; left: -52px; top: -44px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 68px; height: 67px;"></div>
+                                </span>
+                                <label style="vertical-align: middle; cursor: pointer;">Relief</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="gm-style-mtc" style="float: left;">
+                            <div draggable="false" title="Afficher les images satellite" style="direction: ltr; overflow: hidden; text-align: center; position: relative; color: rgb(86, 86, 86); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 8px; border-bottom-right-radius: 2px; border-top-right-radius: 2px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-left: 0px; min-width: 38px; background-color: rgb(255, 255, 255); background-clip: padding-box;">Satellite</div>
+                            <div style="z-index: -1; padding: 2px; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; position: absolute; right: 0px; top: 31px; text-align: left; display: none; background-color: white;">
+                              <div draggable="false" title="Afficher les images satellite avec le nom des rues" style="color: rgb(0, 0, 0); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px 8px 6px 6px; direction: ltr; text-align: left; white-space: nowrap; background-color: rgb(255, 255, 255);">
+                                <span role="checkbox" style="box-sizing: border-box; position: relative; line-height: 0; font-size: 0px; margin: 0px 5px 0px 0px; display: inline-block; border: 1px solid rgb(198, 198, 198); border-radius: 1px; width: 13px; height: 13px; vertical-align: middle; background-color: rgb(255, 255, 255);">
+                                  <div style="position: absolute; left: 1px; top: -2px; width: 13px; height: 11px; overflow: hidden;"><img src="http://maps.gstatic.com/mapfiles/mv/imgs8.png" draggable="false" style="position: absolute; left: -52px; top: -44px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 68px; height: 67px;"></div>
+                                </span>
+                                <label style="vertical-align: middle; cursor: pointer;">Légendes</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <label>Highlight By:</label>
+              <button type="button" class="btn btn-primary" style="width:250px" onclick="TpchangeDates('c')">Conversion Rate</button>
+              <button type="button" class="btn btn-default" style="width:250px" onclick="TpchangeDates('v')">Total Visitors</button>
+              <button type="button" class="btn btn-default" style="width:250px" onclick="TpchangeDates('t')"> Total Transactions</button>
+              <button type="button" class="btn btn-default" style="width:250px" onclick="TpchangeDates('tv')"> Total Transaction Value</button>
+            </div>
+          </div>
+          <div class="row">
+            <a id="MultiSiteSummaryandOverallRanking"></a>
+            <div class="col-md-12">
+              <h5 id="note-editor-31">Multi Site <strong>Summary and Overall Ranking</strong>
+              </h5>
+              <div class="col-md-12">
+                <h7 id="note-editor-31">Click on the <a href="#"><u>storename</u></a>  to open store details</h7>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel">
+                      <div class="panel-content">
+                        <table class="table table-tools table-dynamic dataTable" style="">
+                          <thead>
+                            <tr role="row">
+                              <th aria-label="&amp;nbsp;STORES
+                                : activate to sort column ascending" style="width: 124px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" class="sorting_asc" aria-sort="ascending">&nbsp;STORES
+                              </th>
+                              <th aria-label="&amp;nbsp;CONVERSION RATE
+                                : activate to sort column ascending" style="width: 223px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" class="sorting">&nbsp;CONVERSION RATE
+                              </th>
+                              <th aria-label="&amp;nbsp;TOTAL FOOTFALL
+                                : activate to sort column ascending" style="width: 204px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" class="sorting">&nbsp;TOTAL FOOTFALL
+                              </th>
+                              <th aria-label="&amp;nbsp;TOTAL GROUP FOOTFALL
+                                : activate to sort column ascending" style="width: 277px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" class="sorting">&nbsp;TOTAL GROUP FOOTFALL
+                              </th>
+                              <th aria-label="&amp;nbsp;TOTAL TRANSACTIONS
+                                : activate to sort column ascending" style="width: 257px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" class="sorting">&nbsp;TOTAL TRANSACTIONS
+                              </th>
+                              <th aria-label="&amp;nbsp;TOTAL TRANSACTION VALUES
+                                : activate to sort column ascending" style="width: 324px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" class="sorting">&nbsp;TOTAL TRANSACTION VALUES
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="odd" role="row">
+                              <td class="sorting_1">
+                                <a href="#" onclick="changestore('736842')"><u>Benmore
+                                </u></a>
+                              </td>
+                              <td class="sorting_1"> 
+                                0%
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td class="sorting_1"> 
+                                0
+                              </td>
+                            </tr>
+                            <tr class="even" role="row">
+                              <td class="sorting_1">
+                                <a href="#" onclick="changestore('71108230')"><u>Brooklyn
+                                </u></a>
+                              </td>
+                              <td class="sorting_1"> 
+                                0%
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td class="sorting_1"> 
+                                0
+                              </td>
+                            </tr>
+                            <tr class="odd" role="row">
+                              <td class="sorting_1">
+                                <a href="#" onclick="changestore('73308230')"><u>Cresta
+                                </u></a>
+                              </td>
+                              <td class="sorting_1"> 
+                                0%
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td class="sorting_1"> 
+                                0
+                              </td>
+                            </tr>
+                            <tr class="even" role="row">
+                              <td class="sorting_1">
+                                <a href="#" onclick="changestore('62308230')"><u>Farrarmere
+                                </u></a>
+                              </td>
+                              <td class="sorting_1"> 
+                                0%
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td class="sorting_1"> 
+                                0
+                              </td>
+                            </tr>
+                            <tr class="odd" role="row">
+                              <td class="sorting_1">
+                                <a href="#" onclick="changestore('68908230')"><u>Northgate
+                                </u></a>
+                              </td>
+                              <td class="sorting_1"> 
+                                0%
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td class="sorting_1"> 
+                                0
+                              </td>
+                            </tr>
+                            <tr class="even" role="row">
+                              <td class="sorting_1">
+                                <a href="#" onclick="changestore('4469128')"><u>Randpark
+                                </u></a>
+                              </td>
+                              <td class="sorting_1"> 
+                                0%
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td class="sorting_1"> 
+                                0
+                              </td>
+                            </tr>
+                            <tr class="odd" role="row">
+                              <td class="sorting_1">
+                                <a href="#" onclick="changestore('66708230')"><u>Wonderboom
+                                </u></a>
+                              </td>
+                              <td class="sorting_1"> 
+                                0%
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td class="sorting_1"> 
+                                0
+                              </td>
+                            </tr>
+                            <tr class="even" role="row">
+                              <td class="sorting_1">
+                                <a href="#" onclick="changestore('64508230')"><u>Woodmead
+                                </u></a>
+                              </td>
+                              <td class="sorting_1"> 
+                                0%
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td> 
+                                0
+                              </td>
+                              <td class="sorting_1"> 
+                                0
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td class="sorting_1" rowspan="1" colspan="1"> <strong>TOTAL</strong>
+                              </td>
+                              <td class="sorting_1" rowspan="1" colspan="1"> <strong>%</strong>
+                              </td>
+                              <td class="sorting_1" rowspan="1" colspan="1"> 
+                                <strong>0</strong>
+                              </td>
+                              <td class="sorting_1" rowspan="1" colspan="1">
+                                <strong>0</strong>
+                              </td>
+                              <td class="sorting_1" rowspan="1" colspan="1"> 
+                                <strong>0</strong>
+                              </td>
+                              <td class="sorting_1" rowspan="1" colspan="1"> 
+                                <strong>0</strong>
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <h5 id="note-editor-31">
+                    Multi site <strong>Growth Over Time</strong>
+                    &nbsp;&nbsp;
+                    <h20 class="modal-container" data-toggle="modal" data-target="#full-colored">
+                      <img src="images/Helps.png" width="24" height="24" alt="">
+                    </h20>
+                  </h5>
+                </div>
+                <div class="col-md-12">
+                  <h7 id="note-editor-31">Click on the <a href="#"><u>storename</u></a>  to open store details</h7>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel">
+                      <div class="panel-content">
+                        <table class="table table-tools table-dynamic no-footer" style="">
+                          <thead>
+                            <tr role="row">
+                              <th>&nbsp;STORES
+                              </th>
+                              <th>&nbsp;FOOTFALL <br>FROM BEGINNING <br><em>(change per day)</em>
+                              </th>
+                              <th>&nbsp;FOOTFALL <br>OVER THE LAST 90 DAYS <br><em>(change per day)</em>
+                              </th>
+                              <th>&nbsp;CONVERSION <br>FROM BEGINNING <br><em>(change per day)</em>
+                              </th>
+                              <th>&nbsp;CONVERSION <br>OVER THE LAST 90 DAYS <br><em>(change per day)</em>
+                              </th>
+                              <th>&nbsp;TRANSACTION <br>FROM BEGINNING <br><em>(change per day)</em>
+                              </th>
+                              <th>&nbsp;TRANSACTION <br>OVER THE LAST 90 DAYS <br><em>(change per day)</em>
+                              </th>
+                              <th>&nbsp;TRANSACTION VALUE <br>FROM BEGINNING <br><em>(change per day)</em>
+                              </th>
+                              <th>&nbsp;TRANSACTION VALUE <br>OVER THE LAST 90 DAYS <br><em>(change per day)</em>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="odd" role="row">
+                              <td class="sorting_1"><u>
+                                <a href="#" onclick="changestore('736842')"><u>Benmore
+                                </u></a></u>
+                              </td>
+                              <td>
+                                -0.53
+                              </td>
+                              <td>
+                                -0.84
+                              </td>
+                              <td>
+                                0.02
+                              </td>
+                              <td>
+                                0.05
+                              </td>
+                              <td>
+                                -0.04
+                              </td>
+                              <td>
+                                -0.12
+                              </td>
+                              <td>
+                                100.36
+                              </td>
+                              <td>
+                                224.75
+                              </td>
+                            </tr>
+                            <tr class="even" role="row">
+                              <td class="sorting_1"><u>
+                                <a href="#" onclick="changestore('71108230')"><u>Brooklyn
+                                </u></a></u>
+                              </td>
+                              <td>
+                                0.45
+                              </td>
+                              <td>
+                                -1.62
+                              </td>
+                              <td>
+                                -0.13
+                              </td>
+                              <td>
+                                0.07
+                              </td>
+                              <td>
+                                0.02
+                              </td>
+                              <td>
+                                0.42
+                              </td>
+                              <td>
+                                116.91
+                              </td>
+                              <td>
+                                466.63
+                              </td>
+                            </tr>
+                            <tr class="odd" role="row">
+                              <td class="sorting_1"><u>
+                                <a href="#" onclick="changestore('73308230')"><u>Cresta
+                                </u></a></u>
+                              </td>
+                              <td>
+                                -0.36
+                              </td>
+                              <td>
+                                -1.77
+                              </td>
+                              <td>
+                                -0.00
+                              </td>
+                              <td>
+                                0.02
+                              </td>
+                              <td>
+                                -0.14
+                              </td>
+                              <td>
+                                0.04
+                              </td>
+                              <td>
+                                43.53
+                              </td>
+                              <td>
+                                461.78
+                              </td>
+                            </tr>
+                            <tr class="even" role="row">
+                              <td class="sorting_1"><u>
+                                <a href="#" onclick="changestore('62308230')"><u>Farrarmere
+                                </u></a></u>
+                              </td>
+                              <td>
+                                0.19
+                              </td>
+                              <td>
+                                -0.83
+                              </td>
+                              <td>
+                                -0.01
+                              </td>
+                              <td>
+                                0.03
+                              </td>
+                              <td>
+                                -0.09
+                              </td>
+                              <td>
+                                0.22
+                              </td>
+                              <td>
+                                39.03
+                              </td>
+                              <td>
+                                675.66
+                              </td>
+                            </tr>
+                            <tr class="odd" role="row">
+                              <td class="sorting_1"><u>
+                                <a href="#" onclick="changestore('68908230')"><u>Northgate
+                                </u></a></u>
+                              </td>
+                              <td>
+                                0.13
+                              </td>
+                              <td>
+                                -0.12
+                              </td>
+                              <td>
+                                -0.02
+                              </td>
+                              <td>
+                                -0.03
+                              </td>
+                              <td>
+                                -0.15
+                              </td>
+                              <td>
+                                0.65
+                              </td>
+                              <td>
+                                20.46
+                              </td>
+                              <td>
+                                655.90
+                              </td>
+                            </tr>
+                            <tr class="even" role="row">
+                              <td class="sorting_1"><u>
+                                <a href="#" onclick="changestore('4469128')"><u>Randpark
+                                </u></a></u>
+                              </td>
+                              <td>
+                                0.04
+                              </td>
+                              <td>
+                                8.49
+                              </td>
+                              <td>
+                                0.06
+                              </td>
+                              <td>
+                                -1.04
+                              </td>
+                              <td>
+                                0.05
+                              </td>
+                              <td>
+                                0.06
+                              </td>
+                              <td>
+                                164.03
+                              </td>
+                              <td>
+                                650.31
+                              </td>
+                            </tr>
+                            <tr class="odd" role="row">
+                              <td class="sorting_1"><u>
+                                <a href="#" onclick="changestore('66708230')"><u>Wonderboom
+                                </u></a></u>
+                              </td>
+                              <td>
+                                0.60
+                              </td>
+                              <td>
+                                1.31
+                              </td>
+                              <td>
+                                -0.17
+                              </td>
+                              <td>
+                                -0.01
+                              </td>
+                              <td>
+                                -0.50
+                              </td>
+                              <td>
+                                0.55
+                              </td>
+                              <td>
+                                -123.45
+                              </td>
+                              <td>
+                                653.36
+                              </td>
+                            </tr>
+                            <tr class="even" role="row">
+                              <td class="sorting_1"><u>
+                                <a href="#" onclick="changestore('64508230')"><u>Woodmead
+                                </u></a></u>
+                              </td>
+                              <td>
+                                -1.63
+                              </td>
+                              <td>
+                                -0.43
+                              </td>
+                              <td>
+                                0.01
+                              </td>
+                              <td>
+                                0.01
+                              </td>
+                              <td>
+                                -0.78
+                              </td>
+                              <td>
+                                -0.31
+                              </td>
+                              <td>
+                                -305.46
+                              </td>
+                              <td>
+                                -10.53
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>SYENAP</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <div class="loader-overlay loaded">
+      <div class="spinner">
+        <div class="bounce1">
+        </div>
+        <div class="bounce2">
+        </div>
+        <div class="bounce3">
+        </div>
+      </div>
+    </div>
+    <a href="#" class="scrollup" style="display: none;"><i class="fa fa-angle-up"></i></a>
+    <script src="../assets/global/plugins/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../assets/global/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../assets/global/plugins/gsap/main-gsap.min.js"></script><!-- HTML Animations -->
+    <script src="../assets/global/plugins/jquery-ui/jquery-ui-1.11.2.min.js"></script>
+    <script src="../assets/global/plugins/jquery-block-ui/jquery.blockUI.min.js"></script><!-- simulate synchronous behavior when using AJAX -->
+    <script src="../assets/global/plugins/bootbox/bootbox.min.js"></script>
+    <script src="../assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script><!-- Custom Scrollbar sidebar -->
+    <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/global/plugins/bootstrap-dropdown/bootstrap-hover-dropdown.min.js"></script><!-- Show Dropdown on Mouseover -->
+    <script src="../assets/global/plugins/retina/retina.min.js"></script>
+    <script src="../assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script><!-- Jquery Cookies, for theme -->
+    <script src="../assets/global/plugins/select2/select2.min.js"></script><!-- Select Inputs -->
+    <script src="../assets/global/plugins/bootstrap-tags-input/bootstrap-tagsinput.min.js"></script><!-- Select Inputs -->
+    <script src="../assets/global/plugins/bootstrap-loading/lada.min.js"></script><!-- Buttons Loading State -->
+    <script src="../assets/global/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script><!-- A mobile and touch friendly input spinner component for Bootstrap -->
+    <script src="../assets/global/plugins/autosize/autosize.min.js"></script><!-- Textarea autoresize -->
+    <script src="../assets/global/plugins/icheck/icheck.min.js"></script><!-- Icheck -->
+    <script src="../assets/global/plugins/bootstrap-editable/js/bootstrap-editable.min.js"></script><!-- Inline Edition X-editable -->
+    <script src="../assets/global/plugins/bootstrap-context-menu/bootstrap-contextmenu.min.js"></script><!-- Context Menu -->
+    <script src="../assets/global/plugins/prettify/prettify.min.js"></script><!-- Show html code -->
+    <script src="../assets/global/plugins/slick/slick.min.js"></script><!-- Slider -->
+    <script src="../assets/global/plugins/backstretch/backstretch.min.js"></script><!-- Background Image -->
+    <script src="../assets/global/plugins/datatables/jquery.dataTables.min.js"></script><!-- Tables Filtering, Sorting & Editing -->
+    <script src="../assets/global/plugins/summernote/summernote.js"></script>
+    <script src="../assets/global/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+    <script src="../assets/global/plugins/skycons/skycons.js"></script>
+    <script src="../assets/global/js/sidebar_hover.js"></script>
+    <script src="../assets/global/js/application.js"></script><!-- Main Application Script -->
+    <script src="../assets/global/js/plugins.js"></script><!-- Main Plugin Initialization Script -->
+    <script src="../assets/global/js/widgets/notes.js"></script>
+    <script src="../assets/global/js/quickview.js"></script>
+    <script src="../assets/global/js/pages/search.js"></script>
+    <script src="../assets/global/plugins/bootstrap-slider/bootstrap-slider.js"></script> <!-- Bootstrap Input Slider -->
+    <script src="../assets/global/plugins/ion-slider/ion.rangeSlider.min.js"></script> <!-- Range Input Slider -->
+    <script>
+      jQuery(function($) {
+          // Asynchronously Load the map API 
+          var script = document.createElement('script');
+          script.src = "//maps.googleapis.com/maps/api/js?key= AIzaSyBxV0L73vCC3a_qzRwuxiRD9majI7BOxqQ&sensor=false&callback=initialize";
+          document.body.appendChild(script);
+      });
+      
+      function shadeColor2(color, percent) {   
+          var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+          var temp =""+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+        return temp;
+      }
+      
+      function blendColors(c0, c1, p) {
+          var f=parseInt(c0.slice(1),16),t=parseInt(c1.slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF,R2=t>>16,G2=t>>8&0x00FF,B2=t&0x0000FF;
+          return "#"+(0x1000000+(Math.round((R2-R1)*p)+R1)*0x10000+(Math.round((G2-G1)*p)+G1)*0x100+(Math.round((B2-B1)*p)+B1)).toString(16).slice(1);
+      }
+      
+      function ColorLuminance(hex, lum) {
+      
+        // validate hex string
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+          hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        }
+        lum = lum || 0;
+      
+        // convert to decimal and change luminosity
+        var rgb = "", c, i;
+        for (i = 0; i < 3; i++) {
+          c = parseInt(hex.substr(i*2,2), 16);
+          c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+          rgb += ("00"+c).substr(c.length);
+        }
+        return rgb;
+      }
+      
+      function initialize() {
+          var map;
+          var bounds = new google.maps.LatLngBounds();
+          var mapOptions = {
+              mapTypeId: 'roadmap'
+          };
+                          
+          // Display a map on the page
+          map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+          map.setTilt(45);
+              
+          // Multiple Markers
+          var markers = [
+        ['Benmore',-26.099991,28.049296, 0, 100],['Brooklyn',-25.770393,28.234814, 0, 100],['Cresta',-26.130721,27.975472, 0, 100],['Farrarmere',-26.161828,28.304486, 0, 100],['Northgate',-26.058773,27.947382, 0, 100],['Randpark',-26.100808,27.941270, 0, 100],['Wonderboom',-25.683094,28.193406, 0, 100],['Woodmead',-26.051037,28.092972, 0, 100],
+          ];
+      
+      
+          // Info Window Content
+          var infoWindowContent = [
+      
+      
+              ['<div class="info_content">' +
+              '<h3>Benmore</h3>' +
+              '<strong>Conversion Rate</strong> : 0%<br>' +
+              '<strong>Total Visitors</strong> : 0<br>' +
+              '<strong> Total Transactions</strong> : 0<br>' +
+              '<strong> Total Transaction Value</strong> : 0<br>' +
+          '</div>'],
+          
+              ['<div class="info_content">' +
+              '<h3>Brooklyn</h3>' +
+              '<strong>Conversion Rate</strong> : 0%<br>' +
+              '<strong>Total Visitors</strong> : 0<br>' +
+              '<strong> Total Transactions</strong> : 0<br>' +
+              '<strong> Total Transaction Value</strong> : 0<br>' +
+          '</div>'],
+          
+              ['<div class="info_content">' +
+              '<h3>Cresta</h3>' +
+              '<strong>Conversion Rate</strong> : 0%<br>' +
+              '<strong>Total Visitors</strong> : 0<br>' +
+              '<strong> Total Transactions</strong> : 0<br>' +
+              '<strong> Total Transaction Value</strong> : 0<br>' +
+          '</div>'],
+          
+              ['<div class="info_content">' +
+              '<h3>Farrarmere</h3>' +
+              '<strong>Conversion Rate</strong> : 0%<br>' +
+              '<strong>Total Visitors</strong> : 0<br>' +
+              '<strong> Total Transactions</strong> : 0<br>' +
+              '<strong> Total Transaction Value</strong> : 0<br>' +
+          '</div>'],
+          
+              ['<div class="info_content">' +
+              '<h3>Northgate</h3>' +
+              '<strong>Conversion Rate</strong> : 0%<br>' +
+              '<strong>Total Visitors</strong> : 0<br>' +
+              '<strong> Total Transactions</strong> : 0<br>' +
+              '<strong> Total Transaction Value</strong> : 0<br>' +
+          '</div>'],
+          
+              ['<div class="info_content">' +
+              '<h3>Randpark</h3>' +
+              '<strong>Conversion Rate</strong> : 0%<br>' +
+              '<strong>Total Visitors</strong> : 0<br>' +
+              '<strong> Total Transactions</strong> : 0<br>' +
+              '<strong> Total Transaction Value</strong> : 0<br>' +
+          '</div>'],
+          
+              ['<div class="info_content">' +
+              '<h3>Wonderboom</h3>' +
+              '<strong>Conversion Rate</strong> : 0%<br>' +
+              '<strong>Total Visitors</strong> : 0<br>' +
+              '<strong> Total Transactions</strong> : 0<br>' +
+              '<strong> Total Transaction Value</strong> : 0<br>' +
+          '</div>'],
+          
+              ['<div class="info_content">' +
+              '<h3>Woodmead</h3>' +
+              '<strong>Conversion Rate</strong> : 0%<br>' +
+              '<strong>Total Visitors</strong> : 0<br>' +
+              '<strong> Total Transactions</strong> : 0<br>' +
+              '<strong> Total Transaction Value</strong> : 0<br>' +
+          '</div>'],
+            
+          ];
+              
+          // Display multiple markers on a map
+          var infoWindow = new google.maps.InfoWindow(), marker, i;
+          var firstletter = ""
+          // Loop through our array of markers & place each one on the map  
+          for( i = 0; i < markers.length; i++ ) {
+          var percentage = (markers[i][3] / markers[i][4]) * 100;
+          var shader = ColorLuminance("0b0103", percentage*3);
+      //    var shader = shadeColor2("#004146", markers[i][3]);
+          firstletter = markers[i][0];
+          firstletter = firstletter.charAt(firstletter);
+              var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+              bounds.extend(position);
+              marker = new google.maps.Marker({
+                  position: position,
+                  map: map,
+                  title: markers[i][0],
+            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+firstletter+'|'+shader+'|000000'
+              });
+              
+              // Allow each marker to have an info window    
+              google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                  return function() {
+                      infoWindow.setContent(infoWindowContent[i][0]);
+                      infoWindow.open(map, marker);
+                  }
+              })(marker, i));
+      
+              // Automatically center the map fitting all markers on the screen
+              map.fitBounds(bounds);
+          }
+      
+        
+      }
+    </script>
+    <form name="multi" id="multi" action="Summary.asp" method="post">
+      <input type="hidden" name="mp" id="mp">
+      <input type="hidden" name="startdate" id="startdate" value="5/30/2016">
+      <input type="hidden" name="enddate" id="enddate" value="2016/8/30">
+    </form>
+    <form name="dt" id="dt" action="/multisitesummary.asp" method="post">
+      <input type="hidden" name="btntype">
+      <input type="hidden" name="startdate">
+      <input type="hidden" name="enddate">
+      <input type="hidden" name="cmpr">
+      <input type="hidden" name="urls" value="">
+    </form>
+    <div class="modal fade" id="full-colored" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-primary">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icons-office-52"></i></button>
+            <h4 class="modal-title">Multi site <strong>Growth Over Time</strong></h4>
+          </div>
+          <div class="modal-body">
+            <p class="m-t-40">
+              Growth over time highlights the trend from the beginning of deployment until today as well as the trend over the last 90 days. <br><br>The number shown is the average loss or gain per day over the period. <br><br><strong>For Example:</strong> <br>
+            </p>
+            <ul>
+              <li>A <strong>Positive Number</strong> indicates that the store has experienced an average daily increase for the period.<br></li>
+              <li>A <strong>Negative Number</strong> indicates that the store has experienced an average daily decrease for the period.</li>
+            </ul>
+            <br><br>A positive overall number with a negative 90 day number is a casue for concernin that there has been growth over time but a loss over the past 90 days. Lack of intervention may lead to continued loss.
+            <p></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="//maps.googleapis.com/maps/api/js?key= AIzaSyBxV0L73vCC3a_qzRwuxiRD9majI7BOxqQ&amp;sensor=false&amp;callback=initialize"></script><span role="status" aria-live="polite" class="select2-hidden-accessible"></span>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent nav-active active">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li class="active"><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="doc-title"><strong>Page</strong> Builder</h2>
+              <p>Page Builder is a Javascript script which allows you to quickly create a new page inside your admin.</p>
+              <p>It's an easy way to customize your admin content.</p>
+              <p>
+                <a class="btn btn-primary" href="../admin/layout1/page-builder/index.html" target="_blank">Go to Page Builder</a>
+              </p>
+              <h2>Choose your <strong>sections layouts</strong></h2>
+              <p>Before adding elements such as form, table or portlets, you have to choose your layout.</p>
+              <p>In <strong>layout tab</strong>, you can choose between various predefined grid layout: 1, 2, 3 columns...<br>
+                If you need a more specific layout, click on last option "Custom Layout". <br>
+              <h2>Choose your <strong>content elements</strong></h2>
+              <p>To add new element inside your page, you have to choose an element type. There are various types available:</p>
+              <p><strong>Portlets</strong>: basic portlet, with header, footer, header and footer.</p>
+              <p><strong>Text &amp; Image</strong>: here you can add image, various title and a paragraph. If you click on title, you will be able to edit it. If you click on paragraph, a more advanced editor will appear to edit text.</p>
+              <p><strong>Forms</strong>: here all basic form elements are available. If you add an element, you will have to choose your form layout: vertical or horizontal.</p>
+              <p><strong>Tables</strong>: you can choose a title, number of columns and rows that you want and table style: striped, hover, bordered or basic.</p>
+              <p><strong>Widgets</strong>: various widgets are available: todo list, weather, google maps, profil, calendar...</p>
+              <h2><strong>Edit</strong> text and icons</h2>
+              <p>If you click on text elements, you will be able to change text.</p>
+              <p><strong>Titles</strong>: with double click, a simple editor will appear with various options: size, font weight, color...</p>
+              <p><strong>Paragrah</strong>: with double click, a more advanced editor will appear with new options such as line height or adding picture.</p>
+              <h2><strong>Reorder</strong> / <strong>Remove</strong> section</h2>
+              <p><strong>Reorder sections</strong>: you can reorder each section by clicking on left side of each section and dragging it.</p>
+              <p><strong>Remove sections</strong>: you can remove section by clicking on left side on cross icon.</p>
+              <h2><strong>Export</strong> your page template</h2>
+              <p>When you have added all content you want, you are ready to export your page template in order to integrate it in your project.</p>
+              <p>Just click on button <strong>Export Page Template</strong> at the bottom of the page.</p>
+              <p>A modal window will appear and you will be able to choose your file name.</p>
+              <p>Once you have click on save, your template will be downloaded in the same folder than other html pages.</p>
+              <p>If you are in your-custom-admin folder, your page will be donwloaded here. If you are in admin/layout1 folder, idem, it will be downloaded in admin/layout1 folder.</p>
+    
+              <h2><strong>Indentation</strong> level</h2>
+              <p>If your file is not perfectly indented or if you want to change it, you can use online tool.</p>
+              <p>To do that, just copy and past your page content into free online tool such as <a target="_blank" href="http://www.freeformatter.com/html-formatter.html">http://www.freeformatter.com/html-formatter.html</a>.</p>
+              <p><strong>You want new feature or more options?</strong> Don't hesitate to send us a message via <a href="http://themeforest.net/user/themes-lab" target="_blank">our Themeforest Page</a> or directly by email at <a href="mailto:support@themes-lab.com">support@themes-lab.com</a>.</p>
+              </p>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>

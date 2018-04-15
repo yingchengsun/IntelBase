@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>show.html</title>
+	
+  
+  </head>
+  
+  <body>
+    This is my HTML page. <br>
+    <div>
+    {% for msg in msglist %}
+   	<p>ID: {{msg.id}} </p>
+    {% endfor %} 
+    </div>
+    <div>
+    {% with var=100 %}
+    {% if var > 100 %}
+    Zan!
+    {% endif %}
+    {% endwith %}
+    </div>
+  </body>
+</html>

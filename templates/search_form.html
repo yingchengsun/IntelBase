@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = 'utf-8'>
+<title>IntelBase</title>
+</head>
+<body>
+	<form action="/search" method="get">
+		{% csrf_token %}
+		<input type = "text" name = query>
+		<input type = "submit" value ='Submit'>
+	</form>
+	<p>{{ rlt }}</p>
+</body>
+</html>

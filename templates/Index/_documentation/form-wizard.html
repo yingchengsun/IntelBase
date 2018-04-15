@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent nav-active active">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li class="active"><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="doc-title">Form <strong>Wizard</strong></h2>
+              <p>Form Wizard generate step navigation for your purpose. You can use it for registration, settings, introduction or presentation of your projects.</p>
+              <p>Usage is very simple. Only thing you need is html structure of some form with fieldsets and call on this form this plugin. <br>
+                For more information about options, visit plugin documentation.
+              </p>
+              <p><a href="http://ajoke.cz/wizard/documentation" target="_blank" class="btn btn-primary">Form Wizard Documentation</a></p>
+              <h2><strong>5 styles</strong> to fit your needs</h2>
+              <p>Form Wizard comes with <strong>5 styles</strong>. It's very easy to change style, you just have to change <code>data-style</code> attribute on your form.</p>
+              <p>Here is a list of each style and how to apply them:</p>
+              <pre class="prettyprint linenums">
+&lt;!-- SEA STYLE --&gt;
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-style=&quot;sea&quot;&gt;
+    ...
+&lt;/form&gt;
+&lt;!-- SKY STYLE --&gt;
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-style=&quot;sky&quot;&gt;
+    ...
+&lt;/form&gt;
+&lt;!-- ARROW STYLE --&gt;
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-style=&quot;arrow&quot;&gt;
+    ...
+&lt;/form&gt;
+&lt;!-- SIMPLE STYLE --&gt;
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-style=&quot;simple&quot;&gt;
+    ...
+&lt;/form&gt;
+&lt;!-- CIRCLE STYLE --&gt;
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-style=&quot;circle&quot;&gt;
+    ...
+&lt;/form&gt;</pre>
+              <h2><strong>4 navigation</strong> positions</h2>
+              <p>By default, form wizard navigation is on top. Here you can create creative form wizard with left, right or bottom navigation too.</p>
+              <p>Idem as style, you just have to add <code>data-nav</code> to your form if you want to change it, that's it!</p>
+              <pre class="prettyprint linenums">
+&lt;!-- LEFT NAVIGATION --&gt;
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-nav=&quot;left&quot;&gt;
+    ...
+&lt;/form&gt;
+&lt;!-- RIGHT NAVIGATION --&gt;
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-nav=&quot;right&quot;&gt;
+    ...
+&lt;/form&gt;
+&lt;!-- BOTTOM NAVIGATION --&gt;
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-nav=&quot;bottom&quot;&gt;
+    ...
+&lt;/form&gt;</pre>
+              <h2>How to use Form Validation?</h2>
+              <h3><strong>1. Add specific javascript and css</strong></h3>
+              <p>Add in your head page:</p>
+              <pre class="prettyprint linenums">
+&lt;link href=&quot;assets/plugins/step-form-wizard/css/step-form-wizard.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
+              <p>Add inside <code>body</code> at the end of your page, before main template scripts:</p>
+              <pre class="prettyprint linenums">
+&lt;!-- OPTIONAL, IF YOU NEED VALIDATION --&gt;
+&lt;script src=&quot;assets/plugins/step-form-wizard/plugins/parsley/parsley.min.js&quot;&gt;&lt;/script&gt; 
+&lt;!-- Step Form Validation --&gt;
+&lt;script src=&quot;assets/plugins/step-form-wizard/js/step-form-wizard.js&quot;&gt;&lt;/script&gt;</pre>
+              <h3><strong>2. Create your form with Tabs</strong></h3>
+              <p>Add html markup for your form with <code>wizard</code> class for your form. Each part inside fieldset willbe a step. Here is a simple example:</p>
+              <pre class="prettyprint linenums">
+&lt;form  role=&quot;form&quot; class=&quot;wizard&quot; data-style=&quot;sea&quot;&gt;
+    &lt;!-- FIRST STEP--&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Basic information&lt;/legend&gt;
+        &lt;div class=&quot;row&quot;&gt;
+            &lt;div class=&quot;col-lg-12&quot;&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label for=&quot;exampleInputEmail1&quot;&gt;Email address&lt;/label&gt;
+                    &lt;input type=&quot;email&quot; class=&quot;form-control&quot; placeholder=&quot;Enter email&quot;&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label for=&quot;exampleInputPassword1&quot;&gt;Password&lt;/label&gt;
+                    &lt;input type=&quot;password&quot; class=&quot;form-control&quot; placeholder=&quot;Password&quot;&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label for=&quot;exampleInputPassword1&quot;&gt;Password again&lt;/label&gt;
+                    &lt;input type=&quot;password&quot; class=&quot;form-control&quot; placeholder=&quot;Password&quot;&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/fieldset&gt;
+    &lt;!-- SECOND STEP--&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Condition&lt;/legend&gt;
+        In publishing and graphic design, lorem ipsum is common placeholder text used to demonstrate
+        the graphic elements of a document or visual presentation, such as web pages, typography,
+        and graphical layout. It is a form of &quot;greeking&quot;.
+        &lt;div class=&quot;radio&quot;&gt;
+            &lt;label&gt;
+                &lt;input type=&quot;radio&quot; name=&quot;optionsRadios&quot; value=&quot;option1&quot; checked data-radio=&quot;iradio_square-blue&quot;&gt;
+                Yes, it is totaly right.
+            &lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;radio&quot;&gt;
+            &lt;label&gt;
+                &lt;input type=&quot;radio&quot; name=&quot;optionsRadios&quot; value=&quot;option2&quot; data-radio=&quot;iradio_square-blue&quot;&gt;
+                No, I check it twice and it is not right.
+            &lt;/label&gt;
+        &lt;/div&gt;
+    &lt;/fieldset&gt;
+    &lt;!-- THIRD STEP--&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Final step&lt;/legend&gt;
+        &lt;div class=&quot;row&quot;&gt;
+            &lt;div class=&quot;col-lg-12&quot;&gt;
+                &lt;div class=&quot;row&quot;&gt;
+                    &lt;div class=&quot;col-lg-6&quot;&gt;
+                        &lt;div class=&quot;form-group&quot;&gt;
+                            &lt;label class=&quot;sr-only&quot; for=&quot;exampleInputName1&quot;&gt;Your name&lt;/label&gt;
+                            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Your name&quot;&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;col-lg-6&quot;&gt;
+                        &lt;div class=&quot;form-group&quot;&gt;
+                            &lt;label class=&quot;sr-only&quot; for=&quot;exampleInputCat1&quot;&gt;Name of your cat&lt;/label&gt;
+                            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Name of your cat&quot;&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;</pre>
+              <h2>Form Wizard <strong>Validation</strong></h2>
+              <p>You can validate each step, to be sure user have complete all necessary datas. Here we use Parsley Validation plugin.</p>
+              <p><a href="http://parsleyjs.org/" target="_blank" class="btn btn-primary">Parsley Validation Documentation</a></p>
+              <p>In order to validate each step, you have add <code>wizard-validation</code> class to your class and to tell which input is in which step.</p>
+              <p>For example, input 1, 2 and 3 are in step 1. So we have to validate them together.For each "group" of input, you have to add <code>data-parsley-group</code> attribute.</p>
+              <p>Here is an example:</p>
+              <pre class="prettyprint linenums">
+&lt;form class=&quot;wizard wizard-validation&quot; data-style=&quot;sea&quot; role=&quot;form&quot;&gt;
+  &lt;fieldset&gt;
+      &lt;legend&gt;Basic information&lt;/legend&gt;
+      &lt;div class=&quot;row&quot;&gt;
+          &lt;div class=&quot;col-lg-6&quot;&gt;
+              &lt;div class=&quot;form-group&quot;&gt;
+                  &lt;label for=&quot;email&quot;&gt;Email address&lt;/label&gt;
+                  &lt;input type=&quot;email&quot; class=&quot;form-control&quot; id=&quot;email&quot; name=&quot;email&quot; placeholder=&quot;Enter email&quot; required data-parsley-group=&quot;block0&quot;&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;form-group&quot;&gt;
+                  &lt;label for=&quot;exampleInputPassword1&quot;&gt;Password&lt;/label&gt;
+                  &lt;input type=&quot;password&quot; class=&quot;form-control&quot; id=&quot;password&quot; name=&quot;password&quot; placeholder=&quot;Password&quot; required data-parsley-group=&quot;block0&quot; data-parsley-equalto=&quot;#password&quot;&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;form-group&quot;&gt;
+                  &lt;label for=&quot;exampleInputPassword1&quot;&gt;Password again&lt;/label&gt;
+                  &lt;input type=&quot;password&quot; class=&quot;form-control&quot; id=&quot;password-repeat&quot; name=&quot;password-repeat&quot; placeholder=&quot;Password&quot; required data-parsley-group=&quot;block0&quot; data-parsley-equalto=&quot;#password&quot;&gt;
+              &lt;/div&gt;
+          &lt;/div&gt;
+      &lt;/div&gt;
+  &lt;/fieldset&gt;
+  &lt;fieldset&gt;
+      &lt;legend&gt;Condition&lt;/legend&gt;
+      In publishing and graphic design, lorem ipsum is common placeholder text used to demonstrate the graphic elements of a document or visual presentation, such as web pages, typography, and graphical layout. It is a form of &quot;greeking&quot;.
+      Even though using &quot;lorem ipsum&quot; often arouses curiosity due to its resemblance to classical Latin, it is not intended to have meaning. Where text is visible in a document, people tend to focus on the textual content rather than upon overall presentation, so publishers use lorem ipsum when displaying a typeface or design in order to direct the focus to presentation. &quot;Lorem ipsum&quot; also approximates a typical distribution of letters in English.
+      &lt;div class=&quot;radio&quot;&gt;
+          &lt;label&gt;
+              &lt;input type=&quot;radio&quot; value=&quot;option1&quot; name=&quot;condition&quot; data-parsley-group=&quot;block1&quot; data-radio=&quot;iradio_square-blue&quot; data-parsley-errors-container='div[id=&quot;condition-error&quot;]' required&gt;
+              Yes, it is totaly right.
+          &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;radio&quot;&gt;
+          &lt;label&gt;
+              &lt;input type=&quot;radio&quot; value=&quot;option2&quot; name=&quot;condition&quot; data-parsley-group=&quot;block1&quot; data-radio=&quot;iradio_square-blue&quot; data-parsley-errors-container='div[id=&quot;condition-error&quot;]' required&gt;
+              No, I check it twice and it is not right.
+          &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div id=&quot;condition-error&quot;&gt;&lt;/div&gt;
+  &lt;/fieldset&gt;
+  &lt;fieldset&gt;
+      &lt;legend&gt;Final step&lt;/legend&gt;
+      &lt;div class=&quot;row&quot;&gt;
+          &lt;div class=&quot;col-lg-12&quot;&gt;
+              &lt;div class=&quot;row&quot;&gt;
+                  &lt;div class=&quot;col-lg-6&quot;&gt;
+                      &lt;div class=&quot;form-group&quot;&gt;
+                          &lt;label class=&quot;sr-only&quot; for=&quot;exampleInputName1&quot;&gt;Your name&lt;/label&gt;
+                          &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;exampleInputName1&quot; placeholder=&quot;Your name&quot; name=&quot;your_name&quot; data-parsley-group=&quot;block2&quot; required=&quot;&quot;&gt;
+                      &lt;/div&gt;
+                      &lt;div class=&quot;form-group&quot;&gt;
+                          &lt;label class=&quot;sr-only&quot; for=&quot;exampleInputCat1&quot;&gt;Name of your cat&lt;/label&gt;
+                          &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;exampleInputCat1&quot; name=&quot;exampleInputCat1&quot; placeholder=&quot;Name of your cat&quot;&gt;
+                      &lt;/div&gt;
+                  &lt;/div&gt;
+              &lt;/div&gt;
+          &lt;/div&gt;
+      &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</pre>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>

@@ -1,0 +1,36 @@
+<!doctype html> 
+<html>
+<head> 
+    <meta charset="utf-8">
+    <style>
+        #graph { display: block; position: relative; overflow: hidden; }
+        #graph .node-label { font: 11px sans-serif; }
+    </style>
+    <script src="graph.js"></script>
+    <script>  
+    function spring() {
+        SHADOW = 0.65 // slow... 
+        g = new Graph(document.getElementById("_ctx"));
+        // Random nodes. 
+        for (var i=0; i < 10; i++) { 
+            g.addNode(i+1);
+        }
+        // Random edges. 
+        for (var j=0; j < 15; j++) { 
+            var n1 = choice(g.nodes);
+            var n2 = choice(g.nodes);
+            g.addEdge(n1, n2, {weight: Math.random()});
+        }
+        g.prune(0);
+        g.betweennessCentrality();
+        g.eigenvectorCentrality();
+        g.loop({frames:500, fps:30, ipf:2, weighted:0.5, directed:true});
+    }
+    </script>
+</head>
+<body onload="spring();"> 
+    <div id="graph" style="width:700px; height:500px;">
+        <canvas id="_ctx" width="700" height="500"></canvas>
+    </div>
+</body>
+</html>

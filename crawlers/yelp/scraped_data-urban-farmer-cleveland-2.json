@@ -1,0 +1,120 @@
+{
+    "info": [
+        {
+            "Takes Reservations": "Yes"
+        }, 
+        {
+            "Delivery": "No"
+        }, 
+        {
+            "Take-out": "No"
+        }, 
+        {
+            "Accepts Credit Cards": "Yes"
+        }, 
+        {
+            "Accepts Apple Pay": "No"
+        }, 
+        {
+            "Accepts Android Pay": "Yes"
+        }, 
+        {
+            "Good For": "Brunch, Dinner"
+        }, 
+        {
+            "Parking": "Valet"
+        }, 
+        {
+            "Bike Parking": "Yes"
+        }, 
+        {
+            "Wheelchair Accessible": "Yes"
+        }, 
+        {
+            "Good for Kids": "No"
+        }, 
+        {
+            "Good for Groups": "Yes"
+        }, 
+        {
+            "Attire": "Casual"
+        }, 
+        {
+            "Ambience": "Trendy"
+        }, 
+        {
+            "Noise Level": "Average"
+        }, 
+        {
+            "Alcohol": "Full Bar"
+        }, 
+        {
+            "Outdoor Seating": "Yes"
+        }, 
+        {
+            "Wi-Fi": "Free"
+        }, 
+        {
+            "Has TV": "Yes"
+        }, 
+        {
+            "Waiter Service": "Yes"
+        }, 
+        {
+            "Caters": "No"
+        }
+    ], 
+    "ratings": "4.0", 
+    "website": "http://www.urbanfarmercleveland.com", 
+    "working_hours": [
+        {
+            "Mon": "6:30 am - 10:00 pm"
+        }, 
+        {
+            "Tue": "6:30 am - 10:00 pm"
+        }, 
+        {
+            "Wed": "6:30 am - 10:00 pm"
+        }, 
+        {
+            "Thu": "6:30 am - 10:00 pm"
+        }, 
+        {
+            "Fri": "6:30 am - 11:00 pm"
+        }, 
+        {
+            "Sat": "8:00 am - 11:00 pm\n        \n                Open now"
+        }, 
+        {
+            "Sun": "8:00 am - 10:00 pm"
+        }
+    ], 
+    "name": "Urban Farmer", 
+    "claimed_status": "Claimed", 
+    "url": "https://www.yelp.com/biz/urban-farmer-cleveland-2", 
+    "longitude": "-81.691598", 
+    "reviews": "380 reviews", 
+    "phone": "(216) 771-7707", 
+    "address": "1325 E 6th St Cleveland, OH 44114 Civic Center", 
+    "latitude": "41.503670", 
+    "ratings_histogram": [
+        {
+            "5 stars": "152"
+        }, 
+        {
+            "4 stars": "94"
+        }, 
+        {
+            "3 stars": "55"
+        }, 
+        {
+            "2 stars": "47"
+        }, 
+        {
+            "1 star": "32"
+        }
+    ], 
+    "price_range": "$11-30", 
+    "health_rating": "", 
+    "category": "American (Traditional),Steakhouses"
+}

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li class="active"><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="doc-title"><strong>AngularJS</strong> version</h2>
+              <p>Make admin include AngularJS version of each variation / layout.</p>
+              <p>AngularJS will allow fast application that works like a single page. That's mean that for example topbar and sidebar will stay when page change. Only main content will be updated.</p>
+              <p>
+                <a class="btn btn-primary" href="../admin/layout1/angularjs/app/index.html" target="_blank">See AngularJS version example</a>
+                <a class="btn btn-default" href="https://docs.angularjs.org/tutorial" target="_blank">See official Documentation</a>
+              </p>
+              <h2><strong>AngularJS</strong> files</h2>
+              <p>You will find all specific AngularJS files inside angularjs folder. For example, if you want to use layout1, you will find AngularJS files in admin/layout1/angularjs folder.</p>
+
+              <h2><strong>How to use</strong> AngularJS theme?</h2>
+              <p>We will take example of layout 1 version. It's the same thing without other layouts and with RTL version too.</p>
+
+              <h3><strong>1. Copy admin folder</strong></h3>
+              <p>Here we just need files inside admin folder. All images / js / css / html files will be available.</p>
+
+              <h3><strong>2. Remove unecessary files</strong></h3>
+              <p>If you want to use layout 1, you can remove admin/layout2 , admin/layout3 , admin/layout4 folders.</p>
+              <p>you can also remove admin/assets/admin/layout2 , admin/assets//admin/layout3 , admin/assets//admin/layout4 folders.</p>
+              <p>You can also remove all html pages that are unnecessary, like admin/layout1/charts.html, admin/layout1/charts-finance.html...</p>
+              <p>You can also remove admin/layout1/page-builder folder since it's not available for AngularJS version, as well as admin/layout1/partial folder.</p>
+
+              <h2>How to <strong>change files path </strong>(optional)</h2>
+              <p>It's possible that you want to modify files path. Indeed, your files tree now is:</p>
+              <div id="tree-angular-before"></div>
+
+              <br><p>To show a concrete example, we will modify it in order to have this files organization:</p>
+              <div id="tree-angular-after"></div>
+
+              <h3><strong>1. Move angularjs files</strong></h3>
+              <p>Cut all files inside admin/layout1/angularjs folder and past it in your root folder.</p>
+              <p>After that, you can remove admin/layout1 folder since we don't need it now.</p>
+
+              <h3><strong>2. Move admin &amp; global files</strong></h3>
+              <p>Cut the 2 folders (admin &amp; global) that you will find in admin/assets folder and past it in your root folder.</p>
+              <p>After that, you can remove admin/assets folder since we don't need it now.</p>
+              <p>We have now file organization as we want, but we will have to change some files path to make it works now.</p>
+
+              <h3><strong>3. Move admin &amp; global files</strong></h3>
+              <p>Cut the 2 folders (admin &amp; global) that you will find in admin/assets folder and past it in your root folder.</p>
+              <p>We have now file organization as we want, but we will have to change some files path to make it works now.</p>
+
+              <h3><strong>4. Update files and images path</strong></h3>
+              <p>Of course, you will have to change all files and images path in your project since we have changed it.</p>
+              <p>Best think will be to search in all files and replace in all files using find and replace option in your editor. If you don't know how to search and replace in all files without searching file by file, you can modify each file one by one, or send us an email because each editor is different. </p>
+              <p>So, in all files, you will have to search and replace:</p>
+              <ul class="with-pad">
+                <li><strong>../../../assets/global/</strong> by <strong>../global/</strong></li>
+                <li><strong>../../../assets/admin/</strong> by <strong>../admin/</strong></li>
+              </ul>
+              <br>
+              <p>Here normally you application will work fine. Of course, if you want to have another files organization, you can adapt it to fit your needs.</p>
+              <br><br>
+
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>
+<script>
+  $(function () {
+  
+    $('#tree-angular-before').jstree({
+        'core': {
+            "check_callback": true,
+            'data': [
+               {
+                    'text': 'admin',
+                    "icon": "fa fa-folder-o c-primary",
+                    'state': {
+                        'opened': true,
+                        'selected': false
+                    },
+                    'children': [{
+                        'text': 'assets',
+                        "icon": "fa fa-folder-o c-primary",
+                    }, {
+                        'text': 'angularjs',
+                        "icon": "fa fa-folder-o c-primary",
+                    }]
+                },
+  
+            ]
+        }
+    });
+
+    $('#tree-angular-after').jstree({
+        'core': {
+            "check_callback": true,
+            'data': [
+                {
+                    'text': 'admin',
+                    "icon": "fa fa-folder-o c-primary",
+                    'state': {
+                        'opened': false,
+                        'selected': false
+                    },'children': [{
+                        'text': 'layout1',
+                        "icon": "fa fa-folder-o c-primary",
+                        'children': [{
+                            'text': 'css',
+                            "icon": "fa fa-folder-o c-primary"
+                        }, {
+                            'text': 'js',
+                            "icon": "fa fa-folder-o c-primary"
+                        }]
+                    }]
+                }, 
+                {
+                    'text': 'app',
+                    "icon": "fa fa-folder-o c-primary",
+                    'state': {
+                        'opened': false,
+                        'selected': false
+                    },'children': [{
+                        'text': 'charts',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'dashboard',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'ecommerce',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'extra',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'forms',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'layout',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'mailbox',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'medias',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'pages',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'tables',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'uiElements',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'user',
+                        "icon": "fa fa-folder-o c-primary"
+                    }]
+                }, {
+                    'text': 'css',
+                    "icon": "fa fa-folder-o c-primary",
+                    'state': {
+                        'opened': false,
+                        'selected': false
+                    },
+                }, {
+                    'text': 'directives',
+                    "icon": "fa fa-folder-o c-primary",
+                    'state': {
+                        'opened': false,
+                        'selected': false
+                    }
+                }, {
+                    'text': 'global',
+                    "icon": "fa fa-folder-o c-primary",
+                    'state': {
+                        'opened': false,
+                        'selected': false
+                    },
+                    'children': [{
+                        'text': 'css',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'images',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'js',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'plugins',
+                        "icon": "fa fa-folder-o c-primary"
+                    }]
+                },{
+                    'text': 'js',
+                    "icon": "fa fa-folder-o c-primary",
+                    'state': {
+                        'opened': false,
+                        'selected': false
+                    },
+                    'children': [{
+                        'text': 'pages',
+                        "icon": "fa fa-folder-o c-primary"
+                    }]
+                }, {
+                    'text': 'plugins',
+                    "icon": "fa fa-folder-o c-primary",
+                    'state': {
+                        'opened': false,
+                        'selected': false
+                    },
+                    'children': [{
+                        'text': 'angular',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-animate',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-bootstrap',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-cookies',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-mocks',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-resource',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-route',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-sanitize',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-scenario',
+                        "icon": "fa fa-folder-o c-primary"
+                    }, {
+                        'text': 'angular-json3',
+                        "icon": "fa fa-folder-o c-primary"
+                    }]
+                }
+  
+            ]
+        }
+    });
+  
+  
+  });
+</script>

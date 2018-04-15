@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li class="nav-active active"><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="doc-title"><strong>Material Design</strong> version</h2>
+              <p>Discover new Make Material Design style. It's first version and new elements will come in future version.</p>
+              <p>Material design is based upon the material design principle developed by Google. It's made with Bootstrap and Jquery. Theme uses Bootstrap Material Design (<a href="https://fezvrasta.github.io/bootstrap-material-design/" target="_blank">Bootstrap material design</a> and some custom elements.</p>
+              <p>
+                <a class="btn btn-primary" href="http://www.google.com/design/spec/material-design/introduction.html" target="_blank">See Google Material Design Website</a>
+                <a class="btn btn-default" href="../admin/md-layout1/dashboard.html" target="_blank">See Demo</a>
+              </p>
+              <h2>What is <strong>New</strong> with Material Design template?</h2>
+              <p>We have integrated main elements defined by Material Design:</p>
+              <h3><strong>Material Design Colors</strong></h3>
+              <p>Here is a color palette based on the material design base colors. Each of these colors is defined with a base color class and an optional lighten or darken class.. Color palette is provided by Materialize.<br>
+              <p><strong>How to add a color?</strong></p>
+              <p>On Material design color page, you just have to copy and name of the color and use it as a class for the element you want to change color.</p>
+              <p>For example, if you want a card with a blue background, you will for example this:</p>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;card light-blue darken-4&quot;&gt;
+   // YOUR CONTENT
+&lt;/div&gt;
+</pre>
+              <p><strong>What about text color?</strong></p>
+              <p>You can use this color palette for text color too.</p>
+              <p>For example, if you want a paragraph with a blue color, you will for example this:</p>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;card light-blue-text text-darken-4&quot;&gt;
+   // YOUR CONTENT
+&lt;/div&gt;
+</pre>
+              <a class="btn btn-default m-t-20" href="../admin/md-layout1/material-colors.html" target="_blank">See Material Design Colors</a></p>
+              </p> 
+              <h3><strong>Material Design Buttons</strong></h3>
+              <p>These buttons have specific colors and have animation on hover and click. For example, when you click on a button, a wave effect will appear.<br>
+                You don't have to add specific classes to use Material Design buttons. You will find more info in documentation about buttons <a href="ui-buttons.html">here</a>.
+              </p>
+              <p>
+                <a class="btn btn-default m-t-20" href="../admin/md-layout1/material-buttons.html" target="_blank">See Material Design Buttons</a>
+              </p>
+              <h3><strong>Material Design Cards</strong></h3>
+              <p>A card is a piece of paper with unique related data that serves as an entry point to more detailed information. For example, a card could contain a photo, text, and a link about a single subject.</p>
+              <p><strong>Simple Card</strong></p>
+              Here is a simple markup for basic card:
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;card medium&quot;&gt;
+  &lt;div class=&quot;card-content&quot;&gt;
+    &lt;span class=&quot;card-title&quot;&gt;Card Title&lt;/span&gt;
+    &lt;p&gt;I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card-action&quot;&gt;
+    &lt;a href=&quot;#&quot;&gt;This is a link&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>     
+              <p><strong>Card with Image</strong></p>
+              You can add small, medium or large class to your card to have small, medium or large image:
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-image&quot;&gt;
+    &lt;img src=&quot;../assets/global/images/gallery/4.jpg&quot;&gt;
+    &lt;span class=&quot;card-title&quot;&gt;Card Title&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card-content&quot;&gt;
+    &lt;p&gt;I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card-action&quot;&gt;
+    &lt;a href=&quot;#&quot;&gt;This is a link&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>  
+              <p><strong>Card Reveal</strong></p>
+              Here is a simple markup for basic card:
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-image&quot;&gt;
+    &lt;img class=&quot;activator&quot; src=&quot;../assets/global/images/gallery/6.jpg&quot;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card-content&quot;&gt;
+    &lt;span class=&quot;card-title activator grey-text text-darken-4&quot;&gt;Card Title &lt;i class=&quot;mdi-navigation-more-vert f-right&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+    &lt;p&gt;&lt;a href=&quot;#&quot;&gt;This is a link&lt;/a&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card-reveal&quot;&gt;
+    &lt;span class=&quot;card-title grey-text text-darken-4&quot;&gt;Card Title &lt;i class=&quot;mdi-navigation-close f-right&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+    &lt;p&gt;Here is some more information about this product that is only revealed once clicked on.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>  
+              <p>
+                <a class="btn btn-default m-t-20" href="../admin/md-layout1/material-cards.html" target="_blank">See Material Design Cards</a>
+              </p>
+              <h3><strong>Material Design Icons</strong></h3>
+              <p>Material Design for Bootstrap includes 490 original Material Design icons! These icons are extracted from the original Google sources. They are provided as an iconic and easy to use font. Just hover icon on Material design icons to see his classname.</p>
+              <p>Here is an example of an icon:
+              <pre class="prettyprint linenums">
+&lt;i class=&quot;mdi-action-3d-rotation&quot;&gt;&lt;/i&gt;
+</pre>  
+              </p>
+              <p>
+                <a class="btn btn-default m-t-20" href="../admin/md-layout1/material-icons.html" target="_blank">See Material Design Icons</a>
+              </p>
+              <h3><strong>Material Design Forms</strong></h3>
+              <p>You will find demo of all forms elements in Material Design form page.</p>
+              <p><strong>Radio Inputs</strong></p>
+              <p>To use it, just apply <code>md-radio</code> class to your input this way:</p>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;radio radio-primary&quot;&gt;
+  &lt;label&gt;
+    &lt;input type=&quot;radio&quot; name=&quot;r-primary&quot; value=&quot;option1&quot; checked=&quot;&quot; class=&quot;md-radio&quot;&gt;
+    Always
+  &lt;/label&gt;
+&lt;/div&gt;
+</pre>  
+              <p><strong>Checkbox Inputs</strong></p>
+              <p>To use it, just apply <code>md-checkbox</code> class to your input this way:</p>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;checkbox checkbox-primary&quot;&gt;
+  &lt;label&gt;
+    &lt;input type=&quot;checkbox&quot; name=&quot;r-primary&quot; value=&quot;option1&quot; checked=&quot;&quot; class=&quot;md-checkbox&quot;&gt;
+    Always
+  &lt;/label&gt;
+&lt;/div&gt;
+</pre>  
+               <p><strong>Toggle Button</strong></p>
+              <p>Toggle button are pretty cool for on / off elements for example.</p>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;form-group togglebutton&quot;&gt;
+  &lt;label class=&quot;col-sm-3 control-label&quot;&gt;Wi-Fi&lt;/label&gt;
+  &lt;label&gt;
+    &lt;input type=&quot;checkbox&quot; checked=&quot;&quot;  class=&quot;col-sm-9 md-checkbox&quot;&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+</pre>  
+              <p>You can change color of toggle by adding a class to togglebutton element. Here is a list of class color that you can choose:<br>
+              <pre class="prettyprint linenums">
+.togglebutton-material-red
+.togglebutton-material-pink 
+.togglebutton-material-purple 
+.togglebutton-material-deep-purple
+.togglebutton-material-indigo
+.togglebutton-material-blue 
+.togglebutton-material-light-blue 
+.togglebutton-material-cyan 
+.togglebutton-material-teal
+.togglebutton-material-green
+.togglebutton-material-light-green
+.togglebutton-material-lime 
+.togglebutton-material-yellow 
+.togglebutton-material-amber 
+.togglebutton-material-orange 
+.togglebutton-material-deep-orange
+.togglebutton-material-brown 
+.togglebutton-material-grey 
+.togglebutton-material-blue-grey 
+</pre>  
+              </p>
+
+               <p><strong>Input text</strong></p>
+              <p>If you want to have floating label, add <code>floating-label</code> to your input, like that</p>
+              <pre class="prettyprint linenums">
+&lt;input type=&quot;text&quot; class=&quot;form-control floating-label&quot; placeholder=&quot;label&quot;&gt;
+</pre>  
+                 
+
+              <p>
+                <a class="btn btn-default m-t-20" href="../admin/md-layout1/material-forms.html" target="_blank">See Material Design Forms</a>
+              </p>
+
+
+              <p><strong>You think that new Material Design elements could be great?</strong> Don't hesitate to send us a message via <a href="http://themeforest.net/user/themes-lab" target="_blank">our Themeforest Page</a> or directly by email at <a href="mailto:support@themes-lab.com">support@themes-lab.com</a>.</p>
+
+          
+
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>

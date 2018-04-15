@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent nav-active active">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li class="active"><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-lg-8 col-md-12">
+              <h2 class="doc-title">Form <strong>Elements</strong></h2>
+              <p>Here you will find all support about checkbox, radio, switch,text and select inputs, as well as file upload.</p>
+              <h2><strong>Checkbox</strong></h2>
+              <p>We use Icheck plugin for checkbox and radio input to create beautiful design. If you want more information about options and methods available, please visit <a href="http://fronteed.com/iCheck/" target="_blank">http://fronteed.com/iCheck/</a></p>
+              <p>There is 3 differents layouts and each layout have 9 various colors.</p>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="skin skin-square">
+                    <h3><strong>Square</strong> Skin</h3>
+                    <form role="form">
+                      <div class="form-body">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <ul class="icheck-colors">
+                              <li>
+                              </li>
+                              <li class="red">
+                              </li>
+                              <li class="green">
+                              </li>
+                              <li class="blue active">
+                              </li>
+                              <li class="aero">
+                              </li>
+                              <li class="grey">
+                              </li>
+                              <li class="orange">
+                              </li>
+                              <li class="pink">
+                              </li>
+                              <li class="purple">
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Checkbox List</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-list">
+                              <label><input type="checkbox" data-checkbox="icheckbox_square-blue" checked> Checkbox 1</label>
+                              <label><input type="checkbox" data-checkbox="icheckbox_square-blue" checked> Checkbox 2</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Inline Checkboxes</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-inline">
+                              <label><input type="checkbox" data-checkbox="icheckbox_square-blue" checked> Checkbox 1</label>
+                              <label><input type="checkbox" checked data-checkbox="icheckbox_square-blue"> Checkbox 2</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="skin skin-flat">
+                    <h3><strong>Flat</strong> Skin</h3>
+                    <form role="form">
+                      <div class="form-body">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <ul class="icheck-colors">
+                              <li>
+                              </li>
+                              <li class="red">
+                              </li>
+                              <li class="green">
+                              </li>
+                              <li class="blue active">
+                              </li>
+                              <li class="aero">
+                              </li>
+                              <li class="grey">
+                              </li>
+                              <li class="orange">
+                              </li>
+                              <li class="pink">
+                              </li>
+                              <li class="purple">
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Checkbox List</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-list">
+                              <label><input type="checkbox" data-checkbox="icheckbox_flat-blue" checked> Checkbox 1</label>
+                              <label><input type="checkbox" data-checkbox="icheckbox_flat-blue" checked> Checkbox 2</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Inline Checkboxes</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-inline">
+                              <label><input type="checkbox" data-checkbox="icheckbox_flat-blue" checked> Checkbox 1</label>
+                              <label><input type="checkbox" checked data-checkbox="icheckbox_flat-blue"> Checkbox 2</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="skin skin-minimal">
+                    <h3><strong>Minimal</strong> Skin</h3>
+                    <form role="form">
+                      <div class="form-body">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <ul class="icheck-colors">
+                              <li>
+                              </li>
+                              <li class="red">
+                              </li>
+                              <li class="green">
+                              </li>
+                              <li class="blue active">
+                              </li>
+                              <li class="aero">
+                              </li>
+                              <li class="grey">
+                              </li>
+                              <li class="orange">
+                              </li>
+                              <li class="pink">
+                              </li>
+                              <li class="purple">
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Checkbox List</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-list">
+                              <label><input type="checkbox" data-checkbox="icheckbox_minimal-blue" checked> Checkbox 1</label>
+                              <label><input type="checkbox" data-checkbox="icheckbox_minimal-blue" checked> Checkbox 2</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Inline Checkboxes</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-inline">
+                              <label><input type="checkbox" data-checkbox="icheckbox_minimal-blue" checked> Checkbox 1</label>
+                              <label><input type="checkbox" data-checkbox="icheckbox_minimal-blue"> Checkbox 2</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <h3>Checkbox <strong>Layout Markup</strong></h3>
+              <p>You can change style and color using <code>data-checkbox</code> attribute.</p>
+              <p>There are 3 styles: minimal, flat and square.</p>
+              <p>There are 9 colors: black, red, green, blue, aero, grey, orange, yellow, pink and purple.</p>
+              <p>So, if you want a minimal style with blue color, markup will be:</p>
+              <pre class="prettyprint linenums">
+&lt;input type=&quot;checkbox&quot; data-checkbox=&quot;icheckbox_minimal-blue&quot;&gt;</pre>
+              <p>If you want a square style with red color, markup will be:</p>
+              <pre class="prettyprint linenums">
+&lt;input type=&quot;checkbox&quot; data-checkbox=&quot;icheckbox_square-red&quot;&gt;</pre>
+              <h3>Checkbox <strong>List Markup</strong></h3>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;icheck-list&quot;&gt;
+  &lt;label&gt;&lt;input type=&quot;checkbox&quot;&gt; Checkbox 1&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;checkbox&quot;&gt; Checkbox 2&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;checkbox&quot;&gt; Checkbox 3&lt;/label&gt;
+&lt;/div&gt;</pre>
+              <h3>Checkbox <strong>Inline Markup</strong></h3>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;icheck-inline&quot;&gt;
+  &lt;label&gt;&lt;input type=&quot;checkbox&quot;&gt; Checkbox 1&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;checkbox&quot;&gt; Checkbox 2&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;checkbox&quot;&gt; Checkbox 3&lt;/label&gt;
+&lt;/div&gt;</pre>
+              <h2><strong>Radio</strong> Inputs</h2>
+              <p>Idem as checkbox, there are available in 3 styles and 9 colors.</p>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="skin skin-minimal">
+                    <h3><strong>Minimal</strong> Skin</h3>
+                    <form role="form">
+                      <div class="form-body">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <ul class="icheck-colors">
+                              <li>
+                              </li>
+                              <li class="red">
+                              </li>
+                              <li class="green">
+                              </li>
+                              <li class="blue active">
+                              </li>
+                              <li class="aero">
+                              </li>
+                              <li class="grey">
+                              </li>
+                              <li class="orange">
+                              </li>
+                              <li class="pink">
+                              </li>
+                              <li class="purple">
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Radio List</strong></p>
+                          <div class="input-group">
+                            <div class="icheck-list">
+                              <label><input type="radio" name="radio1" data-radio="iradio_minimal-blue" checked> Radio Button 1</label>
+                              <label><input type="radio" name="radio1" data-radio="iradio_minimal-blue"> Radio Button 1</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Inline Radios</strong></p>
+                          <div class="input-group">
+                            <div class="icheck-inline">
+                              <label><input type="radio" name="radio2" data-radio="iradio_minimal-blue" checked> Radio Button 1</label>
+                              <label><input type="radio" name="radio2" checked data-radio="iradio_minimal-blue"> Radio Button 2</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="skin skin-square">
+                    <h3><strong>Square</strong> Skin</h3>
+                    <form role="form">
+                      <div class="form-body">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <ul class="icheck-colors">
+                              <li>
+                              </li>
+                              <li class="red">
+                              </li>
+                              <li class="green">
+                              </li>
+                              <li class="blue active">
+                              </li>
+                              <li class="aero">
+                              </li>
+                              <li class="grey">
+                              </li>
+                              <li class="orange">
+                              </li>
+                              <li class="pink">
+                              </li>
+                              <li class="purple">
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Radio List</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-list">
+                              <label><input type="radio" name="radio3" data-radio="iradio_square-blue"> Radio Button 1</label>
+                              <label><input type="radio" name="radio3" data-radio="iradio_square-blue"> Radio Button 2</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Inline Radios</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-inline">
+                              <label><input type="radio" name="radio4" data-radio="iradio_square-blue"> Radio Button 1</label>
+                              <label><input type="radio" name="radio4" checked data-radio="iradio_square-blue"> Radio Button 2</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="skin skin-flat">
+                    <h3><strong>Flat</strong> Skin</h3>
+                    <form role="form">
+                      <div class="form-body">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <ul class="icheck-colors">
+                              <li>
+                              </li>
+                              <li class="red">
+                              </li>
+                              <li class="green">
+                              </li>
+                              <li class="blue">
+                              </li>
+                              <li class="aero">
+                              </li>
+                              <li class="grey active">
+                              </li>
+                              <li class="orange">
+                              </li>
+                              <li class="pink">
+                              </li>
+                              <li class="purple">
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Radio List</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-list">
+                              <label><input type="radio" name="radio5" data-radio="iradio_flat-blue"> Radio Button 1</label>
+                              <label><input type="radio" name="radio5" checked data-radio="iradio_flat-blue"> Radio Button 2</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <p><strong>Inline Radios</strong>
+                          </p>
+                          <div class="input-group">
+                            <div class="icheck-inline">
+                              <label><input type="radio" name="radio6" data-radio="iradio_flat-blue"> Radio Button 1</label>
+                              <label><input type="radio" name="radio6" checked data-radio="iradio_flat-blue"> Radio Button 2</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <h3>Checkbox <strong>Layout Markup</strong></h3>
+              <p>You can change style and color using <code>data-radio</code> attribute.</p>
+              <p>There are 3 styles: minimal, flat and square.</p>
+              <p>There are 9 colors: black, red, green, blue, aero, grey, orange, yellow, pink and purple.</p>
+              <p>So, if you want a minimal style with blue color, markup will be:</p>
+              <pre class="prettyprint linenums">
+&lt;input type=&quot;radio&quot; name=&quot;radio1&quot; data-radio=&quot;iradio_minimal-blue&quot;&gt;</pre>
+              <p>If you want a flat style with yellow color, markup will be:</p>
+              <pre class="prettyprint linenums">
+&lt;input type=&quot;radio&quot; name=&quot;radio2&quot; data-radio=&quot;iradio_flat-yellow&quot;&gt;</pre>
+              <h3>Radio <strong>List Markup</strong></h3>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;icheck-list&quot;&gt;
+  &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;radio1&quot;&gt; Radio Button 1&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;radio1&quot;&gt; Radio Button 2&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;radio1&quot;&gt; Radio Button 3&lt;/label&gt;
+&lt;/div&gt;</pre>
+              <h3>Radio <strong>Inline Markup</strong></h3>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;icheck-inline&quot;&gt;
+  &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;radio2&quot;&gt; Radio Button 1&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;radio2&quot;&gt; Radio Button 2&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;radio2&quot;&gt; Radio Button 3&lt;/label&gt;
+&lt;/div&gt;</pre>
+              <h2><strong>Switch</strong> Inputs</h2>
+              <p>We have added 4 switch styles: 3 in css, and one using a jquery plugin.</p>
+              <h3><strong>Modern</strong> Look</h3>
+              <label class="switch m-r-20">
+              <input type="checkbox" class="switch-input">
+              <span class="switch-label" data-on="On" data-off="Off"></span>
+              <span class="switch-handle"></span>
+              </label>
+              <label class="switch m-r-20">
+              <input type="checkbox" class="switch-input" checked>
+              <span class="switch-label" data-on="On" data-off="Off"></span>
+              <span class="switch-handle"></span>
+              </label>          
+              <p class="m-t-20">You can change on/off text by change <code>data-on</code> and <code>data-off</code> attribute.</p>
+              <pre class="prettyprint linenums m-t-10">
+&lt;label class=&quot;switch&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; class=&quot;switch-input&quot;&gt;
+  &lt;span class=&quot;switch-label&quot; data-on=&quot;On&quot; data-off=&quot;Off&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;switch-handle&quot;&gt;&lt;/span&gt;
+&lt;/label&gt;</pre>
+              <h3><strong>Android</strong> Look</h3>
+              <div class="clearfix">
+                <div class="onoffswitch">
+                  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"  id="myonoffswitch1" checked>
+                  <label class="onoffswitch-label" for="myonoffswitch1">
+                  <span class="onoffswitch-inner">
+                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
+                  <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
+                  </span>
+                  </label>
+                </div>
+                <div class="onoffswitch">
+                  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2">
+                  <label class="onoffswitch-label" for="myonoffswitch2">
+                  <span class="onoffswitch-inner">
+                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
+                  <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
+                  </span>
+                  </label>
+                </div>
+              </div>
+              <p class="m-t-20">You can change on/off text by changeing it directly inside inside span.</p>
+              <pre class="prettyprint linenums m-t-10">
+ &lt;div class=&quot;onoffswitch&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; name=&quot;onoffswitch&quot; class=&quot;onoffswitch-checkbox&quot;  id=&quot;myonoffswitch1&quot; checked&gt;
+  &lt;label class=&quot;onoffswitch-label&quot; for=&quot;myonoffswitch1&quot;&gt;
+    &lt;span class=&quot;onoffswitch-inner&quot;&gt;
+      &lt;span class=&quot;onoffswitch-active&quot;&gt;&lt;span class=&quot;onoffswitch-switch&quot;&gt;ON&lt;/span&gt;&lt;/span&gt;
+      &lt;span class=&quot;onoffswitch-inactive&quot;&gt;&lt;span class=&quot;onoffswitch-switch&quot;&gt;OFF&lt;/span&gt;&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;</pre>
+              <h3><strong>Clean</strong> Look</h3>
+              <div class="clearfix">
+                <div class="onoffswitch2">
+                  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked>
+                  <label class="onoffswitch-label" for="myonoffswitch3">
+                  <span class="onoffswitch-inner"></span>
+                  <span class="onoffswitch-switch"></span>
+                  </label>
+                </div>
+                <div class="onoffswitch2">
+                  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch4">
+                  <label class="onoffswitch-label" for="myonoffswitch4">
+                  <span class="onoffswitch-inner"></span>
+                  <span class="onoffswitch-switch"></span>
+                  </label>
+                </div>
+              </div>
+              <p class="m-t-20">Below html markup to create this switch input look:</p>
+              <pre class="prettyprint linenums m-t-10">
+&lt;div class=&quot;onoffswitch2&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; name=&quot;onoffswitch&quot; class=&quot;onoffswitch-checkbox&quot; id=&quot;myonoffswitch3&quot; checked&gt;
+  &lt;label class=&quot;onoffswitch-label&quot; for=&quot;myonoffswitch3&quot;&gt;
+    &lt;span class=&quot;onoffswitch-inner&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;onoffswitch-switch&quot;&gt;&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;</pre>
+              <h3><strong>IOS Switch</strong> Button</h3>
+              <div class="m-b-40 clearfix">
+                <p class="m-b-30">You can change ON / OFF color with <code>data-color</code>.</p>
+                <div class="clearfix">
+                  <div class="f-left p-r-30">
+                    <input type="checkbox" class="js-switch" checked/>
+                  </div>
+                  <div class="f-left p-r-30">
+                    <input type="checkbox" class="js-switch" data-color-on="red" checked/>
+                  </div>
+                  <div class="f-left p-r-30">
+                    <input type="checkbox" class="js-switch" data-color-on="blue" checked/>
+                  </div>
+                  <div class="f-left p-r-30">
+                    <input type="checkbox" class="js-switch" data-color-on="yellow" checked/>
+                  </div>
+                </div>
+                <p class="m-t-20">You can modify color by changing <code>data-color-on</code> and <code>data-color-off</code> attribute.</p>
+                <pre class="prettyprint linenums m-t-10">
+&lt;input type=&quot;checkbox&quot; class=&quot;js-switch&quot; data-color-on=&quot;red&quot; checked/&gt;</pre>
+              </div>
+              <h2><strong>Select</strong> Input</h2>
+              <p>We use Select 2 plugin for select input. It gives you many features, such as searching, tagging and ajax support.</p>
+              <p>For more information about options and methods available, please visit <a href="https://select2.github.io/" target="_blank">https://select2.github.io/</a></p>
+              <div class="row m-t-20">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Select with search</label>
+                    <select class="form-control" data-search="true">
+                      <option value="United States">United States</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="Afghanistan">Afghanistan</option>
+                      <option value="Albania">Albania</option>
+                      <option value="Algeria">Algeria</option>
+                      <option value="American Samoa">American Samoa</option>
+                      <option value="Andorra">Andorra</option>
+                      <option value="Angola">Angola</option>
+                      <option value="Anguilla">Anguilla</option>
+                      <option value="Antarctica">Antarctica</option>
+                      <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                      <option value="Argentina">Argentina</option>
+                      <option value="Armenia">Armenia</option>
+                      <option value="Aruba">Aruba</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Austria">Austria</option>
+                      <option value="Azerbaijan">Azerbaijan</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Select with Image includes</label>
+                    <select class="form-control" data-placeholder="Choose a country...">
+                      <optgroup label="North America">
+                        <option value="image-USA">USA</option>
+                        <option value="image-CANADA">Canada</option>
+                        <option value="image-MEXICO">Mexico</option>
+                      </optgroup>
+                      <optgroup label="Europe">
+                        <option value="image-SPANISH">Spain</option>
+                        <option value="image-FRENCH">France</option>
+                        <option value="image-UNITED-KINGDOM">United Kingdom</option>
+                        <option value="image-italy">Italy</option>
+                      </optgroup>
+                      <optgroup label="Africa">
+                        <option value="image-botswana">Botswana</option>
+                        <option value="image-cameroon">Cameroon</option>
+                        <option value="image-niger">Niger</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row m-t-10">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Loading Data Example</label>
+                    <div>
+                      <input type="text" class="form-control" id="demo-loading-data">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Multiple Select</label>
+                    <select multiple class="form-control" data-placeholder="Choose one or various country...">
+                      <optgroup label="North America">
+                        <option value="USA">USA</option>
+                        <option value="CANADA">Canada</option>
+                        <option value="MEXICO">Mexico</option>
+                      </optgroup>
+                      <optgroup label="South America">
+                        <option value="USA">Brazil</option>
+                        <option value="peru">Peru</option>
+                        <option value="argentina">Argentina</option>
+                      </optgroup>
+                      <optgroup label="Europe">
+                        <option value="SPANISH">Spain</option>
+                        <option value="FRENCH">France</option>
+                        <option value="UNITED-KINGDOM">United Kingdom</option>
+                        <option value="ITALY">Italy</option>
+                        <option value="SPANISH">Deutshland</option>
+                        <option value="FRENCH">France</option>
+                        <option value="Belgium">Belgium</option>
+                      </optgroup>
+                      <optgroup label="Africa">
+                        <option value="Angola">Angola</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Cameroon">Cameroon</option>
+                        <option value="Ghana">Ghana</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <p>Basic Markup</p>
+              <pre class="prettyprint linenums m-t-10">
+&lt;select class=&quot;form-control&quot;&gt;
+  &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+  &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+  &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+&lt;/select&gt;</pre>
+              <p>If you want to enable search, add <code>data-search="true"</code> to select input.</p>
+              <p>If you want to enable a placeholder, add <code>data-placeholder="Your placehoder..."</code> to select input.</p>
+              <p>To enable multiple choices, add <code>multiple</code> to select input.</p>
+              <p>You can group options by adding <code>optgroup</code> markup. Here is an example:</p>
+              <pre class="prettyprint linenums m-t-10">
+&lt;select class=&quot;form-control&quot; data-placeholder=&quot;Choose a country...&quot;&gt;
+  &lt;optgroup label=&quot;North America&quot;&gt;
+    &lt;option value=&quot;USA&quot;&gt;USA&lt;/option&gt;
+    &lt;option value=&quot;CANADA&quot;&gt;Canada&lt;/option&gt;
+    &lt;option value=&quot;MEXICO&quot;&gt;Mexico&lt;/option&gt;
+  &lt;/optgroup&gt;
+  &lt;optgroup label=&quot;South America&quot;&gt;
+    &lt;option value=&quot;USA&quot;&gt;Brazil&lt;/option&gt;
+    &lt;option value=&quot;peru&quot;&gt;Peru&lt;/option&gt;
+    &lt;option value=&quot;argentina&quot;&gt;Argentina&lt;/option&gt;
+  &lt;/optgroup&gt;
+&lt;/select&gt;</pre>
+              <h2><strong>Files</strong> Uploads</h2>
+              <p>Files upload are manage with Jasny Bootstrap plugin that add componenets to Bootstrap for single download, and Dropzone for multiple files download.</p>
+              <p><strong>Dropzone</strong> markup for single and <strong>multiple download</strong>:</p>
+              <pre class="prettyprint linenums m-t-10">
+&lt;form action=&quot;#&quot; class=&quot;dropzone&quot;&gt;
+  &lt;div class=&quot;fallback&quot;&gt;
+    &lt;input name=&quot;file&quot; type=&quot;file&quot; multiple /&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</pre>
+              <p><strong>Single File Upload</strong> Input markup</p>
+              <pre class="prettyprint linenums m-t-10">
+&lt;div class=&quot;fileinput fileinput-new input-group&quot; data-provides=&quot;fileinput&quot;&gt;
+  &lt;div class=&quot;form-control&quot; data-trigger=&quot;fileinput&quot;&gt;
+    &lt;i class=&quot;glyphicon glyphicon-file fileinput-exists&quot;&gt;&lt;/i&gt; &lt;span class=&quot;fileinput-filename&quot;&gt;&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;span class=&quot;input-group-addon btn btn-default btn-file&quot;&gt;&lt;span class=&quot;fileinput-new&quot;&gt;Choose...&lt;/span&gt;&lt;span class=&quot;fileinput-exists&quot;&gt;Change&lt;/span&gt;
+  &lt;input type=&quot;file&quot; name=&quot;...&quot;&gt;
+  &lt;/span&gt;
+  &lt;a href=&quot;#&quot; class=&quot;input-group-addon btn btn-default fileinput-exists&quot; data-dismiss=&quot;fileinput&quot;&gt;Remove&lt;/a&gt;
+&lt;/div&gt;</pre>
+              <p>Single File Upload <strong>with Image Preview</strong> markup</p>
+              <pre class="prettyprint linenums m-t-10">
+&lt;div class=&quot;fileinput-new thumbnail&quot;&gt;
+  &lt;img data-src=&quot;&quot; src=&quot;assets/images/gallery/3.jpg&quot; class=&quot;img-responsive&quot;&gt;
+&lt;/div&gt;
+&lt;div class=&quot;fileinput-preview fileinput-exists thumbnail&quot;&gt;&lt;/div&gt;
+&lt;div&gt;
+  &lt;span class=&quot;btn btn-default btn-file&quot;&gt;&lt;span class=&quot;fileinput-new&quot;&gt;Select image...&lt;/span&gt;&lt;span class=&quot;fileinput-exists&quot;&gt;Change&lt;/span&gt;
+  &lt;input type=&quot;file&quot; name=&quot;...&quot;&gt;
+  &lt;/span&gt;
+  &lt;a href=&quot;#&quot; class=&quot;btn btn-default fileinput-exists&quot; data-dismiss=&quot;fileinput&quot;&gt;Remove&lt;/a&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+    <script src="assets/js/pages/form.js"></script>  
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>

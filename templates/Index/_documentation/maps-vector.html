@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent nav-active active">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li class="active"><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="doc-title">Vector <strong>Maps</strong></h2>
+              <p>Theme use AmCharts Maps that permit to create beautiful and dynamic vector maps.</p>
+              <p>You will find all documentation and plugin options in official website.</p>
+              <p><a class="btn btn-primary" href="http://docs.amcharts.com/3/javascriptmaps/AmBalloon" target="_blank">Vector Map Documentation</a></p>
+              <h2>How to Create a Map?</h2>
+              <h3><strong>1. Add specific javascript</strong></h3>
+              <p>Add inside <code>body</code> at the end of your page, before main template scripts:</p>
+              <pre class="prettyprint linenums">
+&lt;script src=&quot;assets/plugins/maps-amcharts/ammap/ammap.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</pre>
+              <p>Then, add script of map that you want. You will find all maps available in folder <code>admin/assets/plugins/maps-amcharts/ammap/maps/js/</code>.</p>
+              <p>For example, if you want world map, you will add this script after <code>ammap.min.js</code> script:</p>
+              <pre class="prettyprint linenums">
+&lt;script src=&quot;assets/plugins/maps-amcharts/ammap/maps/js/worldLow.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</pre>
+              <h3><strong>2. Create your map markup</strong></h3>
+              <p>Next, you should create a div which will hold your map. Add this to your HTML body where you want that map appear (you can change id, width and height):</p>
+              <pre class="prettyprint linenums">
+&lt;div id=&quot;mapdiv&quot; style=&quot;width: 600px; height: 400px;&quot;&gt;&lt;/div&gt;</pre>
+              <h3><strong>3. Add some Javascript</strong></h3>
+              <p>Now we’ll do some JavaScripting to indicate parameters and options we want. Below is a script with comments which should produce a simple World map:</p>
+              <pre class="prettyprint linenums">
+// add all your code to this method, as this will ensure that page is loaded
+    AmCharts.ready(function() {
+        // create AmMap object
+        var map = new AmCharts.AmMap();
+        // set path to images
+        map.pathToImages = &quot;ammap/images/&quot;;
+
+        /* create data provider object
+         map property is usually the same as the name of the map file.
+
+         getAreasFromMap indicates that amMap should read all the areas available
+         in the map data and treat them as they are included in your data provider.
+         in case you don't set it to true, all the areas except listed in data
+         provider will be treated as unlisted.
+        */
+        var dataProvider = {
+            map: &quot;worldLow&quot;,
+            getAreasFromMap:true                    
+        }; 
+        // pass data provider to the map object
+        map.dataProvider = dataProvider;
+
+        /* create areas settings
+         * autoZoom set to true means that the map will zoom-in when clicked on the area
+         * selectedColor indicates color of the clicked area.
+         */
+        map.areasSettings = {
+            autoZoom: true,
+            selectedColor: &quot;#CC0000&quot;
+        };
+
+        // let's say we want a small map to be displayed, so let's create it
+        map.smallMap = new AmCharts.SmallMap();
+
+        // write the map to container div
+        map.write(&quot;mapdiv&quot;);
+    });</pre>
+              <p class="m-b-30">For inspiration, you can find some maps examples here <a href="http://www.amcharts.com/demos/capitals-map/" target="_blank">http://www.amcharts.com/demos/capitals-map/</a>.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>

@@ -1,0 +1,801 @@
+Bayesian regression and Bitcoin
+
+The MIT Faculty has made this article openly available. Please share
+how this access benefits you.  Your story matters.
+
+Citation
+
+As Published
+Publisher
+
+Version
+Accessed
+Citable Link
+Terms of Use
+Detailed Terms
+
+Shah, Devavrat, and Kang Zhang. “Bayesian Regression and
+Bitcoin.” 2014 52nd Annual Allerton Conference on
+Communication, Control, and Computing (Allerton) (September
+2014).
+
+http://dx.doi.org/10.1109/ALLERTON.2014.7028484
+
+Institute of Electrical and Electronics Engineers (IEEE)
+
+Original manuscript
+
+Thu Oct 19 11:12:57 EDT 2017
+
+http://hdl.handle.net/1721.1/101044
+
+Creative Commons Attribution-Noncommercial-Share Alike
+
+http://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Bayesian regression and Bitcoin
+
+1
+
+Devavrat Shah
+
+Kang Zhang
+
+Laboratory for Information and Decision Systems
+
+Department of EECS
+
+Massachusetts Institute of Technology
+
+devavrat@mit.edu, zhangkangj@gmail.com
+
+4
+1
+0
+2
+
+ 
+t
+c
+O
+6
+
+ 
+
+ 
+ 
+]
+I
+
+A
+.
+s
+c
+[
+ 
+ 
+
+1
+v
+1
+3
+2
+1
+
+.
+
+0
+1
+4
+1
+:
+v
+i
+X
+r
+a
+
+Abstract—In this paper, we discuss the method
+of Bayesian regression and its eﬃcacy for predicting
+price variation of Bitcoin, a recently popularized
+virtual, cryptographic currency. Bayesian regres-
+sion refers to utilizing empirical data as proxy to
+perform Bayesian inference. We utilize Bayesian
+regression for the so-called “latent source model”.
+The Bayesian regression for “latent source model”
+was introduced and discussed by Chen, Nikolov and
+Shah [1] and Bresler, Chen and Shah [2] for the
+purpose of binary classiﬁcation. They established
+theoretical as well as empirical eﬃcacy of the
+method for the setting of binary classiﬁcation.
+
+In this paper, instead we utilize it for predicting
+real-valued quantity, the price of Bitcoin. Based on
+this price prediction method, we devise a simple
+strategy for trading Bitcoin. The strategy is able
+to nearly double the investment in less than 60 day
+period when run against real data trace.
+
+I. Bayesian Regression
+
+The problem. We consider the question of regres-
+sion: we are given n training labeled data points
+(xi, yi) for 1 ≤ i ≤ n with xi ∈ Rd, yi ∈ R for some
+ﬁxed d ≥ 1. The goal is to use this training data to
+predict the unknown label y ∈ R for given x ∈ Rd.
+The classical approach. A standard approach from
+non-parametric statistics (cf. see [3] for example) is to
+assume model of the following type: the labeled data
+is generated in accordance with relation y = f(x) + 
+where  is an independent random variable repre-
+senting noise, usually assumed to be Gaussian with
+mean 0 and (normalized) variance 1. The regression
+method boils down to estimating f from n observation
+(x1, y1), . . . , (xn, yn) and using it for future prediction.
+For example, if f(x) = xT θ∗, i.e. f is assumed to
+be linear function, then the classical
+least-squares
+estimate is used for estimating θ∗ or f:
+(yi − xT
+
+nX
+
+(1)
+
+i θ)2
+
+ˆθLS ∈ arg min
+θ∈Rd
+
+i=1
+
+nX
+(yi − xT
+
+In the classical setting, d is assumed ﬁxed and n (cid:29) d
+which leads to justiﬁcation of such an estimator being
+highly eﬀective. In various modern applications, n (cid:16) d
+or even n (cid:28) d is more realistic and thus leaving
+highly under-determined problem for estimating θ∗.
+Under reasonable assumption such as ‘sparsity’ of θ∗,
+i.e. kθ∗k0 (cid:28) d, where kθ∗k0 = |{i
+6= 0}|,
+the regularized least-square estimation (also known
+as Lasso [4]) turns out to be the right solution: for
+appropriate choice of λ > 0,
+
+: θ∗
+
+i
+
+i=1
+
+(2)
+
+At this stage,
+
+i θ)2 + λkθk1.
+
+ˆθLASSO ∈ arg min
+θ∈Rd
+it is worth pointing out that the
+above framework, with diﬀerent functional forms, has
+been extremely successful in practice. And very excit-
+ing mathematical development has accompanied this
+theoretical progress. The book [3] provides a good
+overview of this literature. Currently, it is a very active
+area of research.
+Our approach. The key to success for the above
+stated approach lies in the ability to choose a reason-
+able parametric function space over which one tries
+to estimate parameters using observations. In various
+modern applications (including the one considered in
+this paper), making such a choice seems challenging.
+The primary reason behind this is the fact that the
+data is very high dimensional (e.g. time-series) making
+either parametric space too complicated or meaning-
+less. Now in many such scenarios, it seems that there
+are few prominent ways in which underlying event
+exhibits itself. For example, a phrase or collection of
+words become viral on Twitter social media for few
+diﬀerent reasons – a public event, life changing event
+for a celebrity, natural catastrophe, etc. Similarly,
+there are only few diﬀerent types of people in terms
+of their choices of movies – those of who like comedies
+and indie movies, those who like court-room dramas,
+etc. Such were the insights formalized in works [1]
+and [2] as the ‘latent source model’ which we describe
+formally in the context of above described framework.
+
+There are K distinct latent sources s1, . . . , sK ∈ Rd;
+a latent distribution over {1, . . . , K} with associated
+probabilities {µ1, . . . , µK}; and K latent distributions
+over R, denoted as P1, . . . , PK. Each labeled data
+point (x, y) is generated as follows. Sample index T ∈
+{1, . . . , K} with P(T = k) = µk for 1 ≤ k ≤ K; x =
+sT + , where  is d-dimensional independent random
+variable, representing noise, which we shall assume to
+be Gaussian with mean vector 0 = (0, ..., 0) ∈ Rd and
+identity covariance matrix; y is sampled from R as per
+distribution PT .
+
+Given this model, to predict label y given associated
+observation x, we can utilize the conditional distribu-
+tion1 of y given x given as follows:
+
+k=1
+
+TX
+P(cid:0)y(cid:12)(cid:12)x(cid:1) =
+∝ TX
+TX
+TX
+
+k=1
+
+k=1
+
+=
+
+=
+
+k=1
+
+P(cid:0)y(cid:12)(cid:12)x, T = k(cid:1)P(cid:0)T = k(cid:12)(cid:12)x(cid:1)
+P(cid:0)y(cid:12)(cid:12)x, T = k(cid:1)P(cid:0)x(cid:12)(cid:12)T = k(cid:1)P(T = k)
+(cid:0)y(cid:1)P(cid:0) = (x − sk)(cid:1)µk
+(cid:0)y(cid:1) exp(cid:16) − 1
+2kx − skk2
+
+(cid:17)
+
+Pk
+
+Pk
+
+µk.
+
+2
+
+(3)
+
+Thus, under the latent source model, the prob-
+lem of regression becomes a very simple Bayesian
+inference problem. However, the problem is lack of
+knowledge of the ‘latent’ parameters of the source
+model. Speciﬁcally, lack of knowledge of K, sources
+(s1, . . . , sK), probabilities (µ1, . . . , µK) and probabil-
+ity distributions P1, . . . , PK.
+
+To overcome this challenge, we propose the follow-
+ing simple algorithm: utilize empirical data as proxy
+for estimating conditional distribution of y given x
+given in (3). Speciﬁcally, given n data points (xi, yi),
+1 ≤ i ≤ n, the empirical conditional probability is
+(cid:17)
+(cid:17)
+4kx − xik2
+
+i=1 1(y = yi) exp(cid:16) − 1
+Pn
+i=1 exp(cid:16) − 1
+Pn
+
+(cid:0)y(cid:12)(cid:12)x(cid:1) =
+
+4kx − xik2
+
+Pemp
+
+2
+
+2
+
+.
+
+(4)
+
+The suggested empirical estimation in (4) has the
+following implications: in the context of binary clas-
+siﬁcation, y takes values in {0, 1}. Then (4) suggests
+
+1Here we are assuming that the random variables have
+well-deﬁned densities over appropriate space. And when ap-
+propriate, conditional probabilities are eﬀectively representing
+conditional probability density.
+
+the following classiﬁcation rule: compute ratio
+
+(cid:0)y = 1(cid:12)(cid:12)x(cid:1)
+(cid:0)y = 0(cid:12)(cid:12)x(cid:1)
+i=1 1(yi = 1) exp(cid:16) − 1
+Pn
+i=1 1(yi = 0) exp(cid:16) − 1
+Pn
+
+Pemp
+Pemp
+
+=
+
+(cid:17)
+(cid:17) .
+
+4kx − xik2
+4kx − xik2
+
+2
+
+2
+
+2
+
+(5)
+
+Eemp[y|x] =
+
+(cid:17)
+(cid:17) .
+4kx − xik2
+4kx − xik2
+
+If the ratio is > 1, declare y = 1, else declare y = 0.
+In general, to estimate the conditional expectation of
+y, given observation x, (4) suggests
+
+i=1 yi exp(cid:16) − 1
+Pn
+i=1 exp(cid:16) − 1
+Pn
+X(x)i = exp(cid:16) − 1
+(cid:17)
+Estimation in (6) can be viewed equivalently as a
+‘linear’ estimator: let vector X(x) ∈ Rn be such that
+i=1 exp(cid:16) − 1
+Pn
+/Z(x) with Z(x) =
+component being yi, then ˆy ≡ Eemp[y|x] is
+
+(cid:17), and y ∈ Rn with ith
+
+4kx − xik2
+
+4kx − xik2
+
+(6)
+
+2
+
+2
+
+2
+
+2
+
+ˆy = X(x)y.
+
+(7)
+In this paper, we shall utilize (7) for predicting future
+variation in the price of Bitcoin. This will further feed
+into a trading strategy. The details are discussed in
+the Section II.
+Related prior work. To begin with, Bayesian in-
+ference is foundational and use of empirical data as
+a proxy has been a well known approach that is
+potentially discovered and re-discovered in variety of
+contexts over decades, if not for centuries. For exam-
+ple, [5] provides a nice overview of such a method for a
+speciﬁc setting (including classiﬁcation). The concrete
+form (4) that results due to the assumption of latent
+source model is closely related to the popular rule
+called the ‘weighted majority voting’ in the literature.
+It’s asymptotic eﬀectiveness is discussed in literature
+as well, for example [6].
+
+The utilization of
+
+latent source model
+
+for the
+purpose of identifying precise sample complexity for
+Bayesian regression was ﬁrst studied in [1]. In [1],
+authors showed the eﬃcacy of such an approach for
+predicting trends in social media Twitter. For the
+purpose of the speciﬁc application, authors had to
+utilize noise model that was diﬀerent than Gaussian
+leading to minor change in the (4) – instead of using
+quadratic function, it was quadratic function applied
+to logarithm (component-wise) of the underlying vec-
+tors - see [1] for further details.
+
+In various modern application such as online recom-
+mendations, the observations (xi in above formalism)
+
+are only partially observed. This requires further mod-
+iﬁcation of (4) to make it eﬀective. Such a modiﬁca-
+tion was suggested in [2] and corresponding theoretical
+guarantees for sample complexity were provided.
+
+We note that in both of the works [1],
+
+[2], the
+Bayesian regression for latent source model was used
+primarily for binary classiﬁcation. Instead,
+in this
+work we shall utilize it for estimating real-valued
+variable.
+
+II. Trading Bitcoin
+
+What is Bitcoin. Bitcoin is a peer-to-peer crypto-
+graphic digital currency that was created in 2009 by
+an unknown person using the alias Satoshi Nakamoto
+[7], [8]. Bitcoin is unregulated and hence comes with
+beneﬁts (and potentially a lot of
+issues) such as
+transactions can be done in a frictionless manner - no
+fees - and anonymously. It can be purchased through
+exchanges or can be ‘mined’ by computing/solving
+complex mathematical/cryptographic puzzles. Cur-
+rently, 25 Bitcoins are rewarded every 10 minutes
+(each valued at around US $400 on September 27,
+2014). As of September 2014, its daily transaction
+volume is in the range of US $30-$50 million and
+its market capitalization has exceeded US $7 billion.
+With such huge trading volume, it makes sense to
+think of it as a proper ﬁnancial instrument as part of
+any reasonable quantitative (or for that matter any)
+trading strategy.
+
+In this paper, our interest is in understanding
+whether there is ‘information’ in the historical data
+related to Bitcoin that can help predict future price
+variation in the Bitcoin and thus help develop prof-
+itable quantitative strategy using Bitcoin. As men-
+tioned earlier, we shall utilize Bayesian regression
+inspired by latent source model for this purpose.
+Relevance of Latent Source Model. Quantitative
+trading strategies have been extensively studied and
+applied in the ﬁnancial industry, although many of
+them are kept secretive. One common approach re-
+ported in the literature is technical analysis, which
+assumes that price movements follow a set of patterns
+and one can use past price movements to predict
+future returns to some extent [9], [10]. Caginalp and
+Balenovich [11] showed that some patterns emerge
+from a model involving two distinct groups of traders
+with diﬀerent assessments of valuation. Studies found
+that some empirically developed geometric patterns,
+such as heads-and-shoulders, triangle and double-
+top-and-bottom, can be used to predict future price
+changes [12], [13], [14].
+
+3
+
+The Latent Source Model
+
+is precisely trying to
+model existence of such underlying patterns leading
+to price variation. Trying to develop patterns with
+the help of a human expert or trying to identify
+patterns explicitly in the data, can be challenging and
+to some extent subjective. Instead, using Bayesian
+regression approach as outlined above allows us to
+utilize the existence of patterns for the purpose of
+better prediction without explicitly ﬁnding them.
+Data. In this paper, to perform experiments, we have
+used data related to price and order book obtained
+from Okcoin.com – one of the largest exchanges
+operating in China. The data concerns time period
+between February 2014 to July 2014. The total raw
+data points were over 200 million. The order book data
+consists of 60 best prices at which one is willing to
+buy or sell at a given point of time. The data points
+were acquired at the interval of every two seconds.
+For the purpose of computational ease, we constructed
+a new time series with time interval of length 10
+seconds; each of the raw data point was mapped to the
+closest (future) 10 second point. While this coarsening
+introduces slight ‘error’
+in the accuracy, since our
+trading strategy operates at a larger time scale, this
+is insigniﬁcant.
+Trading Strategy. The trading strategy is very
+simple: at each time, we either maintain position
+of +1 Bitcoin, 0 Bitcoin or −1 Bitcoin. At each
+time instance, we predict the average price movement
+over the 10 seconds interval, say ∆p, using Bayesian
+regression (precise details explained below) - if ∆p > t,
+a threshold, then we buy a bitcoin if current bitcoin
+position is ≤ 0; if ∆p < −t, then we sell a bitcoin if
+current position is ≥ 0; else do nothing. The choice
+of time steps when we make trading decisions as
+mentioned above are chosen carefully by looking at
+the recent trends. We skip details as they do not have
+ﬁrst order eﬀect on the performance.
+Predicting Price Change. The core method for
+average price change ∆p over the 10 second interval
+is the Bayesian regression as in (7). Given time-
+series of price variation of Bitcoin over the interval
+of few months, measured every 10 second interval, we
+have a very large time-series (or a vector). We use
+this historic time series and from it, generate three
+subsets of time-series data of three diﬀerent lengths:
+S1 of time-length 30 minutes, S2 of time-length 60
+minutes, and S3 of time-length 120 minutes. Now at a
+given point of time, to predict the future change ∆p,
+we use the historical data of three length: previous
+30 minutes, 60 minutes and 120 minutes - denoted
+
+x1, x2 and x3. We use xj with historical samples Sj
+for Bayesian regression (as in (7)) to predict average
+price change ∆pj for 1 ≤ j ≤ 3. We also calculate
+r = (vbid−vask)/(vbid+vask) where vbid is total volume
+people are willing to buy in the top 60 orders and vask
+is the total volume people are willing to sell in the top
+60 orders based on the current order book data. The
+ﬁnal estimation ∆p is produced as
+
+∆p = w0 +
+
+wj∆pj + w4r,
+
+(8)
+
+3X
+
+j=1
+
+where w = (w0, . . . , w4) are learnt parameters. In
+what follows, we explain how Sj, 1 ≤ j ≤ 3 are
+collected; and how w is learnt. This will complete the
+description of the price change prediction algorithm
+as well as trading strategy.
+Now on ﬁnding Sj, 1 ≤ j ≤ 3 and learning w. We
+divide the entire time duration into three, roughly
+equal sized, periods. We utilize the ﬁrst time period to
+ﬁnd patterns Sj, 1 ≤ j ≤ 3. The second period is used
+to learn parameters w and the last third period is used
+to evaluate the performance of the algorithm. The
+learning of w is done simply by ﬁnding the best linear
+ﬁt over all choices given the selection of Sj, 1 ≤ j ≤ 3.
+Now selection of Sj, 1 ≤ j ≤ 3. For this, we take all
+possible time series of appropriate length (eﬀectively
+vectors of dimension 180, 360 and 720 respectively
+for S1, S2 and S3). Each of these form xi (in the
+notation of formalism used to describe (7)) and their
+corresponding label yi is computed by looking at the
+average price change in the 10 second time interval
+following the end of time duration of xi. This data
+repository is extremely large. To facilitate computa-
+tion on single machine with 128G RAM with 32 cores,
+we clustered patterns in 100 clusters using k−means
+algorithm. From these, we chose 20 most eﬀective
+clusters and took representative patterns from these
+clusters.
+
+The one missing detail is computing ‘distance’ be-
+tween pattern x and xi - as stated in (7), this is
+squared ‘2-norm. Computing ‘2-norm is computation-
+ally intensive. For faster computation, we use negative
+of
+‘similarity’, deﬁned below, between patterns as
+’distance’.
+Deﬁnition 1. (Similarity) The similarity between
+two vectors a, b ∈ RM is deﬁned as
+s(a, b) =
+
+PM
+z=1(az − mean(a))(bz − mean(b))
+where mean(a) = (PM
+and std(a) = (PM
+
+M std(a) std(b)
+z=1 az)/M (respectively for b)
+z=1(ai − mean(a))2)/M (respectively
+
+, (9)
+
+for b).
+
+4
+
+In (7), we use exp(c· s(x, xi)) in place of exp(−kx−
+2/4) with choice of constant c optimized for better
+
+xik2
+prediction using the ﬁtting data (like for w).
+
+We make a note of the fact that this similarity
+can be computed very eﬃciently by storing the pre-
+computed patterns (in S1, S2 and S3) in a normalized
+form (0 mean and std 1). In that case, eﬀectively
+the computation boils down to performing an inner-
+product of vectors, which can be done very eﬃciently.
+For example, using a straightforward Python imple-
+mentation, more than 10 million cross-correlations can
+be computed in 1 second using 32 core machine with
+128G RAM.
+
+Fig. 1: The eﬀect of diﬀerent threshold on the number
+of trades, average holding time and proﬁt
+
+Fig. 2: The inverse relationship between the average
+proﬁt per trade and the number of trades
+
+Results. We simulate the trading strategy described
+above on a third of total data in the duration of May
+6, 2014 to June 24, 2014 in a causal manner to see how
+well our strategy does. The training data utilized is all
+historical (i.e. collected before May 6, 2014). We use
+diﬀerent threshold t and see how the performance of
+strategy changes. As shown in Figure 1 and 2 diﬀerent
+threshold provide diﬀerent performance. Concretely,
+as we increase the threshold, the number of trades
+
+5
+
+The cluster centers (means as deﬁned by k−means
+algorithm) found are reported in Figure 4. As can
+be seen, there are “triangle” pattern and “head-and-
+shoulder” pattern. Such patterns are observed and
+reported in the technical analysis literature. This seem
+to suggest that there are indeed such patterns and pro-
+vides evidence of the existence of latent source model
+and explanation of success of our trading strategy.
+
+Fig. 4: Patterns
+shoulder and triangle pattern as shown above.
+
+identiﬁed resemble the head-n-
+
+Scaling of Strategy. The strategy experimented in
+this paper holds minimal position - at most 1 Bitcoin
+(+ or −). This leads to nearly doubling of investment
+in 50 days. Natural question arises - does this scale
+for large volume of investment? Clearly, the number
+of transactions at a given price at a given instance will
+decrease given that order book is always ﬁnite, and
+hence linearity of scale is not expected. On the other
+hand, if we allow for ﬂexibility in the position (i.e
+more than ±1), then it is likely that more proﬁt can
+be earned. Therefore, to scale such a strategy further
+careful research is required.
+Scaling of Computation. To be computationally
+feasible, we utilized ‘representative’ prior time-series.
+It is deﬁnitely believable that using all possible time-
+series could have improved the prediction power and
+hence the eﬃcacy of the strategy. However, this re-
+quires computation at massive scale. Building a scal-
+able computation architecture is feasible, in principle
+
+Fig. 3: The ﬁgure plots two time-series - the cumula-
+tive proﬁt of the strategy starting May 6, 2014 and
+the price of Bitcoin. The one, that is lower (in blue),
+corresponds to the price of Bitcoin, while the other
+corresponds to cumulative proﬁt. The scale of Y -axis
+on left corresponds to price, while the scale of Y -axis
+on the right corresponds to cumulative proﬁt.
+
+decreases and the average holding time increases. At
+the same time, the average proﬁt per trade increases.
+We ﬁnd that the total proﬁt peaked at 3362 yuan
+with a 2872 trades in total with average investment
+of 3781 yuan. This is roughly 89% return in 50 days
+with a Sharpe ratio of 4.10. To recall, sharp ratio of
+strategy, over a given time period, is deﬁned as follows:
+let L be the number of trades made during the time
+interval; let p1, . . . , pL be the proﬁts (or losses if they
+are negative valued) made in each of these trade; let
+C be the modulus of diﬀerence between start and end
+price for this time interval, then Sharpe ratio [15] is
+
+PL
+‘=1 p‘ − C
+(cid:16)PL
+‘=1(p‘ − ¯p)2) with ¯p = (PL
+Lσp
+
+,
+
+(10)
+
+L
+
+where σp = 1
+‘=1 p‘)/L.
+Eﬀectively, Sharpe ratio of a strategy captures how
+well the strategy performs compared to the risk-free
+strategy as well as how consistently it performs.
+
+Figure 3 shows the performance of the best strategy
+over time. Notably, the strategy performs better in
+the middle section when the market volatility is high.
+In addition, the strategy is still proﬁtable even when
+the price is decreasing in the last part of the testing
+period.
+
+III. Discussion
+
+Are There Interesting Patterns? The patterns uti-
+lized in prediction were clustered using the standard
+k−means algorithm. The clusters (with high price
+variation, and conﬁdence) were carefully inspected.
+
+6
+
+as by design (7) is trivially parallelizable (and map-
+reducable) computation. Understanding the role of
+computation in improving prediction quality remains
+important direction for investigation.
+
+Acknowledgments
+
+This work was supported in part by NSF grants
+CMMI-1335155 and CNS-1161964, and by Army Re-
+search Oﬃce MURI Award W911NF-11-1-0036.
+
+References
+
+[1] G. H. Chen, S. Nikolov, and D. Shah, “A latent source
+model for nonparametric time series classiﬁcation,” in
+Information Processing Systems,
+Advances in Neural
+pp. 1088–1096, 2013.
+
+[2] G. Bresler, G. H. Chen, and D. Shah, “A latent source
+model for online collaborative ﬁltering,” in Advances in
+Neural Information Processing Systems, 2014.
+
+[3] L. Wasserman, All of nonparametric statistics. Springer,
+
+[4] R. Tibshirani, “Regression shrinkage and selection via the
+lasso,” Journal of the Royal Statistical Society. Series B
+(Methodological), pp. 267–288, 1996.
+
+[5] C. M. Bishop and M. E. Tipping, “Bayesian regression
+and classiﬁcation,” Nato Science Series sub Series III
+Computer And Systems Sciences, vol. 190, pp. 267–288,
+2003.
+
+[6] K. Fukunaga, Introduction to statistical pattern recogni-
+
+tion. Academic press, 1990.
+
+2006.
+
+[7] “Bitcoin.” https://bitcoin.org/en/faq.
+[8] “What is bitcoin?.” http://money.cnn.com/infographic/
+
+technology/what-is-bitcoin/.
+
+[9] A. W. Lo and A. C. MacKinlay, “Stock market prices
+do not follow random walks: Evidence from a simple
+speciﬁcation test,” Review of Financial Studies, vol. 1,
+pp. 41–66, 1988.
+
+[10] A. W. Lo and A. C. MacKinlay, Stock market prices do not
+follow random walks: Evidence from a simple speciﬁcation
+test. Princeton, NJ: Princeton University Press, 1999.
+
+[11] G. Caginalp and D. Balenovich, “A theoretical founda-
+tion for technical analysis,” Journal of Technical Analysis,
+2003.
+
+[12] A. W. Lo, H. Mamaysky, and J. Wang, “Foundations of
+technical analysis: Computational algorithms, statistical
+inference, and empirical implementation,” Journal of Fi-
+nance, vol. 4, 2000.
+
+[13] G. Caginalp and H. Laurent, “The predictive power of
+price patterns,” Applied Mathematical Finance, vol. 5,
+pp. 181–206, 1988.
+
+[14] C.-H. Park and S. Irwin, “The proﬁtability of technical
+analysis: A review,” AgMAS Project Research Report No.
+2004-04, 2004.
+
+[15] W. F. Sharpe, “The sharpe ratio,” Streetwise–the Best of
+the Journal of Portfolio Management, pp. 169–185, 1998.
+
+

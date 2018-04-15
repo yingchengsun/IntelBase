@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <title>Make Admin Template Documentation</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../admin/assets/global/css/ui.css" rel="stylesheet">
+    <link href="../admin/assets/global/plugins/jstree/src/themes/default/style.min.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="fixed-topbar fixed-sidebar">
+    <section>
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar">
+        <div class="logopanel">
+          <h1>
+            <a href="intro.html"></a>
+          </h1>
+        </div>
+        <div class="sidebar-inner">
+          <ul class="nav nav-pills nav-stacked nav-sidebar">
+            <li><a href="intro.html"><i class="icon-home"></i><span>Introduction</span></a></li>
+            <li><a href="api.html"><i class="icon-bulb"></i><span>API</span></a></li>
+            <li><a href="structure.html"><i class="icon-doc"></i><span>Structure</span></a></li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-puzzle"></i><span>Builder</span></a>
+              <ul class="children collapse">
+                <li><a href="builder-admin.html">Admin Builder</a></li>
+                <li><a href="builder-page.html">Page Builder</a></li>
+                <li><a href="builder-pricing-table.html">Pricing Table Builder</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-eye"></i><span><span>UI Elements</span></a>
+              <ul class="children collapse">
+                <li><a href="ui-buttons.html">Buttons</a></li>
+                <li><a href="ui-portlets.html">Portlets</a></li>
+                <li><a href="ui-modals.html">Modals</a></li>
+                <li><a href="ui-tabs.html">Tabs</a></li>
+                <li><a href="ui-icons.html">Icons</a></li>
+                <li><a href="ui-notifications.html">Notifications</a></li>
+                <li><a href="ui-nestable.html"> Nestable List</a></li>
+                <li><a href="ui-tree.html">Tree View</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-note"></i><span><span>Forms</span></a>
+              <ul class="children collapse">
+                <li><a href="form-layouts.html">Form Layouts</a></li>
+                <li><a href="form-elements.html">Form Elements</a></li>
+                <li><a href="form-input-text.html">Form Input Text</a></li>
+                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="form-wizard.html">Form Wizard</a></li>
+                <li><a href="form-masks.html"> Input Masks</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent">
+              <a href="#"><i class="icon-map"></i><span><span>Maps</span></a>
+              <ul class="children collapse">
+                <li><a href="maps-google.html"> Google Maps</a></li>
+                <li><a href="maps-vector.html"> Vector Maps</a></li>
+              </ul>
+            </li>
+            <li class="nav-parent nav-active active">
+              <a href="#"><i class="fa fa-table"></i><span><span>Tables</span></a>
+              <ul class="children collapse">
+                <li><a href="table-layout.html"> Table Layouts</a></li>
+                <li class="active"><a href="table-dynamic.html"> Table Dynamic</a></li>
+              </ul>
+            </li>
+            <li><a href="plugins.html"><i class="icon-diamond"></i><span>Plugins</span></a></li>
+            <li><a href="material-design.html"><i class="icon-layers"></i><span>Material Design</span></a></li>
+            <li><a href="angularjs.html"><i class="icon-rocket"></i><span>AngularJS version</span></a></li>
+            <li><a href="customize.html"><i class="icon-pencil"></i><span>Customization</span></a></li>
+            <li><a href="credits.html"><i class="icon-grid"></i><span>Credits</span></a></li>
+            <li><a href="contact.html"><i class="icon-support"></i><span>Support</span></a></li>
+          </ul>
+          <div class="sidebar-footer clearfix">
+            <a class="btn btn-primary btn-block" href="mailto:support@themes-lab.com">Send us a Message</a>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <div class="main-content">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="doc-title"><strong>Dynamic</strong> Table</h2>
+              <p>Dynamic table permit to sort, filter, edit, remove element...</p>
+              <p>Dynamic table is powered by DataTables Plugin which have a lot of functionnalities. For more details, please visit plugin website:</p>
+              <p><a class="btn btn-primary" href="http://www.datatables.net/" target="_blank">DataTables Documentation</a>.</p>
+              <div id="tree-demo"></div>
+              <h2>How to transform my simple table into a dynamic table?</h2>
+              <h3><strong>1. Add specific css and javascript</strong></h3>
+              <p>Add inside <code>head</code> this css file:</p>
+              <pre class="prettyprint linenums">
+&lt;link href=&quot;assets/plugins/datatables/dataTables.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
+              <p>Add inside <code>body</code> at the end of your page, before main template scripts:</p>
+              <pre class="prettyprint linenums">
+&lt;script src=&quot;assets/plugins/datatables/jquery.dataTables.min.js&quot;&gt;&lt;/script&gt;</pre>
+              <h3><strong>2. Create your table markup</strong></h3>
+              <p>To give your table dynamic options, just add <code>table-dynamic</code> class to your table. Here is a basic example:</p>
+              <pre class="prettyprint linenums">
+&lt;table class=&quot;table table-dynamic&quot;&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Rendering engine&lt;/th&gt;
+            &lt;th&gt;Browser&lt;/th&gt;
+            &lt;th&gt;Platform(s)&lt;/th&gt;
+            &lt;th&gt;Engine version&lt;/th&gt;
+            &lt;th&gt;CSS grade&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Trident&lt;/td&gt;
+            &lt;td&gt;Internet Explorer 5.5&lt;/td&gt;
+            &lt;td&gt;Win 95+&lt;/td&gt;
+            &lt;td&gt;5.5&lt;/td&gt;
+            &lt;td&gt;A&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Gecko&lt;/td&gt;
+            &lt;td&gt;Mozilla 1.7&lt;/td&gt;
+            &lt;td&gt;Win 98+ / OSX.1+&lt;/td&gt;
+            &lt;td&gt;1.7&lt;/td&gt;
+            &lt;td&gt;A&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Misc&lt;/td&gt;
+            &lt;td&gt;PSP browser&lt;/td&gt;
+            &lt;td&gt;PSP&lt;/td&gt;
+            &lt;td&gt;-&lt;/td&gt;
+            &lt;td&gt;C&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Other browsers&lt;/td&gt;
+            &lt;td&gt;All others&lt;/td&gt;
+            &lt;td&gt;-&lt;/td&gt;
+            &lt;td&gt;-&lt;/td&gt;
+            &lt;td&gt;U&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+              <p>Your table will automatically have pagination and sorting option.</p>
+              <h2><strong>Export</strong> Tools</h2>
+              <p>If you need to export your table data with Excel, PDF or print it, you can add export tools by adding <code>table-tools</code> class to your table:</p>
+              <pre class="prettyprint linenums">
+&lt;div class=&quot;filter-left&quot;&gt;
+    &lt;table class=&quot;table table-dynamic table-tools&quot;&gt;
+        &lt;!-- YOUR TABLE CONTENT --&gt;
+    &lt;/table&gt;
+&lt;/div&gt;</pre>
+              <p>Here we add <code>filter-left</code> class too to indicate that we want search input at the left side of the table (export tools are at the right).</p>
+              <h2><strong>Filtering</strong> Data</h2>
+              <p>The searching functionality that is provided by DataTables is very useful for quickly search through the information in the table - however the search is global, and you may wish to present controls to search on specific columns only.</p>
+              <p>You can add input filter in head with <code>filter-head</code> class, in footer with <code>filter-footer</code> class and select input with <code>filter-select</code>:</p>
+              <pre class="prettyprint linenums">
+// Table with text input filter in head
+&lt;table class=&quot;table table-dynamic filter-head&quot;&gt;
+    &lt;!-- YOUR TABLE CONTENT --&gt;
+&lt;/table&gt;
+
+// Table with text input filter in footer
+&lt;table class=&quot;table table-dynamic filter-head&quot;&gt;
+    &lt;!-- YOUR TABLE CONTENT --&gt;
+&lt;/table&gt;
+
+// Table with select input filter in footer
+&lt;table class=&quot;table table-dynamic filter-head&quot;&gt;
+    &lt;!-- YOUR TABLE CONTENT --&gt;
+&lt;/table&gt;</pre>
+              <p>You can see an example in template here: <a href="http://themes-lab.com/paymee/tables-filter.php" target="_blank">http://themes-lab.com/paymee/tables-filter.php</a>.</p>
+              <p>You can find more comprehensive examples directly on plugin site. It includes a lot of examples with html / js / css details</p>
+              <p><a href="http://www.datatables.net/examples/index" target="_blank" class="btn btn-primary">See DataTables Examples</a></p>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2016 </span>
+                <span>THEMES LAB</span>.
+                <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+    <!-- Preloader -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../admin/assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <script src="../admin/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+    <script src="../admin/assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../admin/assets/global/plugins/jstree/jstree.min.js"></script>
+    <script src="../admin/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../admin/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="../admin/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="../admin/assets/global/plugins/switchery/switchery.min.js"></script>
+    <script src="../admin/assets/global/plugins/prettify/prettify.min.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="../admin/assets/global/js/plugins.js"></script>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+      prettyPrint();
+  });
+</script>
