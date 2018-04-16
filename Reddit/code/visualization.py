@@ -266,7 +266,7 @@ def Visualize4():
     filename = 'parent_comment.txt'
     filepath_name = os.path.join(file_dir, sub_dir, filename)
     test_file = 'test.txt'
-    test_output=  open(test_file,'a+')
+    #test_output=  open(test_file,'a+')
     ndtype = 'S10, S10' 
     names = 'a, b'
     ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')
@@ -288,12 +288,13 @@ def Visualize4():
     pids_rep = [id_dict[x] if x in id_dict else x for x in pids]
 
     edges = zip(ids_rep,pids_rep)
-
-    for item in edges:
-        test_output.write('%i\t%i\n' %(item[0],item[1]))
-    test_output.close()
+    np.savetxt('test5.txt', edges,fmt='%i',delimiter='\t')   # x,y,z equal sized 1D arrays
+    
+    #for item in edges:
+    #    test_output.write('%i\t%i\n' %(item[0],item[1]))
+    #test_output.close()
     t = time()
-    g = nx.Graph(edges)
+    g = nx.graph(edges)
     #nx.draw(g)
     nx.draw_networkx(g)
     #plt.show()
@@ -343,9 +344,11 @@ def idTest2():
     print 'RC_body done!'
 
 if __name__ == '__main__':
-    Visualize()
-    Visualize0()
-    Visualize1()
+    Visualize4()
+    #Visualize()
+    #Visualize0()
+    #Visualize1()
+    
     #Comment()
     #Subreddits()     
     #RC_MonthlyCount()

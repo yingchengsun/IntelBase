@@ -8,6 +8,30 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from decorator import append
 from io import BytesIO
+import logging
+from time import asctime
+ 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+ 
+# create a file handler
+ 
+handler = logging.FileHandler('hello2.log')
+handler.setLevel(logging.INFO)
+tt = open('ttt.txt','a+')
+# create a logging format
+for i in range(100000):
+    formatter = logging.Formatter('%(asctime)s - %(message)s')
+    handler.setFormatter(formatter)
+     
+    # add the handlers to the logger
+     
+    logger.addHandler(handler)
+     
+    #logger.info('Hello baby')
+    logger.info(str(i)+'\t'+'hello baby')
+    #tt.write(str(asctime())+str(i)+'\t'+'hello baby \n')
+tt.close()
 '''
 df = pd.DataFrame({'key1':list('aabba'),
                   'key2': ['one','two','one','two','one'],
@@ -118,7 +142,7 @@ data = '988128\t\t444'
 kwargs = dict(delimiter="\t",comments='%', dtype=int,names="a,b,c",missing_values={0:None, 'b':" ", 2:"???"},filling_values={0:0, 'b':0, 2:-999})
 print np.genfromtxt(BytesIO(data), **kwargs)
 '''
-
+'''
 from time import time 
 t = time() 
 list = ['a','b','is','python','jason','hello','hill','with','phone','test', 
@@ -135,3 +159,72 @@ for i in range (1000000):
             filter.append(find) 
 print "total run time:"
 print time()-t
+'''
+'''
+from time import time 
+
+t = time() 
+list = ['a','b','is','python','jason','hello','hill','with','phone','test', 
+'dfdf','apple','pddf','ind','basic','none','baecr','var','bana','dd','wrd'] 
+total=[] 
+for i in range (1000000): 
+    for w in list: 
+        total.append(w) 
+print "total run time:"
+print time()-t
+
+t = time() 
+list = ['a','b','is','python','jason','hello','hill','with','phone','test', 
+'dfdf','apple','pddf','ind','basic','none','baecr','var','bana','dd','wrd'] 
+total=[] 
+for i in range (1000000): 
+    a = [w for w in list]
+    total = ",".join(a)
+print "total run time:"
+print time()-t
+
+
+
+t = time() 
+list = ['a','b','is','python','jason','hello','hill','with','phone','test', 
+'dfdf','apple','pddf','ind','basic','none','baecr','var','bana','dd','wrd'] 
+total=[] 
+for i in range (1000000): 
+    a = (w for w in list)
+    total = ",".join(a)
+print "total run time:"
+print time()-t
+
+t = time() 
+list = ['a','b','is','python','jason','hello','hill','with','phone','test', 
+'dfdf','apple','pddf','ind','basic','none','baecr','var','bana','dd','wrd'] 
+total=[] 
+for i in xrange (1000000): 
+    a = (w for w in list)
+    total = ",".join(a)
+print type(total)
+print [total]
+print "total run time:"
+print time()-t
+'''
+a = {1,2,3}
+print a
+print type(a)
+
+
+# initialize my_set
+my_set = [1,2]
+my_set.append(3)
+print(my_set)
+
+a_set=set()         
+print a_set
+
+print len(a_set)   
+
+a_set.add(4)       
+print a_set
+
+a_set.update({2,4,6})   
+print len(a_set)
+
