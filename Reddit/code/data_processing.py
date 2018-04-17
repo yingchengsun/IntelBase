@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 '''
 Created on Apr 9, 2018
 
@@ -10,6 +11,7 @@ import json
 from collections import OrderedDict
 import numpy as np
 import logging
+import simplejson
 
 file_dir = 'E:\\Reddit'
 
@@ -59,7 +61,8 @@ Reddit Submission JSON data format:
 def RS():
 
     filetype = 'RS_'
-    ext = '.zip'
+    #ext = '.zip'
+    ext = '.bz2'
     subm_index = open(file_dir+'\\data\\'+'subm_index.txt','a+')
     temp = subm_index.readlines()
     if temp ==[]:
@@ -67,10 +70,11 @@ def RS():
     else:
         index = int(temp[-1])
         
-    for year in range(2005,2006):
-        for month in range(6,13):
+    for year in range(2011,2012):
+        for month in range(1,2):
             
-            file_object = read_file(filetype+'V2_', year, month, ext)
+            #file_object = read_file(filetype+'V2_', year, month, ext)
+            file_object = read_file(filetype, year, month, ext)
             prefix = filetype+str(year)+'-'+str(month).zfill(2)
             
             logger.info('Processing:'+prefix)
@@ -91,6 +95,7 @@ def RS():
                 
                 count=0
                 for line in file_object:
+                    line = line.decode('utf-8').replace('\0', '')
                     data_item = json.loads(line)
                     subreddit_id = (data_item['subreddit_id'].split('_', 1)[-1]).encode('utf-8')
                     
@@ -102,9 +107,18 @@ def RS():
                     
                     score = int(data_item['score'])
                     time = int(data_item['created_utc'])
-                    gilded = int(data_item['gilded'])
                     numofcomm = int(data_item['num_comments'])
                     
+                    if data_item.has_key('gilded'):
+                        gilded = int(data_item['gilded'])
+                    else:
+                        gilded=0
+                   
+                    if data_item.has_key('author'):
+                        author = data_item['author']
+                    else:
+                        author=''
+                        
                     title = data_item['title']
                     if title:
                         title =' '.join(data_item['title'].split())
@@ -114,10 +128,9 @@ def RS():
                         text =' '.join(data_item['title'].split())
                     
                     outfile_subm_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
-                    outfile_subm_author.write((u'%i\t%s\n' %(index, data_item['author'])).encode('utf-8'))
+                    outfile_subm_author.write((u'%i\t%s\n' %(index, author)).encode('utf-8'))
                     outfile_subm_title_text.write((u'%i\t%s\t%s\n' %(index, title, text )).encode('utf-8'))
                     outfile_subm_score_time_gilded_numofcomm_subreddit.write((u'%i\t%i\t%i\t%i\t%i\t%i\n' %(index, score, time, gilded, numofcomm, ids[subreddit_id])).encode('utf-8'))
-                    
                     
                     count+=1
                     index+=1
