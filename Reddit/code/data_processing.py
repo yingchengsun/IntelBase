@@ -60,8 +60,13 @@ def RS():
 
     filetype = 'RS_'
     ext = '.zip'
-    
-    index = 0
+    subm_index = open(file_dir+'\\data\\'+'subm_index.txt','a+')
+    temp = subm_index.readlines()
+    if temp ==[]:
+        index = 0
+    else:
+        index = int(temp[-1])
+        
     for year in range(2005,2006):
         for month in range(6,13):
             
@@ -119,6 +124,7 @@ def RS():
                     if index%10000 == 0:
                         logger.info(str(index)+' recodes have been processed!')
                         print index,' recodes have been processed!'
+                        
                 
                 file_object.close()
                 
@@ -133,9 +139,10 @@ def RS():
             finally:
                 
                 logger.info('Done: ' + str(count) +' RS recodes have been processed !')
-                print prefix+'done: ' + str(count) +' RS recodes have been processed !'
+                print prefix+' done: ' + str(count) +' RS recodes have been processed !'
     
-
+    subm_index.write(str(index))
+    subm_index.close()
 
 '''
 [(u'author', u'vortex30'), (u'author_flair_css_class', None), (u'author_flair_text', None), 
