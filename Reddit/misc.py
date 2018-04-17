@@ -90,7 +90,7 @@ edges = [['80rgu1', 'duxmurx'], ['80rgu1', 'duxmv55'], ['80rgyf', 'duxmzpp'], ['
 g = nx.graph(edges)
 nx.draw_networkx(g)
 plt.show()
-'''
+
 
 import networkx as nx           
 import matplotlib.pyplot as plt 
@@ -99,5 +99,8 @@ g = nx.Graph(edges)
 #g.add_edges_from(edges)
 nx.draw_networkx(g)
 plt.show()                       
+'''
 
-        
+with open('hello.log','a+') as hello:
+    print hello.read()
+    

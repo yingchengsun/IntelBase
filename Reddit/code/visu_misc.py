@@ -11,31 +11,35 @@ from io import BytesIO
 import logging
 from time import asctime
  
-'''
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+def piupiu():
+    
+    #logger = logging.getLogger('my logger')
+    #logger.setLevel(logging.INFO)
+    logging.warning('piupiu')
+
+piupiu()
  
 # create a file handler
  
-handler = logging.FileHandler('hello4.log')
-handler.setLevel(logging.INFO)
-tt = open('ttt.txt','a+')
+#handler = logging.FileHandler('hello4.log')
+#handler.setLevel(logging.INFO)
+
 # create a logging format
-for j in range(1):
-    for i in range(100000):
-        formatter = logging.Formatter('%(message)s')
-        handler.setFormatter(formatter)
+
+for i in range(10):
+    formatter = logging.Formatter('%(message)s')
+        #handler.setFormatter(formatter)
          
         # add the handlers to the logger
          
-        logger.addHandler(handler)
+        #logger.addHandler(handler)
          
         #logger.info('Hello baby')
         #logger.info(str(i)+'\t'+'6xauzw')
-        logger.info('6xauzw')
+    #logger.warning('6xauzw')
         #tt.write(str(asctime())+str(i)+'\t'+'hello baby \n')
-tt.close()
-'''
+
+
 '''
 df = pd.DataFrame({'key1':list('aabba'),
                   'key2': ['one','two','one','two','one'],
@@ -241,13 +245,26 @@ with open(data,'a+') as subm:
     subm.write('bbb\n')
 print d
 print len(d)
-'''
+
 
 a = {'a':1,'b':2,'c':3}
 a['d']=4
 print a
-    
 
+a=[0, 1, 2, 3, 4]
+aa=len(a)
+print range(aa)
+aa+=1
+    
+print aa
+'''
+
+
+with open('hello.log','a+') as hello:
+    infile_subr_id = hello.readlines()
+    print infile_subr_id
+    ids = dict(zip(infile_subr_id,range(len(infile_subr_id))))
+    print ids
 
 
 

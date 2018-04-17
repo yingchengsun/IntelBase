@@ -9,7 +9,7 @@ import os
 import json
 from collections import OrderedDict
 import numpy as np
-
+import logging
 
 file_dir = 'E:\\Reddit'
 
@@ -57,70 +57,83 @@ Reddit Submission JSON data format:
 '''
 
 def RS():
-    
+
     filetype = 'RS_'
-    year = 2008
-    month = 1
     ext = '.zip'
-
-    file_object = read_file(filetype, year, month, ext)
-    prefix = filetype+str(year)+'-'+str(month).zfill(2)
-
-    try: 
-        index = 0
-        
-        infile_subr_id = np.genfromtxt(file_dir+'\\data\\'+'subreddits_id.txt', dtype='S10')
-        outfile_new_subr_id = open(file_dir+'\\data\\'+'subreddits_id.txt','a+')
-        outfile_new_subr_dname = open(file_dir+'\\data\\new_subreddits\\'+prefix+'_new_subr-index-dname.txt','a+')
-        
-        outfile_subm_id  = open(file_dir+'\\data\\'+prefix+'_id.txt','a+')
-        outfile_subm_author = open(file_dir+'\\data\\'+prefix+'_index-author.txt','a+')
-        outfile_subm_title_text = open(file_dir+'\\data\\'+prefix+'_index-title-text.txt','a+')
-        outfile_subm_score_time_gilded_numofcomm_subreddit = open(file_dir+'\\data\\'+prefix+'_index-score-time-gilded-num_comments-subreddit.txt','a+')
-  
-        ids = dict(zip(infile_subr_id,range(len(infile_subr_id))))
-        
-        subr_id_len = len(infile_subr_id)
-        for line in file_object:
-            data_item = json.loads(line)
-            subreddit_id = (data_item['subreddit_id'].split('_', 1)[-1]).encode('utf-8')
-
-            if not ids.has_key(subreddit_id):
-                outfile_new_subr_id.write(subreddit_id+'\n')
-                outfile_new_subr_dname.write((u'%i\t%s\n' %(subr_id_len, data_item['subreddit'])).encode('utf-8'))
-                ids[subreddit_id]=subr_id_len
-                subr_id_len+=1
-            
-            score = int(data_item['score'])
-            time = int(data_item['created_utc'])
-            gilded = int(data_item['gilded'])
-            numofcomm = int(data_item['num_comments'])
-            
-            title = data_item['title']
-            if title:
-                title =' '.join(data_item['title'].split())
-            text = data_item['selftext']
-            
-            if text:
-                text =' '.join(data_item['title'].split())
-            
-            outfile_subm_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
-            outfile_subm_author.write((u'%i\t%s\n' %(index, data_item['author'])).encode('utf-8'))
-            outfile_subm_title_text.write((u'%i\t%s\t%s\n' %(index, title, text )).encode('utf-8'))
-            outfile_subm_score_time_gilded_numofcomm_subreddit.write((u'%i\t%i\t%i\t%i\t%i\t%i\n' %(index, score, time, gilded, numofcomm, ids[subreddit_id])).encode('utf-8'))
-            
-            
-            index+=1
-            if index%10000 == 0:
-                print index,' recodes have been processed!'
-    finally:
-        file_object.close()
-        outfile_subm_id.close()
-        outfile_subm_author.close()
-        outfile_subm_title_text.close()
-        outfile_subm_score_time_gilded_numofcomm_subreddit.close()
     
-    print 'In total: ' + str(index) +' RS recodes have been processed !'
+    index = 0
+    for year in range(2005,2006):
+        for month in range(6,13):
+            
+            file_object = read_file(filetype+'V2_', year, month, ext)
+            prefix = filetype+str(year)+'-'+str(month).zfill(2)
+            
+            logger.info('Processing:'+prefix)
+            try: 
+                infile_subr_id = np.genfromtxt(file_dir+'\\data\\'+'subreddits_id.txt', dtype='S10')
+                outfile_new_subr_id = open(file_dir+'\\data\\'+'subreddits_id.txt','a+')
+                outfile_new_subr_dname = open(file_dir+'\\data\\subreddits_new\\'+prefix+'_new_subr-index-dname.txt','a+')
+                
+                outfile_subm_id  = open(file_dir+'\\data\\RS_id\\'+prefix+'_id.txt','a+')
+                outfile_subm_author = open(file_dir+'\\data\\RS_author\\'+prefix+'_index-author.txt','a+')
+                outfile_subm_title_text = open(file_dir+'\\data\\RS_title_text\\'+prefix+'_index-title-text.txt','a+')
+                outfile_subm_score_time_gilded_numofcomm_subreddit = open(file_dir+'\\data\\RS_matrix\\'+prefix+'_index-score-time-gilded-num_comments-subreddit.txt','a+')
+                
+                #infile_subr_id = outfile_new_subr_id.readlines()
+                
+                subr_id_len = len(infile_subr_id)
+                ids = dict(zip(infile_subr_id,range(subr_id_len)))
+                
+                count=0
+                for line in file_object:
+                    data_item = json.loads(line)
+                    subreddit_id = (data_item['subreddit_id'].split('_', 1)[-1]).encode('utf-8')
+                    
+                    if not ids.has_key(subreddit_id):
+                        outfile_new_subr_id.write(subreddit_id+'\n')
+                        outfile_new_subr_dname.write((u'%i\t%s\n' %(subr_id_len, data_item['subreddit'])).encode('utf-8'))
+                        ids[subreddit_id]=subr_id_len
+                        subr_id_len+=1
+                    
+                    score = int(data_item['score'])
+                    time = int(data_item['created_utc'])
+                    gilded = int(data_item['gilded'])
+                    numofcomm = int(data_item['num_comments'])
+                    
+                    title = data_item['title']
+                    if title:
+                        title =' '.join(data_item['title'].split())
+                    text = data_item['selftext']
+                    
+                    if text:
+                        text =' '.join(data_item['title'].split())
+                    
+                    outfile_subm_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
+                    outfile_subm_author.write((u'%i\t%s\n' %(index, data_item['author'])).encode('utf-8'))
+                    outfile_subm_title_text.write((u'%i\t%s\t%s\n' %(index, title, text )).encode('utf-8'))
+                    outfile_subm_score_time_gilded_numofcomm_subreddit.write((u'%i\t%i\t%i\t%i\t%i\t%i\n' %(index, score, time, gilded, numofcomm, ids[subreddit_id])).encode('utf-8'))
+                    
+                    
+                    count+=1
+                    index+=1
+                    if index%10000 == 0:
+                        logger.info(str(index)+' recodes have been processed!')
+                        print index,' recodes have been processed!'
+                
+                file_object.close()
+                
+                outfile_new_subr_id.close()
+                outfile_new_subr_dname.close()
+                
+                outfile_subm_id.close()
+                outfile_subm_author.close()
+                outfile_subm_title_text.close()
+                outfile_subm_score_time_gilded_numofcomm_subreddit.close()
+                
+            finally:
+                
+                logger.info('Done: ' + str(count) +' RS recodes have been processed !')
+                print prefix+'done: ' + str(count) +' RS recodes have been processed !'
     
 
 
@@ -233,6 +246,18 @@ def Subreddits():
 
 
 if __name__ == "__main__":
+    
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+    handler = logging.FileHandler(file_dir+'\\data\\logs\\'+'reddit_data_prepocessing.log')
+    handler.setLevel(logging.INFO)
+    
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+    handler.setFormatter(formatter)
+     
+    logger.addHandler(handler)
+    logger.info('starts!')
+    
     RS()
     #RC()
     #Subreddits()
