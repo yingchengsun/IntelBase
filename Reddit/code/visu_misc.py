@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 '''
 Created on Apr 10, 2018
 
@@ -11,13 +12,7 @@ from io import BytesIO
 import logging
 from time import asctime
  
-def piupiu():
-    
-    #logger = logging.getLogger('my logger')
-    #logger.setLevel(logging.INFO)
-    logging.warning('piupiu')
 
-piupiu()
  
 # create a file handler
  
@@ -26,8 +21,7 @@ piupiu()
 
 # create a logging format
 
-for i in range(10):
-    formatter = logging.Formatter('%(message)s')
+
         #handler.setFormatter(formatter)
          
         # add the handlers to the logger
@@ -260,7 +254,9 @@ print aa
 '''
 
 
-with open('hello.log','a+') as hello:
+with open('hello.txt','w+') as hello:
+    #hello.write(str(111))
+    hello.write('aaa')
     infile_subr_id = hello.readlines()
     print infile_subr_id
     ids = dict(zip(infile_subr_id,range(len(infile_subr_id))))

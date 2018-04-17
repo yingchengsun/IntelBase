@@ -57,7 +57,43 @@ Reddit Submission JSON data format:
 (u'title', u'New miner in town, should I use CPU or GPU?'), (u'url', u'https://www.reddit.com/r/xdag/comments/80rgry/new_miner_in_town_should_i_use_cpu_or_gpu/'), 
 (u'whitelist_status', None)]
 '''
-
+def RR():
+    filetype = 'RS_'
+    #ext = '.zip'
+    ext = '.bz2'
+    subm_index = open(file_dir+'\\data\\'+'subm_index.txt','a+')
+    temp = subm_index.readlines()
+    if temp ==[]:
+        index = 0
+    else:
+        index = int(temp[-1])
+        
+    for year in range(2013,2014):
+        for month in range(2,3):
+            
+            #file_object = read_file(filetype+'V2_', year, month, ext)
+            file_object = read_file(filetype, year, month, ext)
+            prefix = filetype+str(year)+'-'+str(month).zfill(2)
+            
+            count=0
+            for line in file_object:
+                if count%10000 == 0:
+                    print count
+                if count==835091:
+                    print line
+                if count==835092:
+                    print line
+                if count==835093:
+                    print line
+                if count==835094:
+                    print line
+                count+=1
+                line = line.decode('utf-8').replace('\0', '')
+                data_item = json.loads(line)
+            file_object.close()
+            
+            
+    
 def RS():
 
     filetype = 'RS_'
@@ -70,8 +106,8 @@ def RS():
     else:
         index = int(temp[-1])
         
-    for year in range(2011,2012):
-        for month in range(1,2):
+    for year in range(2013,2014):
+        for month in range(2,3):
             
             #file_object = read_file(filetype+'V2_', year, month, ext)
             file_object = read_file(filetype, year, month, ext)
@@ -95,6 +131,8 @@ def RS():
                 
                 count=0
                 for line in file_object:
+                    if count>835080:
+                        print line
                     line = line.decode('utf-8').replace('\0', '')
                     data_item = json.loads(line)
                     subreddit_id = (data_item['subreddit_id'].split('_', 1)[-1]).encode('utf-8')
@@ -278,6 +316,7 @@ if __name__ == "__main__":
     logger.addHandler(handler)
     logger.info('starts!')
     
-    RS()
+    #RS()
+    RR()
     #RC()
     #Subreddits()
