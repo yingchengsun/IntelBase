@@ -11,27 +11,31 @@ from io import BytesIO
 import logging
 from time import asctime
  
+'''
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
  
 # create a file handler
  
-handler = logging.FileHandler('hello2.log')
+handler = logging.FileHandler('hello4.log')
 handler.setLevel(logging.INFO)
 tt = open('ttt.txt','a+')
 # create a logging format
-for i in range(100000):
-    formatter = logging.Formatter('%(asctime)s - %(message)s')
-    handler.setFormatter(formatter)
-     
-    # add the handlers to the logger
-     
-    logger.addHandler(handler)
-     
-    #logger.info('Hello baby')
-    logger.info(str(i)+'\t'+'hello baby')
-    #tt.write(str(asctime())+str(i)+'\t'+'hello baby \n')
+for j in range(1):
+    for i in range(100000):
+        formatter = logging.Formatter('%(message)s')
+        handler.setFormatter(formatter)
+         
+        # add the handlers to the logger
+         
+        logger.addHandler(handler)
+         
+        #logger.info('Hello baby')
+        #logger.info(str(i)+'\t'+'6xauzw')
+        logger.info('6xauzw')
+        #tt.write(str(asctime())+str(i)+'\t'+'hello baby \n')
 tt.close()
+'''
 '''
 df = pd.DataFrame({'key1':list('aabba'),
                   'key2': ['one','two','one','two','one'],
@@ -206,7 +210,7 @@ print type(total)
 print [total]
 print "total run time:"
 print time()-t
-'''
+
 a = {1,2,3}
 print a
 print type(a)
@@ -227,4 +231,23 @@ print a_set
 
 a_set.update({2,4,6})   
 print len(a_set)
+
+data ='submission.txt'
+d = np.genfromtxt(data, dtype='S10')
+print d
+print len(d)
+with open(data,'a+') as subm:
+    subm.write('aaa\n')
+    subm.write('bbb\n')
+print d
+print len(d)
+'''
+
+a = {'a':1,'b':2,'c':3}
+a['d']=4
+print a
+    
+
+
+
 
