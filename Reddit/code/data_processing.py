@@ -57,42 +57,7 @@ Reddit Submission JSON data format:
 (u'title', u'New miner in town, should I use CPU or GPU?'), (u'url', u'https://www.reddit.com/r/xdag/comments/80rgry/new_miner_in_town_should_i_use_cpu_or_gpu/'), 
 (u'whitelist_status', None)]
 '''
-def RR():
-    filetype = 'RS_'
-    #ext = '.zip'
-    ext = '.bz2'
-    subm_index = open(file_dir+'\\data\\'+'subm_index.txt','a+')
-    temp = subm_index.readlines()
-    if temp ==[]:
-        index = 0
-    else:
-        index = int(temp[-1])
-        
-    for year in range(2013,2014):
-        for month in range(2,3):
-            
-            #file_object = read_file(filetype+'V2_', year, month, ext)
-            file_object = read_file(filetype, year, month, ext)
-            prefix = filetype+str(year)+'-'+str(month).zfill(2)
-            
-            count=0
-            for line in file_object:
-                if count%10000 == 0:
-                    print count
-                if count==835091:
-                    print line
-                if count==835092:
-                    print line
-                if count==835093:
-                    print line
-                if count==835094:
-                    print line
-                count+=1
-                line = line.decode('utf-8').replace('\0', '')
-                data_item = json.loads(line)
-            file_object.close()
-            
-            
+
     
 def RS():
 
@@ -266,9 +231,10 @@ def Subreddits():
     file_object = read_file(filetype='subreddits', year='', month='', ext='.zip')
     
     try: 
-        outfile_id = open(file_dir+'\\data\\subreddits_id.txt','a+')
-        outfile_index_title_description = open(file_dir+'\\data\\subreddits_index-title-publicDescription.txt','a+')
-        outfile_index_displayname_subscribers_time = open(file_dir+'\\data\\subreddits_index-displayname-subscribers-time.txt','a+')
+        #outfile_id = open(file_dir+'\\data\\subreddits_id.txt','a+')
+        outfile_index_title_description = open(file_dir+'\\data\\subreddits_title-publicDescription.txt','a+')
+        #outfile_index_title_description = open(file_dir+'\\data\\subreddits_index-title-publicDescription.txt','a+')
+        #outfile_index_displayname_subscribers_time = open(file_dir+'\\data\\subreddits_index-displayname-subscribers-time.txt','a+')
         index = 0
         for line in file_object:
             data_item = json.loads(line, object_pairs_hook=OrderedDict)
@@ -287,9 +253,10 @@ def Subreddits():
                 
             time = int(data_item['created_utc'])
             
-            outfile_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
-            outfile_index_title_description.write((u'%i\t%s\t%s\n' %(index, title, public_description )).encode('utf-8'))
-            outfile_index_displayname_subscribers_time.write((u'%i\t%s\t%i\t%i\n' %(index, data_item['display_name'].strip('\n'), subscribers, time)).encode('utf-8'))
+            #outfile_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
+            #outfile_index_title_description.write((u'%i\t%s\t%s\n' %(index, title, public_description )).encode('utf-8'))
+            outfile_index_title_description.write((u'%s ' %(title)).encode('utf-8'))
+            #outfile_index_displayname_subscribers_time.write((u'%i\t%s\t%i\t%i\n' %(index, data_item['display_name'].strip('\n'), subscribers, time)).encode('utf-8'))
             
             index+=1
             if index%100000 == 0:
@@ -297,9 +264,9 @@ def Subreddits():
                             
     finally:
         file_object.close()
-        outfile_id.close()
+        #outfile_id.close()
         outfile_index_title_description.close()
-        outfile_index_displayname_subscribers_time.close()
+        #outfile_index_displayname_subscribers_time.close()
     print 'In total: ' + str(index) +' subreddits recodes have been processed !'
 
 
@@ -317,6 +284,6 @@ if __name__ == "__main__":
     logger.info('starts!')
     
     #RS()
-    RR()
+    #RR()
     #RC()
-    #Subreddits()
+    Subreddits()

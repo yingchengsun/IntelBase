@@ -15,17 +15,17 @@ from wordcloud import WordCloud, STOPWORDS
 d = path.dirname(__file__)
 
 # Read the whole text.
-text = open(path.join(d, 'parse.txt')).read()
+text = open(path.join(d, 'subreddits_title-publicDescription.txt')).read()
 
 # read the mask image
 # taken from
 # http://www.stencilry.org/stencils/movies/alice%20in%20wonderland/255fk.jpg
-alice_mask = np.array(Image.open(path.join(d, "examples\\alice_mask.png")))
+#alice_mask = np.array(Image.open(path.join(d, "examples\\alice_mask.png")))
 
 stopwords = set(STOPWORDS)
 stopwords.add("said")
 
-wc = WordCloud(background_color="white", max_words=2000, mask=alice_mask,
+wc = WordCloud(background_color="white", max_words=2000, 
                stopwords=stopwords)
 # generate word cloud
 wc.generate(text)

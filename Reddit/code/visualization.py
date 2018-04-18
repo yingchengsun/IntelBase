@@ -9,20 +9,45 @@ import os
 import numpy as np
 from time import time 
 from collections import OrderedDict
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
 
 file_dir = 'E:\\Reddit'
 sub_dir = 'data'
-
+sub_dir2 = 'subreddits_original'
 def normfun(x,mu,sigma):
    pdf = np.exp(-((x-mu)**2)/(2*sigma**2))/(sigma*np.sqrt(2*np.pi))
    return pdf
-def Subreddits():
-    filename = 'subreddits_id-name-subscribers-time.txt'
-    filepath_name = os.path.join(file_dir, sub_dir, filename)
-    ndtype = 'i,S10,S10,i,i'
-    names = 'index, id, name, subscribers, time'
+def subreddit_subscribers_bar():
+    filename = 'subreddits_index-displayname-subscribers-time.txt'
+    filepath_name = os.path.join(file_dir, sub_dir, sub_dir2,filename)
+    ndtype = 'i,S10,i,i'
+    names = 'index, name, subscribers, time'
     s = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t')
-    print s['id']
+        
+    s_arg = np.argsort(-s['subscribers'])
+    s =  s[s_arg][0:100]
+    s = s[np.argsort(s['subscribers'])]
+    
+    s1 =  np.array([s['name']]).T
+    s2 =  np.array([s['subscribers']]).T
+
+    x=range(100)
+    
+    plt.barh(x, s2,color='r')
+    plt.yticks(x,s1)
+    plt.show()
+
+    print 'subreddit subscribers bar graph done!'
+
+def Subreddits():
+    filename = 'subreddits_index-displayname-subscribers-time.txt'
+    filepath_name = os.path.join(file_dir, sub_dir, sub_dir2,filename)
+    ndtype = 'i,S10,i,i'
+    names = 'index, name, subscribers, time'
+    s = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t')
+    
     print s['name']
     mean = s['subscribers'].mean()  
     sd = s['subscribers'].std() 
@@ -43,16 +68,6 @@ def Subreddits():
     s_arg = np.argsort(-s['subscribers'])
     s =  s[s_arg][0:100]
     s = s[np.argsort(s['subscribers'])]
-    
-    s1 =  np.array([s['name']]).T
-    s2 =  np.array([s['subscribers']]).T
-
-    #x = range(len(s['c']))
-    x=range(100)
-
-    plt.barh(x, s2,color='r')
-    plt.yticks(x,s1)
-    plt.show()
 
     print 'Subreddits_id-name-subscribers-time done!'
 
@@ -61,7 +76,7 @@ def RC_MonthlyCount():
     filepath_name = os.path.join(file_dir, sub_dir, filename)
     ndtype = 'S10, i'
     names = 'month, count'
-    s = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t')
+    s = np.genfromtxt(filepath_name, dtype=ndtype, names=names)
     print np.array([s['count']]).T
     x = range(len(s['month']))
     
@@ -342,16 +357,42 @@ def idTest2():
         print 'stop'
    
     print 'RC_body done!'
+    
+def wordcloud_chart():
+    with open('E:\\Reddit\\subreddits_title-publicDescription.txt','r') as ss:
+        text = ss.read()
+        
+    wordcloud = WordCloud(width=1600, height=800).generate(text)
+    
+    # Display the generated image:
+    # the matplotlib way:
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    
+    # lower max_font_size
+    wordcloud = WordCloud(max_font_size=40).generate(text)
+    plt.figure( figsize=(20,10), facecolor='k')
+    
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.tight_layout(pad=0)
+    
+    plt.savefig('E:/wordcloud_'+'.png', facecolor='k', bbox_inches='tight')
+    plt.close("all")
+    print 'wordcloud done!'
 
 if __name__ == '__main__':
-    Visualize4()
+    #wordcloud_chart()
+    
+    #Visualize4()
     #Visualize()
     #Visualize0()
     #Visualize1()
     
     #Comment()
-    #Subreddits()     
+    RC_MonthlyCount()     
     #RC_MonthlyCount()
     #RC()
     #idTest2()
     print 'All done!'
+        
