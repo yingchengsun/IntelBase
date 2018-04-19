@@ -117,6 +117,7 @@ def RC_monthly_count():
     
 def RC_body():
     filename = 'RC_2008-01_body.txt'
+    sub_dir = 'RC'
     filepath_name = os.path.join(file_dir, sub_dir, filename)
     ndtype = 'i, S100' 
     names = 'count, body'
@@ -334,46 +335,6 @@ def Visualize4():
     print 'v2'
     print "total run time:"
     print time()-t
-    
-def idTest():
-    filename = 'subreddits_index-id.txt'
-    filepath_name = os.path.join(file_dir, sub_dir, filename)
-    ndtype = 'i, S10' 
-    names = 'index, id'
-    try:
-        s = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')
-        #print np.array([s['id']]).T
-        print s
-        print s[1156307]
-        index = np.where(s['id']=='3f9eq')  
-        print index[0][0]
-        print type(index[0][0])
-    finally:
-        print 'stop'
-   
-    print 'RC_body done!'
-
-def idTest2():
-    filename = 'subreddits_id.txt'
-    filepath_name = os.path.join(file_dir, sub_dir, filename)
-    ndtype = 'S10' 
-    names = 'id'
-    try:
-        id = np.genfromtxt(filepath_name, dtype=ndtype)
-
-        #print np.array([s['id']]).T
-        print id
-
-
-        index = np.where(id=='3f9eq')  
-        print index
-        print index[0]
-        print type(index[0][0])
-
-    finally:
-        print 'stop'
-   
-    print 'RC_body done!'
     
 
 if __name__ == '__main__':

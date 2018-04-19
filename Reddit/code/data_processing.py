@@ -41,6 +41,74 @@ def read_file(filetype, year, month, ext):
         return NameError
     return file_object
 
+
+
+
+'''
+Subreddit JSON file format
+
+[(u'header_img', u'http://a.thumbs.redditmedia.com/gq9561mrzeY9TrVx.png'), (u'submit_link_label', u'Submit a new post'),
+ (u'name', u't5_2qgzg'), (u'description', u'/r/business brings you the best of your business section.'), (u'suggested_comment_sort', None), 
+ (u'subscribers', 201926), (u'header_title', u'/r/business brings you the best of your business section.'), (u'header_size', [1, 1]), 
+ (u'public_traffic', False), (u'description_html', u'a href="/r/business"&gt;\gt'),(u'title', u'business'), 
+ (u'subreddit_type', u'public'), (u'url', u'/r/business/'), (u'wiki_enabled', False), (u'submission_type', u'any'), 
+ (u'public_description_html', u'&lt;!-- SC_OFF --&gt;&lt'), (u'comment_score_hide_mins', 0), (u'quarantine', False), 
+ (u'display_name', u'business'), (u'collapse_deleted_comments', False), (u'banner_img', u''), (u'over18', False)]
+'''
+        
+def Subreddits():
+    """ Extract subreddit fields useful for our research from raw dataset
+    
+        Extract subreddit id into 'subreddits_id.txt'
+            title and publicDescription into 'subreddits_index-title-publicDescription.txt'
+            display name, subscribers and time into 'subreddits_index-displayname-subscribers-time.txt'
+            
+    """
+    file_object = read_file(filetype='subreddits', year='', month='', ext='.zip')
+    
+    logger.info('Processing: subreddits')
+    try: 
+        #outfile_id = open(file_dir+'\\data\\subreddits_id.txt','a+')
+        outfile_index_title_description = open(file_dir+'\\data\\subreddits_title-publicDescription.txt','a+')
+        #outfile_index_title_description = open(file_dir+'\\data\\subreddits_index-title-publicDescription.txt','a+')
+        #outfile_index_displayname_subscribers_time = open(file_dir+'\\data\\subreddits_index-displayname-subscribers-time.txt','a+')
+        index = 0
+        for line in file_object:
+            data_item = json.loads(line, object_pairs_hook=OrderedDict)
+            
+            title = data_item['title']
+            if title:
+                title =' '.join(data_item['title'].split())
+               
+            public_description = data_item['public_description']
+            
+            if public_description:
+                public_description =' '.join(data_item['public_description'].split())    
+            
+            if data_item['subscribers']:
+                subscribers = int(data_item['subscribers'])
+                
+            time = int(data_item['created_utc'])
+            
+            #outfile_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
+            #outfile_index_title_description.write((u'%i\t%s\t%s\n' %(index, title, public_description )).encode('utf-8'))
+            outfile_index_title_description.write((u'%s ' %(title)).encode('utf-8'))
+            #outfile_index_displayname_subscribers_time.write((u'%i\t%s\t%i\t%i\n' %(index, data_item['display_name'].strip('\n'), subscribers, time)).encode('utf-8'))
+            
+            index+=1
+            if index%100000 == 0:
+                logger.info(str(index)+' recodes have been processed!')
+                print index,' recodes have been processed!'
+                            
+    finally:
+        file_object.close()
+        #outfile_id.close()
+        outfile_index_title_description.close()
+        #outfile_index_displayname_subscribers_time.close()
+        logger.info('By now, '+str(index)+' recodes have been processed!')
+        print 'In total: ' + str(index) +' subreddits recodes have been processed !'
+    
+
 '''
 Reddit Submission JSON data format:
 
@@ -60,6 +128,14 @@ Reddit Submission JSON data format:
 
     
 def RS():
+    """ Extract submission fields useful for our current research from raw dataset
+    
+        Extract submission id into 'RS_date_id.txt'
+            index and author into 'RS_date_index-author.txt'
+            index, title, selftext into 'RS_date_index-title-text.txt'
+            index, score, created_utc, gilded, num_comments, subreddit_id into 'RS_date_index-score-time-gilded-num_comments-subreddit.txt'
+        Meanwhile, update the subreddit id list and its file when some new subreddits come out
+    """
 
     filetype = 'RS_'
     #ext = '.zip'
@@ -88,9 +164,7 @@ def RS():
                 outfile_subm_author = open(file_dir+'\\data\\RS_author\\'+prefix+'_index-author.txt','a+')
                 outfile_subm_title_text = open(file_dir+'\\data\\RS_title_text\\'+prefix+'_index-title-text.txt','a+')
                 outfile_subm_score_time_gilded_numofcomm_subreddit = open(file_dir+'\\data\\RS_matrix\\'+prefix+'_index-score-time-gilded-num_comments-subreddit.txt','a+')
-                
-                #infile_subr_id = outfile_new_subr_id.readlines()
-                
+                    
                 subr_id_len = len(infile_subr_id)
                 ids = dict(zip(infile_subr_id,range(subr_id_len)))
                 
@@ -170,7 +244,10 @@ def RS():
     subm_index.write(str(index))
     subm_index.close()
 
+
 '''
+Reddit Comment JSON data format:
+
 [(u'author', u'vortex30'), (u'author_flair_css_class', None), (u'author_flair_text', None), 
 (u'body', u'People loooooove quoting Warren Buffett here.'), (u'can_gild', True), 
 (u'controversiality', 0), (u'created_utc', 1519776000), (u'distinguished', None), (u'edited', 1519776490), 
@@ -179,6 +256,14 @@ def RS():
 (u'score', 3), (u'stickied', False), (u'subreddit', u'weedstocks'), (u'subreddit_id', u't5_2zfqj'), (u'subreddit_type', u'public')])
 '''
 def RC():
+    """ Extract comment fields useful for our current research from raw dataset
+    
+        Extract comment id into 'RC_date_id.txt'
+            index and author into 'RC_date_index-author.txt'
+            index, body into 'RS_date_index-body.txt'
+            index, score, created_utc, parent_id, link_id, subreddit_id into 'RS_date_index-score-time-gilded-num_comments-subreddit.txt'
+        Meanwhile, update the subreddit id list and its file when some new subreddits come out
+    """
     filetype = 'RC_'
     year = 2008
     month = 1
@@ -189,7 +274,7 @@ def RC():
         #outfile_body = open(prefix+'_body.txt','a+')
         outfile_index_id  = open(prefix+'_id.txt','a+')
         outfile_index_author = open(prefix+'_author.txt','a+')
-        outfile_index_score_time_parent_submission_subreddit = open(prefix+'_index-score-time-parent-submission-subreddit.txt','a+')
+        outfile_index_score_controv_time_parent_subm = open(prefix+'_index-score-controv-time-parent-subm.txt','a+')
         index = 1
         for line in file_object:
             data_item = json.loads(line, object_pairs_hook=OrderedDict)
@@ -214,72 +299,10 @@ def RC():
         #outfile_body.close()
         outfile_index_id.close()
         outfile_index_author.close()
-        outfile_index_score_time_parent_submission_subreddit.close()
+        outfile_index_score_controv_time_parent_subm.close()
         print 'In total: ' + str(index-1) +' RC recodes have been processed !'
 
     
-
-'''
-Subreddit JSON file format
-
-[(u'header_img', u'http://a.thumbs.redditmedia.com/gq9561mrzeY9TrVx.png'), (u'submit_link_label', u'Submit a new post'),
- (u'name', u't5_2qgzg'), (u'description', u'/r/business brings you the best of your business section.'), (u'suggested_comment_sort', None), 
- (u'subscribers', 201926), (u'header_title', u'/r/business brings you the best of your business section.'), (u'header_size', [1, 1]), 
- (u'public_traffic', False), (u'description_html', u'a href="/r/business"&gt;\gt'),(u'title', u'business'), 
- (u'subreddit_type', u'public'), (u'url', u'/r/business/'), (u'wiki_enabled', False), (u'submission_type', u'any'), 
- (u'public_description_html', u'&lt;!-- SC_OFF --&gt;&lt'), (u'comment_score_hide_mins', 0), (u'quarantine', False), 
- (u'display_name', u'business'), (u'collapse_deleted_comments', False), (u'banner_img', u''), (u'over18', False)]
-'''
-        
-def Subreddits():
-    """
-        Extract subreddit id into 'subreddits_id.txt'
-            title and publicDescription into 'subreddits_index-title-publicDescription.txt'
-            display name, subscribers and time into 'subreddits_index-displayname-subscribers-time.txt'
-            
-    """
-    file_object = read_file(filetype='subreddits', year='', month='', ext='.zip')
-    
-    try: 
-        #outfile_id = open(file_dir+'\\data\\subreddits_id.txt','a+')
-        outfile_index_title_description = open(file_dir+'\\data\\subreddits_title-publicDescription.txt','a+')
-        #outfile_index_title_description = open(file_dir+'\\data\\subreddits_index-title-publicDescription.txt','a+')
-        #outfile_index_displayname_subscribers_time = open(file_dir+'\\data\\subreddits_index-displayname-subscribers-time.txt','a+')
-        index = 0
-        for line in file_object:
-            data_item = json.loads(line, object_pairs_hook=OrderedDict)
-            
-            title = data_item['title']
-            if title:
-                title =' '.join(data_item['title'].split())
-               
-            public_description = data_item['public_description']
-            
-            if public_description:
-                public_description =' '.join(data_item['public_description'].split())    
-            
-            if data_item['subscribers']:
-                subscribers = int(data_item['subscribers'])
-                
-            time = int(data_item['created_utc'])
-            
-            #outfile_id.write((u'%s\n' %(data_item['id'])).encode('utf-8'))
-            #outfile_index_title_description.write((u'%i\t%s\t%s\n' %(index, title, public_description )).encode('utf-8'))
-            outfile_index_title_description.write((u'%s ' %(title)).encode('utf-8'))
-            #outfile_index_displayname_subscribers_time.write((u'%i\t%s\t%i\t%i\n' %(index, data_item['display_name'].strip('\n'), subscribers, time)).encode('utf-8'))
-            
-            index+=1
-            if index%100000 == 0:
-                print index,' recodes have been processed!'
-                            
-    finally:
-        file_object.close()
-        #outfile_id.close()
-        outfile_index_title_description.close()
-        #outfile_index_displayname_subscribers_time.close()
-    print 'In total: ' + str(index) +' subreddits recodes have been processed !'
-
-
 if __name__ == "__main__":
     
     logger = logging.getLogger(__name__)
