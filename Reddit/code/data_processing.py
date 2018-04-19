@@ -96,19 +96,29 @@ def RS():
                 
                 count=0
                 for line in file_object:
-                    if count>835080:
-                        print line
+                    
                     line = line.decode('utf-8').replace('\0', '')
                     data_item = json.loads(line)
-                    subreddit_id = (data_item['subreddit_id'].split('_', 1)[-1]).encode('utf-8')
+                    
+                    if not data_item.has_key('subreddit_id') or not data_item['subreddit_id']:
+                        subreddit_id = '0'
+                        subreddit_name='0'
+                    else:
+                        subreddit_id = (data_item['subreddit_id'].split('_', 1)[-1]).encode('utf-8')
+                        subreddit_name=data_item['subreddit']
+
                     
                     if not ids.has_key(subreddit_id):
                         outfile_new_subr_id.write(subreddit_id+'\n')
-                        outfile_new_subr_dname.write((u'%i\t%s\n' %(subr_id_len, data_item['subreddit'])).encode('utf-8'))
+                        outfile_new_subr_dname.write((u'%i\t%s\n' %(subr_id_len, subreddit_name)).encode('utf-8'))
                         ids[subreddit_id]=subr_id_len
                         subr_id_len+=1
                     
-                    score = int(data_item['score'])
+                    if not data_item.has_key('score') or not data_item['score']:
+                        score = 0
+                    else:
+                        score = int(data_item['score'])
+                        
                     time = int(data_item['created_utc'])
                     numofcomm = int(data_item['num_comments'])
                     
@@ -140,8 +150,9 @@ def RS():
                     if index%10000 == 0:
                         logger.info(str(index)+' recodes have been processed!')
                         print index,' recodes have been processed!'
-                        
-                
+              
+            finally:
+                              
                 file_object.close()
                 
                 outfile_new_subr_id.close()
@@ -152,9 +163,8 @@ def RS():
                 outfile_subm_title_text.close()
                 outfile_subm_score_time_gilded_numofcomm_subreddit.close()
                 
-            finally:
-                
                 logger.info('Done: ' + str(count) +' RS recodes have been processed !')
+                logger.info('By now, '+str(index)+' recodes have been processed!')
                 print prefix+' done: ' + str(count) +' RS recodes have been processed !'
     
     subm_index.write(str(index))
