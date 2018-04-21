@@ -1,31 +1,60 @@
-#!/usr/bin/env python
-#coding:utf-8
 '''
-Created on Mar 23, 2018
+Created on Apr 19, 2018
 
 @author: yingc
 '''
 import json
+import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from scipy.stats.mstats_basic import threshold
+import logging
 
-'''
-[(u'archived', False), (u'author', u'ThucydidesJones'), (u'author_flair_css_class', None), (u'author_flair_text', None), 
-(u'brand_safe', False), (u'contest_mode', False), (u'created_utc', 1519776000), (u'distinguished', None), (u'domain', u'self.xdag'), 
-(u'edited', 1519776189.0), (u'gilded', 0), (u'hidden', False), (u'hide_score', False), (u'id', u'80rgry'), (u'is_crosspostable', False), 
-(u'is_reddit_media_domain', False), (u'is_self', True), (u'is_video', False), (u'link_flair_css_class', None), (u'link_flair_text', None), 
-(u'locked', False), (u'media', None), (u'media_embed', OrderedDict()), (u'no_follow', True), (u'num_comments', 6), (u'num_crossposts', 0), 
-(u'over_18', False), (u'parent_whitelist_status', None), (u'permalink', u'/r/xdag/comments/80rgry/new_miner_in_town_should_i_use_cpu_or_gpu/'), 
-(u'pinned', False), (u'retrieved_on', 1520606335), (u'score', 2), (u'secure_media', None), (u'secure_media_embed', OrderedDict()), 
-(u'selftext', u"i7 3820 or\nGTX 1080 FTW\n\nI'm mining via CPU right now since that was easier to set up, but would I be better of utilizing the GPU?"), 
-(u'send_replies', True), (u'spoiler', False), (u'stickied', False), (u'subreddit', u'xdag'), (u'subreddit_id', u't5_bxyiw'), 
-(u'subreddit_type', u'public'), (u'suggested_sort', None), (u'thumbnail', u'self'), (u'thumbnail_height', None), (u'thumbnail_width', None), 
-(u'title', u'New miner in town, should I use CPU or GPU?'), (u'url', u'https://www.reddit.com/r/xdag/comments/80rgry/new_miner_in_town_should_i_use_cpu_or_gpu/'), 
-(u'whitelist_status', None)]
-'''
-
+file_dir = 'E:\\Reddit'
+    
+def rank_num_comments():
+    
+    num_comments_dict=OrderedDict()
+    Zero_num_comments = open(file_dir+'\\data\\'+'Zero_num_comments.txt','a+')
+    filetype = 'RS_'
+    for year in range(2005,2006):
+        print year
+        for month in range(1,13):
+            if year == 2005:
+                month+=5
+            if month>12 or (year == 2018 and month>2):
+                break
+            print month
+            #RS_2007-03_index-score-time-gilded-num_comments-subreddit
+            prefix = filetype+str(year)+'-'+str(month).zfill(2)
+            filename = file_dir+'\\data\\RS_matrix\\'+prefix+'_index-score-time-gilded-num_comments-subreddit.txt'
+            logger.info('Processing:'+filename)
+            ndtype = 'i,i,i,i,i,i' 
+            names='index, score, time, gilded, num_comments, subreddit_id'
+            subm_matrix = np.genfromtxt(filename, dtype=ndtype, names=names, delimiter='\t')
+            with open(filename,'r+') as infile:
+                for line in infile:
+                    subm_matrix = line.rstrip('\n').split('\t')
+                    num_comments = int(subm_matrix[4])
+                    
+                    if num_comments == 0:
+                        Zero_num_comments.write(subm_matrix[0]+'\n')
+                    else:
+                        index = int(subm_matrix[0])
+                        if not num_comments_dict.has_key(num_comments):
+                            num_comments_dict[num_comments]=set([index])
+                        else:
+                            num_comments_dict[num_comments].add(index)
+                
+    sorted_dict= OrderedDict(sorted(num_comments_dict.items(),key = lambda t:-t[0]))
+    Zero_num_comments.close()
+    
+    with open(file_dir+'\\data\\'+'sorted_num_comments.txt','w+') as outfile:
+        for key,value in sorted_dict.items():
+            #print key, value
+            outfile.write('%i\t%s\n' %(key,list(value)))
+    
+        
 def RS():
     #threshold of number of comments
     th_num_comments = 100
@@ -50,14 +79,7 @@ def RS():
     new_data_file2.close()
     print 'RS done!'
 
-'''
-[(u'author', u'vortex30'), (u'author_flair_css_class', None), (u'author_flair_text', None), 
-(u'body', u'People loooooove quoting Warren Buffett here.'), (u'can_gild', True), 
-(u'controversiality', 0), (u'created_utc', 1519776000), (u'distinguished', None), (u'edited', 1519776490), 
-(u'gilded', 0), (u'id', u'duxmu9j'), (u'is_submitter', False), (u'link_id', u't3_80pua7'), (u'parent_id', u't1_duxkd5c'), 
-(u'permalink', u'/r/weedstocks/comments/80pua7/maricann_faces_osc_scrutiny_over_bought_deal/duxmu9j/'), (u'retrieved_on', 1520324632), 
-(u'score', 3), (u'stickied', False), (u'subreddit', u'weedstocks'), (u'subreddit_id', u't5_2zfqj'), (u'subreddit_type', u'public')])
-'''
+
 def RC():
     th_num_records = 1000
     s_with_c_over_100=[]
@@ -111,15 +133,6 @@ def Comment():
     
     print 'Comment done!'
 
-'''
-[(u'header_img', u'http://a.thumbs.redditmedia.com/gq9561mrzeY9TrVx.png'), (u'submit_link_label', u'Submit a new post'),
- (u'name', u't5_2qgzg'), (u'description', u'/r/business brings you the best of your business section.'), (u'suggested_comment_sort', None), 
- (u'subscribers', 201926), (u'header_title', u'/r/business brings you the best of your business section.'), (u'header_size', [1, 1]), 
- (u'public_traffic', False), (u'description_html', u'a href="/r/business"&gt;\gt'),(u'title', u'business'), 
- (u'subreddit_type', u'public'), (u'url', u'/r/business/'), (u'wiki_enabled', False), (u'submission_type', u'any'), 
- (u'public_description_html', u'&lt;!-- SC_OFF --&gt;&lt'), (u'comment_score_hide_mins', 0), (u'quarantine', False), 
- (u'display_name', u'business'), (u'collapse_deleted_comments', False), (u'banner_img', u''), (u'over18', False)]
-'''
     
 def Subreddits():
     count = 0
@@ -137,27 +150,25 @@ def Subreddits():
     new_data_file.close()
     print 'Subreddits done!'
 
-def Visualize():
-    edges=[]
-    count = 0
-    with open('E:\\Reddit\\data\\parent_comment.txt','r') as ps:
-        for line in ps:
-            edge = line.split('\t')
-            edge[1] = edge[1].strip('\n')
-            edges.append(edge)
-            count+=1
-            if count >1000:
-                break
-    print edges    
-    g = nx.graph(edges)
-    nx.draw_networkx(g)
-    plt.show()
 
+    
 if __name__ == '__main__':
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+    handler = logging.FileHandler(file_dir+'\\data\\logs\\'+'reddit_data_prepocessing.log')
+    handler.setLevel(logging.INFO)
+    
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+    handler.setFormatter(formatter)
+     
+    logger.addHandler(handler)
+    logger.info('starts!')
     #RS()
     #RC()
     #Subreddits()
-    Visualize()
+
     #Comment()
+    rank_num_comments()
     
     print 'All done!'
+

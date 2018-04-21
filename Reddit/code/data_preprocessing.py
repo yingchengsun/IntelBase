@@ -11,7 +11,7 @@ import json
 from collections import OrderedDict
 import numpy as np
 import logging
-import simplejson
+
 
 file_dir = 'E:\\Reddit'
 
