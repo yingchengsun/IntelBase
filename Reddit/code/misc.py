@@ -122,8 +122,7 @@ l = np.genfromtxt('out.txt', dtype='i,S10', delimiter='\t',names='a,b')
 print l['a']
 print int(l['b'][0].lstrip('[').rstrip(']').split(',')[0])
 
-tt=set(2,)
-print tt
+
 '''
 with open('out.txt') as infile:
     for line in infile.readlines():
@@ -146,4 +145,8 @@ with open('out.txt') as infile:
 
 '''
 
-
+aa=[]
+aa=aa+([11,11,22])
+ss=' fff'
+ss =ss.strip()
+print ss
