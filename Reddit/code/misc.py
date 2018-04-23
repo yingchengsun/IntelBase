@@ -143,7 +143,7 @@ with open('out.txt') as infile:
     for line in infile.readlines():
         print list(line)
 
-'''
+
 
 num_comments_file_dict={}
 k_num_comments_dict={}
@@ -156,4 +156,9 @@ print num_comments_file_dict
 num_comments=0
 if 0<=num_comments <= k:
     print 'num_comments'
-
+'''
+from itertools import izip  
+a=[1,2,3]
+b=['a','b','c']
+for i,j in izip(a,b):
+    print i,j

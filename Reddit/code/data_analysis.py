@@ -10,6 +10,7 @@ import zipfile
 import os
 from collections import OrderedDict
 import logging
+from itertools import izip  
 
 file_dir = 'E:\\Reddit'
 
@@ -75,7 +76,7 @@ def rank_num_comments():
                     if 0<=num_comments <= k:
                         num_comments_file_dict[num_comments].write(subm_matrix[0]+'\n')
                         k_num_comments_dict[num_comments]+=1
-                    else:
+                    elif num_comments>0:
                         index = int(subm_matrix[0])
                         if not num_comments_dict.has_key(num_comments):
                             num_comments_dict[num_comments]=set([index])
@@ -122,7 +123,7 @@ def num_comment_statics():
     
       
         
-def generate_submr_id_list():
+def generate_submr_id_text_list():
     """Generate submission id list given its index
     
     """
@@ -157,25 +158,37 @@ def generate_submr_id_list():
             logger.info('Processing:'+filename_id)
             logger.info('Processing:'+filename_text)
             
-            with open(filename_id,'r+') as infile:
-                for line in infile:
+            with open(filename_id,'r+') as infile_id, open (filename_text,'r+') as infile_text:
+                for line_id,line_text in izip(infile_id, infile_text):  
                     if str(count) in submr_index_list:
-                        submr_id = line.strip()
+                        submr_id = line_id.strip()
                         submr_id_list.append(submr_id)
+                        
+                        line_text_list = line_text.rstrip('\n').split('\t')
+                        title=line_text_list[1]
+                        text=line_text_list[2]
+                        print title,text     
+                                         
                     count+=1
     submr_index_infile.close()
     print str(count)+' submission id records have been processed!'
-    return submr_id_list
+    
+    with open(file_dir+'\\data\\submr_id_list.txt','w+') as outfile_idlist:
+        outfile_idlist.write(submr_id_list)                 
+    print 'generate_submr_id_text_list done'
     
 
     
     
     
-def comment_network(submr_id_list):
+def comment_network():
     """Generate the comment and its parent comment pairs given submission id
     
     """
+    with open(file_dir+'\\data\\submr_id_list.txt','r+') as infile_idlist:
+        submr_id_list = infile_idlist.read()    
     print submr_id_list
+    
     comment_network_file = open(file_dir+'\\data\\'+'comment_network.txt','w+')
     
     count=0
@@ -270,8 +283,8 @@ if __name__ == '__main__':
 
 
     #rank_num_comments()
-    num_comment_statics()
-    #print generate_submr_id_list()
+    #num_comment_statics()
+    generate_submr_id_text_list()
     #comment_network(generate_submr_id_list())
     print 'All done!'
 
