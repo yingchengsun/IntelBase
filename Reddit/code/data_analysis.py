@@ -124,7 +124,7 @@ def num_comment_statics():
       
         
 def generate_submr_id_text_list():
-    """Generate submission id list given its index
+    """Generate submission id list and corresponding title and text given its index
     
     """
 
@@ -158,6 +158,7 @@ def generate_submr_id_text_list():
             logger.info('Processing:'+filename_id)
             logger.info('Processing:'+filename_text)
             
+            #The main requirement to use this tech is all input files or lists have the same length
             with open(filename_id,'r+') as infile_id, open (filename_text,'r+') as infile_text:
                 for line_id,line_text in izip(infile_id, infile_text):  
                     if str(count) in submr_index_list:
@@ -174,7 +175,8 @@ def generate_submr_id_text_list():
     print str(count)+' submission id records have been processed!'
     
     with open(file_dir+'\\data\\submr_id_list.txt','w+') as outfile_idlist:
-        outfile_idlist.write(submr_id_list)                 
+        for item in submr_id_list:
+            outfile_idlist.write(item+'\n')                 
     print 'generate_submr_id_text_list done'
     
 
@@ -184,9 +186,11 @@ def generate_submr_id_text_list():
 def comment_network():
     """Generate the comment and its parent comment pairs given submission id
     
+        Extract both id and text body of comment 
+    
     """
-    with open(file_dir+'\\data\\submr_id_list.txt','r+') as infile_idlist:
-        submr_id_list = infile_idlist.read()    
+    submr_id_list = np.genfromtxt(file_dir+'\\data\\submr_id_list.txt', dtype='S10')
+   
     print submr_id_list
     
     comment_network_file = open(file_dir+'\\data\\'+'comment_network.txt','w+')
@@ -212,8 +216,9 @@ def comment_network():
             for line in file_object:
                 data_item = json.loads(line, object_pairs_hook=OrderedDict)                
                 if data_item['link_id'].split('_', 1)[-1] in submr_id_list:
+
                     comment_network_file.write((u'%s\t%s\n' %(data_item['parent_id'].split('_', 1)[-1],data_item['id'] )).encode('utf-8'))
-                    print data_item['id']
+                    print data_item['body'].encode('utf-8')
                 count+=1
                 if count%10000 == 0:
                     print count,' recodes have been processed!'
@@ -284,7 +289,7 @@ if __name__ == '__main__':
 
     #rank_num_comments()
     #num_comment_statics()
-    generate_submr_id_text_list()
-    #comment_network(generate_submr_id_list())
+    #generate_submr_id_text_list()
+    comment_network()
     print 'All done!'
 

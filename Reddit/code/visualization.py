@@ -230,7 +230,7 @@ if __name__ == '__main__':
     #subreddit_title_wordcloud()
     #RC_monthly_count()
     #comment_network_visual()
-    #comment_network_visual_indexing_version()
-    num_comments_plot()
+    comment_network_visual_indexing_version()
+    #num_comments_plot()
     print 'All done!'
         

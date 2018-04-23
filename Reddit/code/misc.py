@@ -157,8 +157,15 @@ num_comments=0
 if 0<=num_comments <= k:
     print 'num_comments'
 '''
-from itertools import izip  
+from itertools import izip_longest
 a=[1,2,3]
 b=['a','b','c']
-for i,j in izip(a,b):
-    print i,j
+c=['A','B']
+print zip(a,b,c)
+for i,j,k in izip_longest(a,b,c):
+    if k is None:
+        print 'haha'
+    print i,j,k
+from collections import Counter
+c = Counter([1, 2, 3, 1, 3, 'hello'])
+print c
