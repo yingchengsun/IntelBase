@@ -80,7 +80,7 @@ if __name__ == "__main__":
      
     logger.info('Hello baby')
     t()
-'''
+
 dict = {1: set([2]), 6: set([2, 4]), 4: set([0,1,3]), 5: set([32, 44])}
 d={'d': 75, 'b': 66, 'c': 93, 'x': 73, 'y': 71, 'z': 72}  
 print d.keys()
@@ -101,7 +101,7 @@ print r['arr_0']
 
 d= sorted(dict.items(),key = lambda x : -x[0])  
         
-'''
+
 with open('out.txt','w+') as outfile:
     for key,value in ccc.items():
         print key,value
@@ -116,14 +116,14 @@ print dict(d)
 with open('out.txt','w+') as outfile:
     for i in range(len(d)):
         outfile.write('%i\t%s\n' %(d[i][0],list(d[i][1])))
-'''
+
           
 l = np.genfromtxt('out.txt', dtype='i,S10', delimiter='\t',names='a,b')
 print l['a']
 print int(l['b'][0].lstrip('[').rstrip(']').split(',')[0])
 
 
-'''
+
 with open('out.txt') as infile:
     for line in infile.readlines():
         print line.split(',')
@@ -145,8 +145,15 @@ with open('out.txt') as infile:
 
 '''
 
-aa=[]
-aa=aa+([11,11,22])
-ss=' fff'
-ss =ss.strip()
-print ss
+num_comments_file_dict={}
+k_num_comments_dict={}
+k=20
+for i in range(k+1):
+    num_comments_file_dict[i]=str(i)+'_num_comments.txt'
+    k_num_comments_dict[i]=0
+print num_comments_file_dict
+
+num_comments=0
+if 0<=num_comments <= k:
+    print 'num_comments'
+

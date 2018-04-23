@@ -43,8 +43,16 @@ def rank_num_comments():
     """Rank submissions by the number of its comments, and group submissions by their number of comments
     
     """
+    
+    num_comments_file_dict={}
+    k_num_comments_dict={}
+    k=20
+    for i in range(k+1):
+        num_comments_file_dict[i] = open(file_dir+'\\data\\num_comments\\'+str(i)+'_num_comments.txt','w+')
+        k_num_comments_dict[i] = 0
+    
     num_comments_dict=OrderedDict()
-    Zero_num_comments = open(file_dir+'\\data\\'+'Zero_num_comments.txt','a+')
+    
     filetype = 'RS_'
     for year in range(2005,2006):
         print year
@@ -64,8 +72,9 @@ def rank_num_comments():
                     subm_matrix = line.rstrip('\n').split('\t')
                     num_comments = int(subm_matrix[4])
                     
-                    if num_comments == 0:
-                        Zero_num_comments.write(subm_matrix[0]+'\n')
+                    if 0<=num_comments <= k:
+                        num_comments_file_dict[num_comments].write(subm_matrix[0]+'\n')
+                        k_num_comments_dict[num_comments]+=1
                     else:
                         index = int(subm_matrix[0])
                         if not num_comments_dict.has_key(num_comments):
@@ -74,10 +83,19 @@ def rank_num_comments():
                             num_comments_dict[num_comments].add(index)
                 
     sorted_dict= OrderedDict(sorted(num_comments_dict.items(),key = lambda t:-t[0]))
-    logger('Subtotal for'+ str(len(sorted_dict)) +'different numbers of comments!')
+    logger.info('Subtotal for'+ str(len(sorted_dict)) +'different numbers of comments!')
     
-    Zero_num_comments.close()
-    with open(file_dir+'\\data\\'+'sorted_num_comments.txt','w+') as outfile:
+    sorted_k_dict= OrderedDict(sorted(k_num_comments_dict.items(),key = lambda t:t[0]))
+    
+    with open(file_dir+'\\data\\num_comments\\'+'k_num_comments.txt','w+') as outfile:
+        for key,value in sorted_k_dict.items():
+            #print key, value
+            outfile.write('%i\t%i\n' %(key,value))
+            
+    for i in range(k+1):
+        num_comments_file_dict[i].close()
+
+    with open(file_dir+'\\data\\num_comments\\'+'sorted_num_comments.txt','w+') as outfile:
         for key,value in sorted_dict.items():
             #print key, value
             outfile.write('%i\t%s\n' %(key,list(value)))
@@ -226,8 +244,8 @@ if __name__ == '__main__':
     logger.info('starts!')
 
 
-    #rank_num_comments()
+    rank_num_comments()
     #print generate_submr_id_list()
-    comment_network(generate_submr_id_list())
+    #comment_network(generate_submr_id_list())
     print 'All done!'
 
