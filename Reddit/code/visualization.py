@@ -186,6 +186,26 @@ def comment_network_visual_indexing_version():
     
     print "comment network visualization indexing version total run time:"
     print time()-t
+
+def num_comments_plot():
+    filename = 'k_num_comments.txt'
+    sub_dir = 'num_comments'
+    filepath_name = os.path.join(file_dir, sub_dir, filename)
+    ndtype = 'i, i'
+    names = 'num_comment, quantity'
+    s = np.genfromtxt(filepath_name, dtype=ndtype, names=names)
+    #print np.array([s['count']]).T
+    x = range(len(s['num_comment']))
+    print 'mean: '+str(s['num_comment'].mean())
+    
+    plt.plot(x,s['quantity']) 
+    #plt.xticks(x,s['month'])
+    #plt.xticks(x,s['month'],rotation=17 )
+    
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_num_comments'+'.png')
+    plt.show()    
+    plt.close("all")
+    print 'num_comments_plot done!'
     
 def RC_body():
     filename = 'RC_2008-01_body.txt'
@@ -211,6 +231,6 @@ if __name__ == '__main__':
     #RC_monthly_count()
     #comment_network_visual()
     #comment_network_visual_indexing_version()
-    RC_body()
+    num_comments_plot()
     print 'All done!'
         

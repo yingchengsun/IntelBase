@@ -100,7 +100,27 @@ def rank_num_comments():
             #print key, value
             outfile.write('%i\t%s\n' %(key,list(value)))
     print 'Rank number of comments done!'
+
+def num_comment_statics():
+    """num_comment_statics
+    """
+    num_comment_dict={}
+    with open(file_dir+'\\data\\num_comments\\'+'k_num_comments.txt','a+') as outfile:
+        with open(file_dir+'\\data\\num_comments\\'+'sorted_num_comments.txt','r+') as infile:
+            for line in infile:
+                num_comment = line.split('\t')[0]
+                subm_list = line.split('\t')[1].strip('\n').lstrip('[').rstrip(']').split(',')
+                print num_comment, subm_list
+                num_comment_dict[int(num_comment)] = len(subm_list)
+            print num_comment_dict
+            sorted_dict= OrderedDict(sorted(num_comment_dict.items(),key = lambda t:t[0]))
+            print sorted_dict
+            for key,value in sorted_dict.items():
+                #print key, value
+                outfile.write('%i\t%i\n' %(key,value))
+    print 'num_comment_statics done!'
     
+      
         
 def generate_submr_id_list():
     """Generate submission id list given its index
@@ -132,10 +152,12 @@ def generate_submr_id_list():
             print month
             
             prefix = filetype+str(year)+'-'+str(month).zfill(2)
-            filename = file_dir+'\\data\\RS_id\\'+prefix+'_id.txt'
-            logger.info('Processing:'+filename)
+            filename_id = file_dir+'\\data\\RS_id\\'+prefix+'_id.txt'
+            filename_text = file_dir+'\\data\\\RS_title_text\\'+prefix+'_index-title-text.txt'
+            logger.info('Processing:'+filename_id)
+            logger.info('Processing:'+filename_text)
             
-            with open(filename,'r+') as infile:
+            with open(filename_id,'r+') as infile:
                 for line in infile:
                     if str(count) in submr_index_list:
                         submr_id = line.strip()
@@ -146,6 +168,9 @@ def generate_submr_id_list():
     return submr_id_list
     
 
+    
+    
+    
 def comment_network(submr_id_list):
     """Generate the comment and its parent comment pairs given submission id
     
@@ -244,7 +269,8 @@ if __name__ == '__main__':
     logger.info('starts!')
 
 
-    rank_num_comments()
+    #rank_num_comments()
+    num_comment_statics()
     #print generate_submr_id_list()
     #comment_network(generate_submr_id_list())
     print 'All done!'
