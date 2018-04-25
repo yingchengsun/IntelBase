@@ -144,6 +144,36 @@ def comment_network_visual():
     print "comment network visualization total run time:"
     print time()-t
 
+def comment_network_visual_dynamic():
+    """Plot comment network graph by the id and pid pairs
+        
+    """
+    t = time() 
+    filename = 'comment_network.txt'
+    filepath_name = os.path.join(file_dir, filename)
+    
+    ndtype = 'S10, S10' 
+    names = 'parent_id, id'
+    ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t')
+
+    edges = zip(ps['parent_id'], ps['id'])
+    print edges
+    d=[]
+    
+    for item in edges:
+        d.append(item)
+        g = nx.Graph(d)
+        
+        #pos = nx.shell_layout(g)
+    #nx.draw(g)
+        nx.draw_networkx(g)
+        
+        plt.pause(0.5)
+        plt.clf()
+    #plt.show()
+
+    print "comment network visualization total run time:"
+    print time()-t
   
 def comment_network_visual_indexing_version():
     """Use the property of set to eliminate the repetition and give all ids an index, 
@@ -206,6 +236,38 @@ def num_comments_plot():
     plt.show()    
     plt.close("all")
     print 'num_comments_plot done!'
+
+def num_comments_pie():
+    filename = 'k_num_comments.txt'
+    sub_dir = 'num_comments'
+    filepath_name = os.path.join(file_dir, sub_dir, filename)
+    ndtype = 'i, i'
+    names = 'num_comment, quantity'
+    s = np.genfromtxt(filepath_name, dtype=ndtype, names=names)
+    
+    #print np.array([s['count']]).T
+    x = s['quantity'][1:-1]
+    s_length = len(x)
+    labels1=['']*s_length
+    explode1=[0]*s_length
+    labels1[0]=1
+    labels1[1]=2
+    labels1[2]=3
+    #explode1[0]=0.08
+    #explode1[1]=0.05
+    plt.axes(aspect=1)
+    plt.pie(x,autopct='%.0f%%',shadow=True,explode=explode1,labels=labels1)
+    #plt.xticks(x,s['month'])
+    #plt.xticks(x,s['month'],rotation=17 )
+    
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_num_comments'+'.png')
+    plt.show()    
+    plt.close("all")
+    
+    labels1='A','B','C','D'
+
+
+    print 'num_comments_pie done!'
     
 def RC_body():
     filename = 'RC_2008-01_body.txt'
@@ -230,7 +292,9 @@ if __name__ == '__main__':
     #subreddit_title_wordcloud()
     #RC_monthly_count()
     #comment_network_visual()
-    comment_network_visual_indexing_version()
+    #comment_network_visual_indexing_version()
+    #comment_network_visual_dynamic()
+    num_comments_pie()
     #num_comments_plot()
     print 'All done!'
         
