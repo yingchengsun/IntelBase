@@ -256,16 +256,21 @@ def num_comments_pie():
     #explode1[0]=0.08
     #explode1[1]=0.05
     plt.axes(aspect=1)
-    plt.pie(x,autopct='%.0f%%',shadow=True,explode=explode1,labels=labels1)
+    plt.pie(x,autopct='%.0f%%',shadow=True,explode=explode1,labels=labels1, textprops = {'fontsize':14, 'color':'k'})
+    plt.pie
     #plt.xticks(x,s['month'])
     #plt.xticks(x,s['month'],rotation=17 )
     
-    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_num_comments'+'.png')
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_num_comments_pie'+'.png')
     plt.show()    
-    plt.close("all")
     
-    labels1='A','B','C','D'
+    data=s['num_comment']
 
+    #plt.boxplot(data,sym='o',whis=1.5,labels=labes)
+    plt.boxplot(data)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_num_comments_box'+'.png')
+    plt.show()
+    plt.close("all")
 
     print 'num_comments_pie done!'
     

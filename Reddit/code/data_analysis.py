@@ -83,52 +83,37 @@ def rank_num_comments():
                         else:
                             num_comments_dict[num_comments].add(index)
                 
-    sorted_dict= OrderedDict(sorted(num_comments_dict.items(),key = lambda t:-t[0]))
+    sorted_dict= OrderedDict(sorted(num_comments_dict.items(),key = lambda t:t[0]))
+    sorted_dict_reversed= OrderedDict(sorted(num_comments_dict.items(),key = lambda t:-t[0]))
     logger.info('Subtotal for'+ str(len(sorted_dict)) +'different numbers of comments!')
     
     sorted_k_dict= OrderedDict(sorted(k_num_comments_dict.items(),key = lambda t:t[0]))
     
-    with open(file_dir+'\\data\\num_comments\\'+'k_num_comments.txt','w+') as outfile:
+    with open(file_dir+'\\data\\num_comments\\'+'sorted_num_comments_count.txt','w+') as outfile:
         for key,value in sorted_k_dict.items():
             #print key, value
             outfile.write('%i\t%i\n' %(key,value))
-            
+        
+        for key,value in sorted_dict.items():
+            outfile.write('%i\t%i\n' %(key,len(value)))
+       
     for i in range(k+1):
         num_comments_file_dict[i].close()
 
-    with open(file_dir+'\\data\\num_comments\\'+'sorted_num_comments.txt','w+') as outfile:
-        for key,value in sorted_dict.items():
+    with open(file_dir+'\\data\\num_comments\\'+'r_sorted_num_comments.txt','w+') as outfile:
+        for key,value in sorted_dict_reversed.items():
             #print key, value
             outfile.write('%i\t%s\n' %(key,list(value)))
     print 'Rank number of comments done!'
 
-def num_comment_statics():
-    """num_comment_statics
-    """
-    num_comment_dict={}
-    with open(file_dir+'\\data\\num_comments\\'+'k_num_comments.txt','a+') as outfile:
-        with open(file_dir+'\\data\\num_comments\\'+'sorted_num_comments.txt','r+') as infile:
-            for line in infile:
-                num_comment = line.split('\t')[0]
-                subm_list = line.split('\t')[1].strip('\n').lstrip('[').rstrip(']').split(',')
-                print num_comment, subm_list
-                num_comment_dict[int(num_comment)] = len(subm_list)
-            print num_comment_dict
-            sorted_dict= OrderedDict(sorted(num_comment_dict.items(),key = lambda t:t[0]))
-            print sorted_dict
-            for key,value in sorted_dict.items():
-                #print key, value
-                outfile.write('%i\t%i\n' %(key,value))
-    print 'num_comment_statics done!'
-    
-      
+
         
 def generate_submr_id_text_list():
     """Generate submission id list and corresponding title and text given its index
     
     """
 
-    submr_index_infile = open(file_dir+'\\data\\'+'sorted_num_comments.txt','a+')
+    submr_index_infile = open(file_dir+'\\data\\'+'r_sorted_num_comments.txt','a+')
     line_count=0
     submr_index_list=[]
     for line in submr_index_infile:
@@ -287,9 +272,9 @@ if __name__ == '__main__':
     logger.info('starts!')
 
 
-    #rank_num_comments()
+    rank_num_comments()
     #num_comment_statics()
     #generate_submr_id_text_list()
-    comment_network()
+    #comment_network()
     print 'All done!'
 
