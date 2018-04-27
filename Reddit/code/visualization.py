@@ -10,7 +10,7 @@ import numpy as np
 from time import time 
 from datetime import datetime
 from wordcloud import WordCloud
-
+from textblob import TextBlob
 
 
 file_dir = 'E:\\Reddit\\data'
@@ -174,7 +174,138 @@ def comment_network_visual_dynamic():
 
     print "comment network visualization total run time:"
     print time()-t
-  
+    
+    
+    
+
+def comment_network_visual_category():
+    """CATEGORY
+        
+    """
+    t = time() 
+    subpath = 'comment_network'
+    filename = 'submission_all_info.txt'
+    filepath_name = os.path.join(file_dir,subpath, filename)
+    infile_subm = open(filepath_name,'r+')
+    subm_all = infile_subm.readlines()
+    
+    subm = subm_all[0].split('\t')
+    subm_id = subm[0]
+    subm_title = subm[1]
+    subm_text = subm[2]
+    subm_index = subm[3]
+    subm_score = subm[4]
+    subm_time = subm[5]
+    subm_gilded = subm[6]
+    subm_num_comments = subm[7]
+    subreddit_index = subm[8]
+    subreddit_id = subm[9]
+    
+    subm_filename = subm_id+'.txt'
+    filepath_name = os.path.join(file_dir, subpath, subm_filename)
+    
+    ndtype = 'S10,S10,i,i,i,i,S20,S1000' 
+    names = 'cid, pid, time, controversiality, score, gilded, author, body'
+     
+    k=200
+    
+    ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')[1:k]
+
+    controversiality = map(int, ps['controversiality'])+[0]
+    created_utc = map(int, ps['time'])+[int(subm_time)]
+    score =  map(int, ps['score'])+[10]
+    gilded = map(int, ps['gilded'])
+    author = ps['author']
+    body = np.append(ps['body'], subm_title)
+
+    edges = zip(ps['pid'], ps['cid'])
+    g = nx.Graph(edges)
+    nodes = np.append(ps['cid'], subm_id)
+    nodes=nodes.tolist()
+    
+    polarity = [TextBlob(item.decode('utf-8')).polarity for item in body]
+    subjectivity = [TextBlob(item.decode('utf-8')).subjectivity for item in body]
+
+    created_utc_diff = [item-int(subm_time) for item in created_utc]
+    created_utc_degrade = [item/60+1 for item in created_utc_diff]
+    
+    text = body
+
+    wordcloud = WordCloud(width=1600, height=800).generate(" ".join(text))
+
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.tight_layout(pad=0)
+    plt.axis("off")
+    plt.show()
+        
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_subreddit_title_wordcloud'+'.png', facecolor='k', bbox_inches='tight')
+    '''
+    degree = g.degree()
+    size = [50*(degree[n]+1.0) for n in nodes]
+    pos=nx.spring_layout(g)
+    degree_ordered =  [degree[n] for n in nodes]
+    plt.plot(score,label="score")  
+    plt.plot(polarity,label="polarity") 
+    plt.plot(subjectivity,label="subjectivity") 
+    plt.plot(degree_ordered,label="degree") 
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.legend(fontsize=16)
+
+    plt.show()
+    
+    
+    nx.draw_networkx(g)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('submission-comment network')
+    plt.show()
+    
+    plt.clf()
+    nx.draw(g,nodelist=nodes, with_labels=False, pos=pos, node_size=size, arrows=True, title='Scaling by connections')
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('Scaling by connections')
+    plt.show()
+    
+    plt.clf()
+    colors = controversiality
+    nx.draw(g,nodelist=nodes, node_color=[i for i in colors], with_labels=False,  cmap=plt.cm.Reds, pos=pos, node_size=size, arrows=True)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('Colored by controversiality')
+    plt.show()
+    
+    plt.clf()
+    colors = score
+    nx.draw(g,nodelist=nodes, node_color=[i for i in colors], with_labels=False,  cmap=plt.cm.Reds, pos=pos, node_size=size, arrows=True)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('Colored by score')
+    plt.show()
+    
+
+    plt.clf()
+    colors = polarity
+    nx.draw(g,nodelist=nodes, node_color=[i for i in colors], with_labels=False,  cmap=plt.cm.Reds, pos=pos, node_size=size, arrows=True)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('colored by polarity')
+    plt.show()
+    
+    plt.clf()
+    colors = subjectivity
+    nx.draw(g,nodelist=nodes, node_color=[i for i in colors], with_labels=False,  cmap=plt.cm.Reds, pos=pos, node_size=size, arrows=True)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('colored by subjectivity')
+    plt.show()
+    
+    
+    plt.clf()
+    colors = created_utc_degrade
+    nx.draw(g,nodelist=nodes, node_color=[-i for i in colors], with_labels=False,  cmap=plt.cm.Reds, pos=pos, node_size=size, arrows=True)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('Evloving by time')
+    plt.show()
+    '''
+
+    print "comment network visualization category total run time:"
+    print time()-t
+    
 def comment_network_visual_indexing_version():
     """Use the property of set to eliminate the repetition and give all ids an index, 
         and use the new indexes to plot comment network graph
@@ -299,7 +430,8 @@ if __name__ == '__main__':
     #comment_network_visual()
     #comment_network_visual_indexing_version()
     #comment_network_visual_dynamic()
-    num_comments_pie()
+    #num_comments_pie()
+    comment_network_visual_category()
     #num_comments_plot()
     print 'All done!'
         

@@ -113,21 +113,26 @@ def generate_submr_id_text_list():
     
     """
 
-    submr_index_infile = open(file_dir+'\\data\\'+'r_sorted_num_comments.txt','a+')
+    infile_submr_index = open(file_dir+'\\data\\num_comments\\'+'r_sorted_num_comments.txt','r+')
     line_count=0
     submr_index_list=[]
-    for line in submr_index_infile:
+    for line in infile_submr_index:
         line = line.split('\t')
+        submr_index_list =submr_index_list+line[1].strip().lstrip('[').rstrip(']').split(',')
         line_count+=1
-        if line_count ==2:
-            submr_index_list =submr_index_list+line[1].strip().lstrip('[').rstrip(']').split(',')
+        if line_count ==20:
             break
     submr_index_list = [item.strip() for item in submr_index_list] 
     print submr_index_list
-    submr_id_list=[]
+    
+    infile_subr_id = open(file_dir+'\\data\\'+'subreddits_id.txt','r+')
+    subr_id_list = infile_subr_id.readlines()
+    
+    outfile_idlist = open(file_dir+'\\data\\submr_allinfo_list.txt','w+')
     
     count=0
     filetype = 'RS_'
+    index_old = index ='0'
     for year in range(2005,2006):
         print year
         for month in range(1,13):
@@ -140,28 +145,58 @@ def generate_submr_id_text_list():
             prefix = filetype+str(year)+'-'+str(month).zfill(2)
             filename_id = file_dir+'\\data\\RS_id\\'+prefix+'_id.txt'
             filename_text = file_dir+'\\data\\\RS_title_text\\'+prefix+'_index-title-text.txt'
+            filename_matrix = file_dir+'\\data\\\\RS_matrix\\'+prefix+'_index-score-time-gilded-num_comments-subreddit.txt'
+            
             logger.info('Processing:'+filename_id)
             logger.info('Processing:'+filename_text)
+            logger.info('Processing:'+filename_matrix)
+            
             
             #The main requirement to use this tech is all input files or lists have the same length
-            with open(filename_id,'r+') as infile_id, open (filename_text,'r+') as infile_text:
-                for line_id,line_text in izip(infile_id, infile_text):  
-                    if str(count) in submr_index_list:
+            with open(filename_id,'r+') as infile_id, open (filename_text,'r+') as infile_text, open (filename_matrix,'r+') as infile_matrix:
+                for line_id,line_text,line_matrix in izip(infile_id, infile_text,infile_matrix): 
+                    line_matrix_list = line_matrix.rstrip('\n').split('\t')
+
+                    index_old=index
+
+                    index = line_matrix_list[0] 
+                    if int(index_old)!= int(index)-1:
+                        
+                        print 'index_old',index_old
+                        print 'index',index
+                        
+                    #if str(count) in submr_index_list:
+                    if index in submr_index_list:
                         submr_id = line_id.strip()
-                        submr_id_list.append(submr_id)
+                        outfile_idlist.write(submr_id)
+                        outfile_idlist.write('\t')
                         
                         line_text_list = line_text.rstrip('\n').split('\t')
                         title=line_text_list[1]
                         text=line_text_list[2]
-                        print title,text     
-                                         
+                        outfile_idlist.write(title+'\t'+text)  
+                        outfile_idlist.write('\t')
+                        
+                        line_matrix_list = line_matrix.rstrip('\n').split('\t')
+
+                        #index = line_matrix_list[0]
+                        score = line_matrix_list[1]
+                        time = line_matrix_list[2]
+                        gilded = line_matrix_list[3]
+                        num_comments = line_matrix_list[4]
+                        subreddit  = int(line_matrix_list[5])
+                        outfile_idlist.write(line_matrix.rstrip('\n')) 
+                        outfile_idlist.write('\t')
+                        outfile_idlist.write(subr_id_list[subreddit]) 
+
                     count+=1
-    submr_index_infile.close()
-    print str(count)+' submission id records have been processed!'
+                    
+    infile_submr_index.close()
+    infile_subr_id.close()
+    outfile_idlist.close()
     
-    with open(file_dir+'\\data\\submr_id_list.txt','w+') as outfile_idlist:
-        for item in submr_id_list:
-            outfile_idlist.write(item+'\n')                 
+    print str(count)+' submission id records have been processed!'
+          
     print 'generate_submr_id_text_list done'
     
 
@@ -174,42 +209,86 @@ def comment_network():
         Extract both id and text body of comment 
     
     """
-    submr_id_list = np.genfromtxt(file_dir+'\\data\\submr_id_list.txt', dtype='S10')
-   
+    #submr_id_list = np.genfromtxt(file_dir+'\\data\\submr_id_list.txt', dtype='S10')
+    infile_sid = open(file_dir+'\\data\\submr_id_list.txt','r+')
+    submr_id_list = infile_sid.readlines()
+    submr_id_list = [item.rstrip('\n') for item in submr_id_list] 
     print submr_id_list
     
-    comment_network_file = open(file_dir+'\\data\\'+'comment_network.txt','w+')
+    #comment_network_file = open(file_dir+'\\data\\comment_network\\'+'comment_network.txt','w+')
+    outfile_dict={}
+    for id in submr_id_list:
+        outfile_dict[id] = open(file_dir+'\\data\\comment_network\\'+id+'.txt','w+')
     
     count=0
     filetype = 'RC_'
     ext = '.bz2'
-    for year in range(2005,2007):
+    for year in range(2010,2019):
         print year
         for month in range(1,13):
-            if year == 2005:
-                month+=11
+            if year == 2010:
+                month+=7
             if month>12 or (year == 2018 and month>2):
                 break
+            if (year == 2017 and month==12) or (year == 2018):
+                ext = '.zip'
+                
             print month
             
             prefix = filetype+str(year)+'-'+str(month).zfill(2)
-            filename = file_dir+'\\data\\raw_data\\'+prefix+'_id.txt'
-            logger.info('Processing:'+filename)
+        
+            logger.info('Processing:'+filetype+prefix+ext)
             
             file_object = read_file(filetype, year, month, ext)
           
             for line in file_object:
-                data_item = json.loads(line, object_pairs_hook=OrderedDict)                
-                if data_item['link_id'].split('_', 1)[-1] in submr_id_list:
-
-                    comment_network_file.write((u'%s\t%s\n' %(data_item['parent_id'].split('_', 1)[-1],data_item['id'] )).encode('utf-8'))
-                    print data_item['body'].encode('utf-8')
+                data_item = json.loads(line, object_pairs_hook=OrderedDict)           
+                sid = data_item['link_id'].split('_', 1)[-1]     
+                if sid in submr_id_list:
+                    print sid
+                    cid=data_item['id']
+                    pid=data_item['parent_id'].split('_', 1)[-1]
+                    
+                    if not data_item.has_key('author') or not data_item['author']:
+                        author = ''
+                    else:
+                        author = data_item['author']
+                    
+                    body = data_item['body']
+                    if body:
+                        body=' '.join(data_item['body'].split())
+                    
+                    time = int(data_item['created_utc'])
+                    
+                    if not data_item.has_key('controversiality') or not data_item['controversiality']:
+                        controversiality = 0
+                    else:
+                        controversiality = int(data_item['controversiality'])
+                    
+                    
+                    if not data_item.has_key('score') or not data_item['score']:
+                        score = 0
+                    else:
+                        score = int(data_item['score'])
+                    
+                    if not data_item.has_key('gilded') or not data_item['gilded']:
+                        gilded = 0
+                    else:
+                        gilded = int(data_item['gilded'])
+                    
+                    
+                    outfile_dict[sid].write((u'%s\t%s\t%i\t%i\t%i\t%i\t%s\t%s\n' %(cid, pid, time, controversiality, score, gilded, author, body )).encode('utf-8'))
+                   
                 count+=1
                 if count%10000 == 0:
                     print count,' recodes have been processed!'
                 
-    comment_network_file.close()
-    file_object.close()
+    #comment_network_file.close()
+            file_object.close()
+            
+    infile_sid.close()
+    for id in submr_id_list:
+        outfile_dict[id].close()
   
     print 'comment network done!'
 
@@ -272,9 +351,9 @@ if __name__ == '__main__':
     logger.info('starts!')
 
 
-    rank_num_comments()
+    #rank_num_comments()
     #num_comment_statics()
-    #generate_submr_id_text_list()
+    generate_submr_id_text_list()
     #comment_network()
     print 'All done!'
 
