@@ -11,6 +11,12 @@ from time import time
 from datetime import datetime
 from wordcloud import WordCloud
 from textblob import TextBlob
+import codecs
+from gensim.models import LdaModel
+from gensim.corpora import Dictionary
+from gensim import corpora, models
+import numpy as np
+import jieba
 
 
 file_dir = 'E:\\Reddit\\data'
@@ -175,9 +181,37 @@ def comment_network_visual_dynamic():
     print "comment network visualization total run time:"
     print time()-t
     
-    
-    
+def read_subreddit_considering_submssion():
 
+    subpath = 'subreddits_original'
+    filename = 'subreddits_index-displayname-subscribers-time.txt'
+    filepath_name = os.path.join(file_dir,subpath, filename)
+    ndtype='i,S100,i,i'
+    names='index,displayname,subscribers,time'
+    ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')
+    
+    subpath = 'comment_network'
+    filename = 'submission_all_info.txt'
+    filepath_name = os.path.join(file_dir,subpath, filename)
+    infile_subm = open(filepath_name,'r+')
+    subm_all = infile_subm.readlines()
+    
+    print ps['index']
+    for subm in subm_all:
+        subm = subm.split('\t')
+        subm_id = subm[0]
+        subreddit_index = int(subm[8])
+        print subreddit_index
+        subreddit_id = subm[9]
+        if subreddit_index<=ps['index'][-1]:
+            print ps['displayname'].tolist()[subreddit_index]
+            
+        print subreddit_id
+        
+    infile_subm.close()
+    
+    
+    
 def comment_network_visual_category():
     """CATEGORY
         
@@ -229,8 +263,60 @@ def comment_network_visual_category():
     created_utc_diff = [item-int(subm_time) for item in created_utc]
     created_utc_degrade = [item/60+1 for item in created_utc_diff]
     
-    text = body
+    
+    s1=subm_title
+    length = len(body)
 
+    similarity=[0]*length
+    for j in range(length):
+        s2=body[j]
+        train =[] 
+        stopwords=['']
+        for line in body.tolist():
+            line = list(jieba.cut(line))
+            train.append([w for w in line if w not in stopwords])
+    
+        dictionary = Dictionary(train)
+        corpus = [ dictionary.doc2bow(text) for text in train ]
+        lda = LdaModel(corpus=corpus, id2word=dictionary, num_topics=7)
+        
+        test_doc = list(jieba.cut(s1))  
+        doc_bow = dictionary.doc2bow(test_doc)  
+        doc_lda = lda[doc_bow] 
+      
+        list_doc1 = [i[1] for i in doc_lda]
+      
+        test_doc2 = list(jieba.cut(s2))
+        doc_bow2 = dictionary.doc2bow(test_doc2)  
+        doc_lda2 = lda[doc_bow2]  
+       
+        list_doc2 = [i[1] for i in doc_lda2]
+       
+        try:
+            sim = np.dot(list_doc1, list_doc2) / (np.linalg.norm(list_doc1) * np.linalg.norm(list_doc2))
+        except ValueError:
+            sim=0
+
+        similarity[j]=sim
+    
+    
+   
+    degree = g.degree()
+    #size = [50*(degree[n]+1.0) for n in nodes]
+    pos=nx.spring_layout(g)
+    
+    size = [500*(item+0.01) for item in similarity]
+    
+    colors = polarity
+    nx.draw(g,nodelist=nodes, node_color=[i for i in colors], with_labels=False,  cmap=plt.cm.Reds, pos=pos, node_size=size, arrows=True)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('Colored by polarity, sized by similarity ')
+    plt.legend(fontsize=16)
+    plt.show()
+    
+    '''
+    text = body
+    
     wordcloud = WordCloud(width=1600, height=800).generate(" ".join(text))
 
     plt.imshow(wordcloud, interpolation='bilinear')
@@ -239,10 +325,8 @@ def comment_network_visual_category():
     plt.show()
         
     plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_subreddit_title_wordcloud'+'.png', facecolor='k', bbox_inches='tight')
-    '''
-    degree = g.degree()
-    size = [50*(degree[n]+1.0) for n in nodes]
-    pos=nx.spring_layout(g)
+    
+    
     degree_ordered =  [degree[n] for n in nodes]
     plt.plot(score,label="score")  
     plt.plot(polarity,label="polarity") 
@@ -301,8 +385,16 @@ def comment_network_visual_category():
     plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
     plt.title('Evloving by time')
     plt.show()
+    
+   
+    colors = similarity
+    nx.draw(g,nodelist=nodes, node_color=[i for i in colors], with_labels=False,  cmap=plt.cm.Reds, pos=pos, node_size=size, arrows=True)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_comment_network_visual_category'+'.png')
+    plt.title('Colored by similarity')
+    plt.legend(fontsize=16)
+    plt.show()
     '''
-
+    infile_subm.close()
     print "comment network visualization category total run time:"
     print time()-t
     
@@ -431,7 +523,8 @@ if __name__ == '__main__':
     #comment_network_visual_indexing_version()
     #comment_network_visual_dynamic()
     #num_comments_pie()
-    comment_network_visual_category()
+    #comment_network_visual_category()
+    read_subreddit_considering_submssion()
     #num_comments_plot()
     print 'All done!'
         
