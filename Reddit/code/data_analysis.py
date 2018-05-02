@@ -200,6 +200,7 @@ def generate_submr_id_text_list():
     print 'generate_submr_id_text_list done'
 
 def subm_data_verify():
+    
     count=0
     filetype = 'RS_'
     index_old = index ='0'
