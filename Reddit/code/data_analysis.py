@@ -11,7 +11,7 @@ import os
 from collections import OrderedDict
 import logging
 from itertools import izip  
-
+import codecs
 file_dir = 'E:\\Reddit'
 
 def read_file(filetype, year, month, ext):
@@ -198,8 +198,44 @@ def generate_submr_id_text_list():
     print str(count)+' submission id records have been processed!'
           
     print 'generate_submr_id_text_list done'
-    
 
+def subm_data_verify():
+    count=0
+    filetype = 'RS_'
+    index_old = index ='0'
+    for year in range(2005,2019):
+        print year
+        for month in range(1,13):
+            if year == 2005:
+                month+=5
+            if month>12 or (year == 2018 and month>2):
+                break
+            print month
+            
+            prefix = filetype+str(year)+'-'+str(month).zfill(2)
+            filename_id = file_dir+'\\data\\RS_id\\'+prefix+'_id.txt'
+            filename_text = file_dir+'\\data\\\RS_title_text\\'+prefix+'_index-title-text.txt'
+            filename_author = file_dir+'\\data\\\\RS_author\\'+prefix+'_index-author.txt'
+            filename_matrix = file_dir+'\\data\\\\RS_matrix\\'+prefix+'_index-score-time-gilded-num_comments-subreddit.txt'
+            
+            #logger.info('Processing:'+filename_id)
+            logger_verify.info('Processing:'+filename_matrix)
+            #logger.info('Processing:'+filename_matrix)
+           
+            with open (filename_text,'r+') as infile_text:
+                for line_text in infile_text: 
+                    line_text_list = line_text.rstrip('\n').split('\t')
+
+                    index = line_text_list[0] 
+                    if count!= int(index):                       
+                        print 'count:'+str(count)+' '+'index:'+str(index)+'\n'
+                        logger_verify.info('count:'+str(count)+' '+'index:'+str(index)+'\n')
+                        break
+                    count+=1
+    
+    print str(count)+' submission id records have been processed!'
+          
+    print 'subm_data_verify done'
     
     
     
@@ -339,6 +375,7 @@ def Subreddits():
 
     
 if __name__ == '__main__':
+    
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
     handler = logging.FileHandler(file_dir+'\\data\\logs\\'+'reddit_data_prepocessing.log')
@@ -350,10 +387,22 @@ if __name__ == '__main__':
     logger.addHandler(handler)
     logger.info('starts!')
 
+    logger_verify = logging.getLogger(__name__)
+    logger_verify.setLevel(logging.INFO)
+    handler = logging.FileHandler(file_dir+'\\data\\logs\\'+'reddit_data_verification.log')
+    handler.setLevel(logging.INFO)
+    
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+    handler.setFormatter(formatter)
+     
+    logger_verify.addHandler(handler)
+    logger_verify.info('starts!')
 
     #rank_num_comments()
     #num_comment_statics()
-    generate_submr_id_text_list()
+    #generate_submr_id_text_list()
+    #subm_data_verify()
+    verify2()
     #comment_network()
     print 'All done!'
 

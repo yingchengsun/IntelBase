@@ -224,6 +224,7 @@ def comment_network_visual_category():
     subm_all = infile_subm.readlines()
     
     subm = subm_all[0].split('\t')
+    
     subm_id = subm[0]
     subm_title = subm[1]
     subm_text = subm[2]
@@ -234,6 +235,7 @@ def comment_network_visual_category():
     subm_num_comments = subm[7]
     subreddit_index = subm[8]
     subreddit_id = subm[9]
+    subm_author  =subm[10].strip()
     
     subm_filename = subm_id+'.txt'
     filepath_name = os.path.join(file_dir, subpath, subm_filename)
@@ -241,7 +243,7 @@ def comment_network_visual_category():
     ndtype = 'S10,S10,i,i,i,i,S20,S1000' 
     names = 'cid, pid, time, controversiality, score, gilded, author, body'
      
-    k=200
+    k=2000
     
     ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t',comments='{[#%]}')[1:k]
 
@@ -249,9 +251,9 @@ def comment_network_visual_category():
     created_utc = map(int, ps['time'])+[int(subm_time)]
     score =  map(int, ps['score'])+[10]
     gilded = map(int, ps['gilded'])
-    author = ps['author']
+    author = np.append(ps['author'], subm_author)
     body = np.append(ps['body'], subm_title)
-
+    
     edges = zip(ps['pid'], ps['cid'])
     g = nx.Graph(edges)
     nodes = np.append(ps['cid'], subm_id)
@@ -263,7 +265,7 @@ def comment_network_visual_category():
     created_utc_diff = [item-int(subm_time) for item in created_utc]
     created_utc_degrade = [item/60+1 for item in created_utc_diff]
     
-    
+    '''
     s1=subm_title
     length = len(body)
 
@@ -298,9 +300,36 @@ def comment_network_visual_category():
             sim=0
 
         similarity[j]=sim
-    
+    '''
+
+    unique, counts = np.unique(author, return_counts=True)
+    author_dict = dict(zip(unique, range(len(unique))))
+
     
    
+    degree = g.degree()
+    size = [50*(degree[n]+1.0) for n in nodes]
+    pos=nx.spring_layout(g)
+    
+    #size = [500*(item+0.01) for item in similarity]
+    
+    for key, value in author_dict.items():
+        if key==subm_author:
+            author_dict[key]=1
+        else:
+            author_dict[key]=0
+            
+    colors = [author_dict[name] for name in author]
+    print len(colors)
+    #colors = polarity
+
+    nx.draw(g,nodelist=nodes, node_color=colors, with_labels=False, cmap=plt.cm.Reds, pos=pos, node_size=size, arrows=True)
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+'_colored by author'+'.png')
+    plt.title('Colored by polarity, sized by similarity ')
+    plt.legend(fontsize=16)
+    plt.show()
+     
+    '''
     degree = g.degree()
     #size = [50*(degree[n]+1.0) for n in nodes]
     pos=nx.spring_layout(g)
@@ -314,7 +343,7 @@ def comment_network_visual_category():
     plt.legend(fontsize=16)
     plt.show()
     
-    '''
+    
     text = body
     
     wordcloud = WordCloud(width=1600, height=800).generate(" ".join(text))
@@ -523,8 +552,8 @@ if __name__ == '__main__':
     #comment_network_visual_indexing_version()
     #comment_network_visual_dynamic()
     #num_comments_pie()
-    #comment_network_visual_category()
-    read_subreddit_considering_submssion()
+    comment_network_visual_category()
+    #fread_subreddit_considering_submssion()
     #num_comments_plot()
     print 'All done!'
         
