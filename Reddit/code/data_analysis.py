@@ -403,7 +403,7 @@ if __name__ == '__main__':
     #num_comment_statics()
     #generate_submr_id_text_list()
     #subm_data_verify()
-    verify2()
+    #verify2()
     #comment_network()
     print 'All done!'
 
