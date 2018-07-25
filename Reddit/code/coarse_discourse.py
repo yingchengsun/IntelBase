@@ -134,7 +134,50 @@ def Post_ID_match():
                 file_object.close()
                 outfile_raw_post.close()
                 print prefix+' done: ' + str(count) +' RS recodes have been processed !'
-         
+
+
+def Comment_ID_match():
+    """ Extract raw RC data with the same post ID in raw_postID list
+        
+    """
+    
+    filetype = 'RC_'
+    #ext = '.zip'
+    ext = '.bz2'
+
+    for year in range(2006,2018):
+        for month in range(1,13):
+            
+            #file_object = read_file(filetype+'V2_', year, month, ext)
+            file_object = read_file(filetype, year, month, ext)
+            prefix = filetype+str(year)+'-'+str(month).zfill(2)
+            
+            print 'Processing: '+prefix
+            
+            try: 
+                infile_raw_postID = np.genfromtxt(file_dir+'\\data\\coarse_discourse\\'+'postID.txt', dtype='S10')
+                outfile_raw_comment = open(file_dir+'\\data\\coarse_discourse\\'+'outfile_raw_comment.txt','a+')
+                outfile_commentID_found = open(file_dir+'\\data\\coarse_discourse\\'+'outfile_commentID_found.txt','a+')
+                count=0
+              
+                for line in file_object:
+                    line = line.decode('utf-8').replace('\0', '')
+                    data_item = json.loads(line)
+                    
+                    id = (data_item['link_id'].split('_', 1)[-1]).encode('utf-8')
+                    
+                    if id in infile_raw_postID:
+                        print id
+                        outfile_commentID_found.write((u'%s' %line).encode('utf-8'))
+                        count+=1
+                    
+            finally:
+                              
+                file_object.close()
+                outfile_raw_comment.close()
+                outfile_commentID_found.close()
+                print prefix+' done: ' + str(count) +' RC recodes have been processed !'
+                
             
 def test():
     pass
@@ -144,4 +187,5 @@ def test():
 if __name__ == '__main__':
     #argument_extr()
     #Post_ID_extr()
-    Post_ID_match()
+    #Post_ID_match()
+    Comment_ID_match()

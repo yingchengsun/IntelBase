@@ -285,7 +285,7 @@ def RC():
             '''
             score = int(data_item['score'])
             time = int(data_item['created_utc'])
-            
+            id = data_item['id']
             #outfile_body.write((u'%i\t%s\n' %(count, body)).encode('utf-8'))
             outfile_index_id.write((u'%i\t%s\n' %(index, id)).encode('utf-8'))
             outfile_index_author.write((u'%i\t%s\n' %(index, data_item['author'])).encode('utf-8'))
