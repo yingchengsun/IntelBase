@@ -75,82 +75,66 @@ def argument_extr():
 
             print count
                     
-def ID_extr():
+def Post_ID_extr():
     """ Extract raw post ID from raw data file
         
     """
     filename='coarse_discourse_dataset.json'
     filepath_name = os.path.join(file_dir, 'data','coarse_discourse',filename)
-    with open(file_dir+'\\data\\coarse_discourse\\'+'raw_postID.txt','w+') as raw_ID_out:
+    #with open(file_dir+'\\data\\coarse_discourse\\'+'raw_postID.txt','w+') as raw_ID_out:
+    with open(file_dir+'\\data\\coarse_discourse\\'+'postID.txt','w+') as ID_out:
         with open(filepath_name,'r') as infile:
             for line in infile:
                 data_item = json.loads(line, object_pairs_hook=OrderedDict) 
                 raw_id = data_item['posts'][0]['id'].encode('utf-8')
-                #id = raw_id.split('_', 1)[-1]
-                raw_ID_out.write('%s\n' %raw_id)
+                id = raw_id.split('_', 1)[-1]
+                #raw_ID_out.write('%s\n' %raw_id)
+                ID_out.write('%s\n' %id)
     print 'Done'
             
 
     
-def ID_match():
-    filetype = 'RS_'
-    #ext = '.zip'
-    ext = '.bz2'
-    subm_index = open(file_dir+'\\data\\'+'subm_index.txt','a+')
-    temp = subm_index.readlines()
-    if temp ==[]:
-        index = 0
-    else:
-        index = int(temp[-1])
+def Post_ID_match():
+    """ Extract raw RS data with the same ID in raw_postID list
         
-    for year in range(2001,2001):
-        for month in range(1,2):
+    """
+    
+    filetype = 'RS_v2_'
+    ext = '.zip'
+    #ext = '.bz2'
+
+    for year in range(2006,2011):
+        for month in range(1,13):
             
             #file_object = read_file(filetype+'V2_', year, month, ext)
             file_object = read_file(filetype, year, month, ext)
             prefix = filetype+str(year)+'-'+str(month).zfill(2)
-
+            
+            print 'Processing: '+prefix
+            
             try: 
-                infile_subr_id = np.genfromtxt(file_dir+'\\data\\'+'subreddits_id.txt', dtype='S10')
-                
-                outfile_subm_title_text = open(file_dir+'\\data\\RS_title_text\\'+prefix+'_index-title-text.txt','a+')
-               
-                subr_id_len = len(infile_subr_id)
-                ids = dict(zip(infile_subr_id,range(subr_id_len)))
+                infile_raw_postID = np.genfromtxt(file_dir+'\\data\\coarse_discourse\\'+'postID.txt', dtype='S10')
+                outfile_raw_post = open(file_dir+'\\data\\coarse_discourse\\'+'outfile_raw_post.txt','a+')
                 
                 count=0
+              
                 for line in file_object:
-                    
                     line = line.decode('utf-8').replace('\0', '')
                     data_item = json.loads(line)
                     
-                 
-                        
-                    title = data_item['title']
-                    if title:
-                        title =' '.join(data_item['title'].split())
-                    text = data_item['selftext']
+                    id = data_item['id']
                     
-                    if text:
-                        text =' '.join(data_item['title'].split())
-             
-                    outfile_subm_title_text.write((u'%i\t%s\t%s\n' %(index, title, text )).encode('utf-8'))
-                     
+                    if id in infile_raw_postID:
+                        print id
+                        outfile_raw_post.write((u'%s' %line).encode('utf-8'))
                     count+=1
-                    index+=1
-                   
-              
+                    
             finally:
                               
                 file_object.close()
-                
-                outfile_subm_title_text.close()
-       
+                outfile_raw_post.close()
                 print prefix+' done: ' + str(count) +' RS recodes have been processed !'
-    
-    subm_index.write(str(index))
-    subm_index.close()
-            
+         
             
 def test():
     pass
@@ -159,5 +143,5 @@ def test():
     
 if __name__ == '__main__':
     #argument_extr()
-    #ID_match()
-    ID_extr()
+    #Post_ID_extr()
+    Post_ID_match()
