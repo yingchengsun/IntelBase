@@ -99,8 +99,12 @@ g = nx.Graph(edges)
 #g.add_edges_from(edges)
 nx.draw_networkx(g)
 plt.show()                       
-'''
 
 with open('hello.log','a+') as hello:
     print hello.read()
-    
+    '''
+a=[]
+a.append('object')
+a.append('')
+a.append('')
+print a
