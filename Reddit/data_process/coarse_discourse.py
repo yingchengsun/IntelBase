@@ -12,7 +12,8 @@ import logging
 
 from data_preprocessing import read_file
 
-
+from gensim.test.utils import common_corpus, common_dictionary
+from gensim.models import HdpModel
 
 file_dir = 'E:\\Reddit'
 
@@ -180,7 +181,12 @@ def Comment_ID_match():
                 
             
 def test():
-    pass
+    hdp = HdpModel(common_corpus, common_dictionary)
+    unseen_document = [(1, 3.), (2, 4)]
+    doc_hdp = hdp[unseen_document]
+    topic_info = hdp.print_topics(num_topics=20, num_words=10)
+    print unseen_document
+    print topic_info
 
 
     
@@ -188,4 +194,5 @@ if __name__ == '__main__':
     #argument_extr()
     #Post_ID_extr()
     #Post_ID_match()
-    Comment_ID_match()
+    #Comment_ID_match()
+    test()

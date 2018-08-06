@@ -56,6 +56,10 @@ lda_model = LatentDirichletAllocation(n_topics=no_topics, max_iter=5, learning_m
 lda_W = lda_model.transform(tf)
 lda_H = lda_model.components_
 
+print tfidf_feature_names
+
+print lda_model.showtopics()
+
 no_top_words = 4
 no_top_documents = 4
 display_topics(nmf_H, nmf_W, tfidf_feature_names, documents, no_top_words, no_top_documents)
