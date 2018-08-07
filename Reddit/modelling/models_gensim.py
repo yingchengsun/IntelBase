@@ -15,7 +15,7 @@ import string
     
 import logging
 
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+#logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 documents = ["Human machine interface for lab abc computer applications",
              "A survey of user opinion of computer system response time",
@@ -67,7 +67,8 @@ def get_dictionary(texts, min_count=1):
     dictionary.filter_tokens(lowfreq_ids)
     # remove gaps in id sequence after words that were removed
     dictionary.compactify()
-    dictionary.save('docs.dict')
+    
+    #dictionary.save('docs.dict')
     return dictionary
 
 
@@ -77,12 +78,12 @@ def corpus2bow(texts,dictionary):
     
     """
     corpus=[dictionary.doc2bow(text) for text in texts]
-    pprint(corpus)
+    #pprint(corpus)
     
     # save corpus
-    corpora.MmCorpus.serialize('corpus.mm', corpus)
+    #corpora.MmCorpus.serialize('corpus.mm', corpus)
     # load corpus
-    corpus = corpora.MmCorpus('corpus.mm')
+    #corpus = corpora.MmCorpus('corpus.mm')
     
     return corpus
 
@@ -90,32 +91,31 @@ def bow2tfidf(corpus):
     """represent docs  with TF*IDF model
     
     """
-    
     tfidf = models.TfidfModel(corpus)
     corpus_tfidf = tfidf[corpus] # wrap the old corpus to tfidf
     
-    print tfidf, '\n' # TfidfModel(num_docs=9, num_nnz=51) 
-    print corpus_tfidf, '\n'
-    print tfidf[corpus[0]], '\n' # convert first doc from bow to tfidf
+    #print tfidf, '\n' # TfidfModel(num_docs=9, num_nnz=51) 
+    #print corpus_tfidf, '\n'
+    #print tfidf[corpus[0]], '\n' # convert first doc from bow to tfidf
     
-    for doc in corpus_tfidf: # convert the whole corpus on the fly
-        print doc
+    #for doc in corpus_tfidf: # convert the whole corpus on the fly
+    #    print doc
     
     return corpus_tfidf
         
-def topic_models(corpus_tfidf,dictionary):
+def topic_models(corpus_tfidf,dictionary,num_topics=1):
+    """modelling the corpus with LDA, LSI and HDP
+    
     """
-    """
-    LDA_model = models.LdaModel(corpus = corpus_tfidf, id2word = dictionary, num_topics=2)
+    LDA_model = models.LdaModel(corpus = corpus_tfidf, id2word = dictionary, num_topics=num_topics)
     LDA_model.save('LDA.model')
     LDA_model = models.LdaModel.load('LDA.model')
     
     hdp = models.HdpModel(corpus_tfidf, T=100,id2word=dictionary)
-    
-    
-   
+    hdp.save("HDP.model")
+
     # initialize a fold-in LSI transformation
-    lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=2) 
+    lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=num_topics) 
 
     # create a double wrapper over the original corpus:bow->tfidf->fold-in-lsi
     corpus_lsi = lsi[corpus_tfidf] 
@@ -124,7 +124,8 @@ def topic_models(corpus_tfidf,dictionary):
     lsi.save('model.lsi')
     # load model
     lsi = models.LsiModel.load('model.lsi')
-
+    
+    '''
     nodes = list(corpus_lsi)
     print nodes
     ax0 = [x[0][1] for x in nodes] 
@@ -132,11 +133,12 @@ def topic_models(corpus_tfidf,dictionary):
     
     plt.plot(ax0,ax1,'o')
     plt.show()
+    '''
 
 
-def doc_similarity(corpus,corpus_tfidf):
+def doc_similarity(doc, corpus):
 
-    doc="Human computer interaction"
+    
     ver_bow=dictionary.doc2bow(doc.lower().split())#return bags-of-word[(tokenid,count)....]
     print(ver_bow)
     
@@ -156,7 +158,7 @@ def perplexity(ldamodel, testset, dictionary, size_dictionary, num_topics):
     """
     
     # dictionary : {7822:'deferment', 1841:'circuitry',19202:'fabianism'...]
-    print ('the info of this ldamodel: \n')
+    #print ('the info of this ldamodel: \n')
     print ('num of testset: %s; size_dictionary: %s; num of topics: %s'%(len(testset), size_dictionary, num_topics))
     prep = 0.0
     prob_doc_sum = 0.0
@@ -169,9 +171,9 @@ def perplexity(ldamodel, testset, dictionary, size_dictionary, num_topics):
             dic[word] = probability
         topic_word_list.append(dic)
     doc_topics_ist = [] #store the doc-topic tuples:[(0, 0.0006211180124223594),(1, 0.0006211180124223594),...]
-    for doc in testset:
-        
-        doc_topics_ist.append(ldamodel.get_document_topics(doc, minimum_probability=0))
+    for doc in testset: 
+        #doc_topics_ist.append(ldamodel.get_document_topics(doc, minimum_probability=0))
+        doc_topics_ist.append(ldamodel[doc])
     testset_word_num = 0
    
     for i in range(len(testset)):
@@ -194,28 +196,24 @@ def perplexity(ldamodel, testset, dictionary, size_dictionary, num_topics):
     print ("the perplexity of this ldamodel is : %s"%prep)
     return prep
 
-def test_perplexity(corpus):
+def test_perplexity(testset,num_topics):
     
-    corpus_path = 'corpus.mm'
     ldamodel_path = 'LDA.model'
     dictionary = corpora.Dictionary.load('docs.dict')
-    #corpus = corpora.MmCorpus(corpus_path)
-
-    lda_multi = models.ldamodel.LdaModel.load(ldamodel_path)
-    num_topics = 2
-    testset = corpus
+    lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
+    hdp = models.hdpmodel.HdpModel.load("HDP.model")
     # sample 1/300
-    
-    for i in range(corpus.num_docs/300):
-        testset.append(corpus[i*300])
-        
-    prep = perplexity(lda_multi, testset, dictionary, len(dictionary.keys()), num_topics)
+    #for i in range(corpus.num_docs/300):
+    #    testset.append(corpus[i*300])
+
+    return perplexity(lda_model, testset, dictionary, len(dictionary.keys()), num_topics)
     
 if __name__ == '__main__':
     texts = MyTexts()
+    '''
     for text in texts:
         print text
-    
+    '''
     dictionary = get_dictionary(texts, min_count=2)
     # save and load dictionary
     '''
@@ -225,8 +223,11 @@ if __name__ == '__main__':
     '''
     corpus = corpus2bow(texts,dictionary)
     corpus_tfidf = bow2tfidf(corpus)
-    topic_models(corpus_tfidf,dictionary)
-    print doc_similarity(corpus,corpus_tfidf)
-    test_perplexity(corpus_tfidf)
+    #doc="Human computer interaction"
+    #print doc_similarity(doc, corpus)
+    num_topics = 20
+    for i in range(1,20):
+        topic_models(corpus_tfidf,dictionary,i)
+        test_perplexity(corpus_tfidf, i)
     
     
