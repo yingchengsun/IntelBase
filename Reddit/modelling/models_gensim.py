@@ -12,7 +12,10 @@ import math
 from nltk.corpus import stopwords 
 from nltk.stem.wordnet import WordNetLemmatizer
 import string
-    
+import numpy as np
+
+from gensim.models.coherencemodel import CoherenceModel
+
 import logging
 
 #logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -46,11 +49,8 @@ class MyTexts(object):
         for doc in documents:
             #remove stop words from docs
             stop_free = [i for i in doc.lower().split() if i not in stop]
-
             punc_free = [ch for ch in stop_free if ch not in exclude]
-
             normalized = [lemma.lemmatize(word) for word in punc_free]
- 
         
             #yield [word for word in doc.lower().split() if word not in stop]
             yield  normalized
@@ -103,14 +103,20 @@ def bow2tfidf(corpus):
     
     return corpus_tfidf
         
-def topic_models(corpus_tfidf,dictionary,num_topics=1):
+def topic_models(corpus,dictionary,num_topics=2):
     """modelling the corpus with LDA, LSI and HDP
     
     """
-    LDA_model = models.LdaModel(corpus = corpus_tfidf, id2word = dictionary, num_topics=num_topics)
+
+    LDA_model = models.LdaModel(corpus = corpus, id2word = dictionary, iterations=50,num_topics=num_topics)
     LDA_model.save('LDA.model')
     LDA_model = models.LdaModel.load('LDA.model')
     
+    #LDA_model.bound(corpus, gamma, subsample_ratio)
+    
+    #In order to compare perplexities you need to convert gensim's perplexity
+    #np.exp(-1. * LDA_model.log_perplexity(train_corpus)).
+    '''
     hdp = models.HdpModel(corpus_tfidf, T=100,id2word=dictionary)
     hdp.save("HDP.model")
 
@@ -126,6 +132,8 @@ def topic_models(corpus_tfidf,dictionary,num_topics=1):
     lsi = models.LsiModel.load('model.lsi')
     
     '''
+    
+    '''
     nodes = list(corpus_lsi)
     print nodes
     ax0 = [x[0][1] for x in nodes] 
@@ -134,6 +142,8 @@ def topic_models(corpus_tfidf,dictionary,num_topics=1):
     plt.plot(ax0,ax1,'o')
     plt.show()
     '''
+    
+    return LDA_model
 
 
 def doc_similarity(doc, corpus):
@@ -210,11 +220,9 @@ def test_perplexity(testset,num_topics):
     
 if __name__ == '__main__':
     texts = MyTexts()
-    '''
-    for text in texts:
-        print text
-    '''
-    dictionary = get_dictionary(texts, min_count=2)
+    
+    dictionary = get_dictionary(texts, min_count=1)
+  
     # save and load dictionary
     '''
     dictionary.save('docs.dict')
@@ -226,8 +234,23 @@ if __name__ == '__main__':
     #doc="Human computer interaction"
     #print doc_similarity(doc, corpus)
     num_topics = 20
-    for i in range(1,20):
-        topic_models(corpus_tfidf,dictionary,i)
-        test_perplexity(corpus_tfidf, i)
     
+    topic_models(corpus=corpus_tfidf, dictionary=dictionary,num_topics=2)
     
+    ldamodel_path = 'LDA.model'
+    lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
+
+    
+    for i in range(1,num_topics):
+        topic_models(corpus=corpus_tfidf, dictionary=dictionary,num_topics=i)
+        lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
+        #test_perplexity(corpus_tfidf, i)
+        coherence =  CoherenceModel(model=lda_model, corpus=corpus_tfidf, texts=texts, dictionary=dictionary, coherence='u_mass').get_coherence()      
+        #print CoherenceModel(model=lda_model, corpus=corpus_tfidf, texts=texts, dictionary=dictionary, coherence='u_mass').get_coherence()
+        #print CoherenceModel(model=lda_model, corpus=corpus, texts=new_docs, dictionary=dictionary, coherence='c_uci').get_coherence()
+        #print CoherenceModel(model=lda_model, corpus=corpus, texts=new_docs, dictionary=dictionary, coherence='c_npmi').get_coherence()
+        print coherence
+
+       
+    
+          

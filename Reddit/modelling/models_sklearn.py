@@ -35,6 +35,7 @@ data_vectorized = vectorizer.fit_transform(data)
 
 # Build a Latent Dirichlet Allocation Model
 lda_model = LatentDirichletAllocation(n_topics=NUM_TOPICS, max_iter=10, learning_method='online')
+#lda_model.perplexity()
 
 lda_Z = lda_model.fit_transform(data_vectorized)
 print(lda_Z.shape)  # (NO_DOCUMENTS, NO_TOPICS)
