@@ -17,10 +17,11 @@ import numpy as np
 from gensim.models.coherencemodel import CoherenceModel
 
 import logging
+from textblob.classifiers import _get_document_tokens
 
 #logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-documents = ["Human machine interface for lab abc computer applications",
+documents0 = ["Human machine interface for lab abc computer applications",
              "A survey of user opinion of computer system response time",
             "The EPS user interface management system",
             "System and human system engineering testing of EPS",
@@ -30,6 +31,142 @@ documents = ["Human machine interface for lab abc computer applications",
             "Graph minors IV Widths of trees and well quasi ordering",
             "Graph minors A survey"]
 
+documents1 = ["The concept of the observable universe. The fact that the reason we can't see a certain range into the space being because the light hasn't had time to get to earth since the beginning of the universe is crazy to me.",
+             "So you mean the universe is buffering for us?",
+             "Wow, now your analogy blew my mind!",
+             "I want it now godamit! gluurrraAA grrraAAA",
+             "Fucking pop-up.",
+             "Nah it's more like the draw distance.",
+             "this comment literally made the whole observable universe thing actually make sense to me for the first time. cheers.",
+             "Your comment just blew my mind into milky way chunks.",
+             "Oh. Damn.",
+             "Holy shit o.o",
+             "I guarantee the universe is gonna put itself behind a paywall very soon",
+             "There is an horizon beyond which we will never be able to see no matter how long the universe runs for. It is one of the unsolved cosmological problems. If there are boundaries beyond which no information will ever pass then how did the universe end up homogeneous?",
+             "Not really."]
+
+documents2 = ["Holy shit is that what that means? I never gave it much thought but always assumed 'observable universe' just to be the furthest we can accurately see before the information becomes too small or distorted by the great distance.",
+              "Its even crazier than that. Due to the expansion of the Universe, everthing outside the observable Universe is now moving faster than the speed of light away from us. That means that the light from the rest of the Universe will never reach us. We live in an ever shrinking bubble of local galaxies. Everything around us will literally fade out of existence (since by definition, if you can't ever observe it, it doesn't exist) as the relative speed between us and the rest of the galaxies passes the speed of light. EDIT There is a ton of responses to this thread. I've posted this link elsewhere, but I figured I'd put here as well. It explained this way, way better than I could ever hope to.https://www.youtube.com/watch?v=XBr4GkRnY04 There are differences between what we can see, how far away those objects currently are, how long its been going on, how wide our visible universe is, etc. But the basic point is the same. Outside some radius about our place in the universe, the rest of the universe is expanding away from us greater than the speed of light. Not only will the light from that part of the universe never reach us, we can never reach them. We are forever isolated in our bubble. If you think about the simulation theory of the universe, it's an ingenious way to contain us without having walls.",
+              "This baffles me. My knowledge of this stuff is severely limited to things I've only been told/ read/ watched, but I remember on this one episode of Cosmos (the new one), NDT mentioned that nothing could ever go faster than light. I think the situation they portrayed was if you could travel to 99.9999~% the speed of light on a bike, then switch on the headlight, the light leaving the headlight would still be traveling at the speed of light. Since you brought this up though, I was wondering about it as well. If the universe is expanding more rapidly, could it expand at such a rate where light couldn't overcome the rate of expansion? And if it could, what happens to the light traveling in the opposite direction? I mean if I'm in a car going at 25 mph and throw a ball out the window going 25 mph in the opposite direction, it'd appear like the ball is standing still to someone on the outside, right (not taking gravity into account)? So could light theoretically be standing still somewhere in the universe? I'm sorry for the babbling on my part, but this screws with my mind in all sorts of ways. EDIT: Holy expletive, this is why I love the reddit community. Thanks for all the helpful answers everyone!",
+              "The galaxies and other things that are 'moving faster than the speed of light away from us' are not moving through space/time faster than the speed of light, but are moving that fast because of space/time itself expanding. The individual stars, planets, asteroids and such aren't moving through space at a faster than light speed, the very fabric of space/time is expanding faster than light. Although I'm not entirely sure if space actually IS expanding that fast right now, I just know that it is continually increasing its rate of expansion and will eventually (if it hasn't already) break that barrier. So the 'nothing travels faster than light' rule still holds, because that rule is talking about things moving through space, not space itself. Hopefully I explained that adequately.",
+              "Very informative and detailed answer. I think I understand your explanation of space being the container, which is itself expanding. The light, or contents in the container still adhere to the rules of the inside of the container, but different rules apply to the container itself? Sorry I keep reverting to comparisons, only way I can sort of make sense of things.",
+              "Yeah, you pretty much have it. The analogy that gets used lots is to blow up a balloon and draw dots on it. With the dots representing galaxies and the balloon surface representing space itself. If you blow the balloon up further, it expands, and the dots (galaxies) get farther away from one another. However, the dots themselves haven't actually moved."
+              ]
+
+d1 = ["The concept of the observable universe. The fact that the reason we can't see a certain range into the space being because the light hasn't had time to get to earth since the beginning of the universe is crazy to me. So you mean the universe is buffering for us? Wow, now your analogy blew my mind! I want it now godamit! gluurrraAA grrraAAA. Fucking pop-up.Nah it's more like the draw distance. this comment literally made the whole observable universe thing actually make sense to me for the first time. cheers.Your comment just blew my mind into milky way chunks. Oh. Damn. Holy shit o.o I guarantee the universe is gonna put itself behind a paywall very soon There is an horizon beyond which we will never be able to see no matter how long the universe runs for. It is one of the unsolved cosmological problems. If there are boundaries beyond which no information will ever pass then how did the universe end up homogeneous? Not really."]
+
+d2 = ["Holy shit is that what that means? I never gave it much thought but always assumed 'observable universe' just to be the furthest we can accurately see before the information becomes too small or distorted by the great distance. Its even crazier than that. Due to the expansion of the Universe, everthing outside the observable Universe is now moving faster than the speed of light away from us. That means that the light from the rest of the Universe will never reach us. We live in an ever shrinking bubble of local galaxies. Everything around us will literally fade out of existence (since by definition, if you can't ever observe it, it doesn't exist) as the relative speed between us and the rest of the galaxies passes the speed of light. EDIT There is a ton of responses to this thread. I've posted this link elsewhere, but I figured I'd put here as well. It explained this way, way better than I could ever hope to.https://www.youtube.com/watch?v=XBr4GkRnY04 There are differences between what we can see, how far away those objects currently are, how long its been going on, how wide our visible universe is, etc. But the basic point is the same. Outside some radius about our place in the universe, the rest of the universe is expanding away from us greater than the speed of light. Not only will the light from that part of the universe never reach us, we can never reach them. We are forever isolated in our bubble. If you think about the simulation theory of the universe, it's an ingenious way to contain us without having walls. This baffles me. My knowledge of this stuff is severely limited to things I've only been told/ read/ watched, but I remember on this one episode of Cosmos (the new one), NDT mentioned that nothing could ever go faster than light. I think the situation they portrayed was if you could travel to 99.9999~% the speed of light on a bike, then switch on the headlight, the light leaving the headlight would still be traveling at the speed of light. Since you brought this up though, I was wondering about it as well. If the universe is expanding more rapidly, could it expand at such a rate where light couldn't overcome the rate of expansion? And if it could, what happens to the light traveling in the opposite direction? I mean if I'm in a car going at 25 mph and throw a ball out the window going 25 mph in the opposite direction, it'd appear like the ball is standing still to someone on the outside, right (not taking gravity into account)? So could light theoretically be standing still somewhere in the universe? I'm sorry for the babbling on my part, but this screws with my mind in all sorts of ways. EDIT: Holy expletive, this is why I love the reddit community. Thanks for all the helpful answers everyone! The galaxies and other things that are 'moving faster than the speed of light away from us' are not moving through space/time faster than the speed of light, but are moving that fast because of space/time itself expanding. The individual stars, planets, asteroids and such aren't moving through space at a faster than light speed, the very fabric of space/time is expanding faster than light. Although I'm not entirely sure if space actually IS expanding that fast right now, I just know that it is continually increasing its rate of expansion and will eventually (if it hasn't already) break that barrier. So the 'nothing travels faster than light' rule still holds, because that rule is talking about things moving through space, not space itself. Hopefully I explained that adequately. Very informative and detailed answer. I think I understand your explanation of space being the container, which is itself expanding. The light, or contents in the container still adhere to the rules of the inside of the container, but different rules apply to the container itself? Sorry I keep reverting to comparisons, only way I can sort of make sense of things. Yeah, you pretty much have it. The analogy that gets used lots is to blow up a balloon and draw dots on it. With the dots representing galaxies and the balloon surface representing space itself. If you blow the balloon up further, it expands, and the dots (galaxies) get farther away from one another. However, the dots themselves haven't actually moved."
+              ]
+
+documents3 = ["Texas serial bomber made video confession before blowing himself up",
+              "What are the chances we ever see the video?",
+              "About the same as the chances of the Browns winning the Super Bowl.",
+              "I take the browns to the super bowl every morning.",
+              "I have to applaud your regularity",
+              "I thought at first you meant he posts that comment regularly. But now I get it. Healthy colon.",
+              "Pshh I'm taking the browns to the super bowl as we speak",
+              "Consistency is the key.",
+              "Seriously. Well done.",
+              "Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
+              "Holy fuck, here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very fucking bad.",
+              "I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived a fucking explosion?!",
+              "Nokia brick",
+              "God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now).",
+              "Yes but the old phones had the drawback of having to be charged every two weeks."
+              
+    ]
+
+documents33 = ["Texas serial bomber made video confession before blowing himself up",
+              "What are the chances we ever see the video?",
+              "About the same as the chances of the Browns winning the Super Bowl.",
+              "I take the browns to the super bowl every morning.",
+              "I have to applaud your regularity",
+              "I thought at first you meant he posts that comment regularly. But now I get it. Healthy colon.",
+              "Pshh I'm taking the browns to the super bowl as we speak",
+              "Consistency is the key.",
+              "Seriously. Well done.",
+              "Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
+              "here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very bad.",
+              "I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?!",
+              "Nokia brick",
+              "God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now).",
+              "Yes but the old phones had the drawback of having to be charged every two weeks."
+              
+    ]
+
+documents3 = ["Texas serial bomber made video confession before blowing himself up",
+              "What are the chances we ever see the video?",
+              "About the same as the chances of the Browns winning the Super Bowl.",
+              "every morning.",
+              "I have to applaud your regularity",
+              "I thought at first you meant he posts that comment regularly. But now I get it. Healthy colon.",
+              "Pshh I'm taking the browns to the super bowl as we speak",
+              "Consistency is the key.",
+              "Seriously. Well done.",
+              "Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
+              "here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very bad.",
+              "I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?!",
+              "Nokia brick",
+              "God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now).",
+              "Yes but the old phones had the drawback of having to be charged every two weeks."
+              
+    ]
+
+documents3 = ["Texas serial bomber made video confession before blowing himself up",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video?",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl.",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity I thought at first you meant he posts that comment regularly. But now I get it. Healthy colon.",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity Pshh I'm taking the browns to the super bowl as we speak",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity Consistency is the key.",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity Seriously. Well done.",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
+              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile. here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very bad.",
+              "Texas serial bomber made video confession before blowing himself up I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?!",
+              "Texas serial bomber made video confession before blowing himself up I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?! Nokia brick",
+              "Texas serial bomber made video confession before blowing himself up I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?! Nokia brick God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now).",
+              "Texas serial bomber made video confession before blowing himself up I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?! Nokia brick God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now). Yes but the old phones had the drawback of having to be charged every two weeks."
+              
+    ]
+
+edges = {0:0,
+         1:0,
+         2:1,
+         3:2,
+         4:3,
+         5:4,
+         6:4,
+         7:4,
+         8:4,
+         9:1,
+         10:9,
+         11:0,
+         12:11,
+         13:12,
+         14:13
+         }
+
+#document4= ["Parents can help their children be successful in school by encouraging them. Children usually enjoy playing games instead of studying their boring lessons, so parents have to take the responsibility to monitor their studying and to remind them to do their homework at home after school.  Parents should also encourage their children to study by buying story books with pictures, or they can buy text books or tapes that help children learn to spell or read.  The best way to encourage children to study efficiently is to spell or read.  The best way to encourage children to study efficiently is to reward them when they get an 'A.'  As a child, I experienced this.  My parents gave me a gift if I had studied well, and then I was very excited.  So, if parents really want their children to succeed in school, they need to pay attention to their children's studies and encourage them."]
+document4= ["Parents can help their children be successful in school by encouraging them. Children usually enjoy playing games instead of studying their boring lessons, so parents have to take the responsibility to monitor their studying and to remind them to do their homework at home after school.Parents should also encourage their children to study by buying story books with pictures, or they can buy text books or tapes that help children learn to spell or read. The best way to encourage children to study efficiently is to spell or read."]
+
+document5= ["lBJ LBJ LBJ LBJ LBJ Lakers Lakers Lakers Lakers Lakers",
+            "Warriors Warriors Warriors Warriors Warriors Championship Championship Championship Championship Championship"]
+
+document6= ["lBJ LBJ LBJ LBJ LBJ Warriors Warriors Warriors Warriors Warriors Lakers Lakers Lakers Lakers Lakers Championship Championship Championship Championship Championship "]
+document7= ["lBJ LBJ LBJ LBJ LBJ",
+            " Lakers Lakers Lakers Lakers Lakers",
+            " Warriors Warriors Warriors Warriors Warriors",
+            " Championship Championship Championship Championship Championship "]
+
+#document6= ["lBJ LBJ LBJ LBJ LBJ Lakers Lakers Lakers Lakers Lakers"]
+document8= ["lBJ LBJ LBJ LBJ LBJ LBJ LBJ LBJ Warriors Championship basketball Lakers Lakers Lakers Lakers Lakers Lakers Lakers Lakers curry"]
+
+document9= ["lBJ LBJ Lakers Lakers",
+            "Warriors  Warriors Championship  Championship"]
+#documents = documents1+documents2
+#documents= documents1
+documents = document9
 stop = set(stopwords.words('english'))
 exclude = set(string.punctuation)
 lemma = WordNetLemmatizer()
@@ -43,7 +180,8 @@ class MyTexts(object):
     """
     def __init__(self):
         #stop word list
-        self.stoplist = set('for a of the and to in'.split())
+        #self.stoplist = set('for a of the and to in'.split())
+        pass
 
     def __iter__(self):
         for doc in documents:
@@ -103,14 +241,23 @@ def bow2tfidf(corpus):
     
     return corpus_tfidf
         
-def topic_models(corpus,dictionary,num_topics=2):
+def topic_models(corpus,dictionary,num_topics=2,edges=None):
     """modelling the corpus with LDA, LSI and HDP
     
     """
 
-    LDA_model = models.LdaModel(corpus = corpus, id2word = dictionary, iterations=50,num_topics=num_topics)
-    LDA_model.save('LDA.model')
-    LDA_model = models.LdaModel.load('LDA.model')
+    LDA_model = models.LdaModel(corpus = corpus, id2word = dictionary, num_topics=num_topics,edges = edges)
+    #LDA_model.save('LDA.model')
+    #LDA_model = models.LdaModel.load('LDA.model')
+    topics =  LDA_model.show_topics( num_words=15, log=False, formatted=False)
+    for t in topics:
+        print t
+        
+    i=0
+    for c in corpus:
+        doc_t =  LDA_model.get_document_topics(c)
+        print i, doc_t
+        i+=1
     
     #LDA_model.bound(corpus, gamma, subsample_ratio)
     
@@ -230,27 +377,38 @@ if __name__ == '__main__':
     print dictionary
     '''
     corpus = corpus2bow(texts,dictionary)
+
     corpus_tfidf = bow2tfidf(corpus)
     #doc="Human computer interaction"
     #print doc_similarity(doc, corpus)
-    num_topics = 20
+    num_topics = 5
     
-    topic_models(corpus=corpus_tfidf, dictionary=dictionary,num_topics=2)
     
-    ldamodel_path = 'LDA.model'
-    lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
-
+    lda_model = topic_models(corpus=corpus, dictionary=dictionary,num_topics=2,edges=edges)
     
+    #ldamodel_path = 'LDA.model'
+    #lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
+    #doc=['mean','universe' ,'buffering' ,'us']
+    #doc = ['Not ', 'really']
+    '''
+    for t in texts:
+        doc = lda_model.id2word.doc2bow(t)
+        #doc_topics, word_topics, phi_values = lda_model.get_document_topics(doc, per_word_topics=True)
+        results = lda_model.get_document_topics(doc, per_word_topics=True)
+        print results
+        '''
+    '''
     for i in range(1,num_topics):
         topic_models(corpus=corpus_tfidf, dictionary=dictionary,num_topics=i)
         lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
+        '''
         #test_perplexity(corpus_tfidf, i)
-        coherence =  CoherenceModel(model=lda_model, corpus=corpus_tfidf, texts=texts, dictionary=dictionary, coherence='u_mass').get_coherence()      
+        #coherence =  CoherenceModel(model=lda_model, corpus=corpus_tfidf, texts=texts, dictionary=dictionary, coherence='u_mass').get_coherence()      
         #print CoherenceModel(model=lda_model, corpus=corpus_tfidf, texts=texts, dictionary=dictionary, coherence='u_mass').get_coherence()
         #print CoherenceModel(model=lda_model, corpus=corpus, texts=new_docs, dictionary=dictionary, coherence='c_uci').get_coherence()
         #print CoherenceModel(model=lda_model, corpus=corpus, texts=new_docs, dictionary=dictionary, coherence='c_npmi').get_coherence()
-        print coherence
-
+        #print coherence
+    
        
     
           

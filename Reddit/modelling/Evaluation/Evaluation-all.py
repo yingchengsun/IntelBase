@@ -10,7 +10,7 @@ import re
 from gensim.parsing.preprocessing import remove_stopwords, strip_punctuation
 
 import numpy as np
-
+from pprint import pprint
 df_fake = pd.read_csv('fake - Copy.csv')
 df_fake[['title', 'text', 'language']].head()
 df_fake = df_fake.loc[(pd.notnull(df_fake.text)) & (df_fake.language == 'english')]

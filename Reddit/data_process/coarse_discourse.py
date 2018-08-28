@@ -15,6 +15,7 @@ from data_preprocessing import read_file
 from gensim.test.utils import common_corpus, common_dictionary
 from gensim.models import HdpModel
 
+
 file_dir = 'E:\\Reddit'
 
 
@@ -189,10 +190,144 @@ def test():
     print topic_info
 
 
+def Add_raw_post_to_PCA():
+    """
+        PCA: Post-Comments-Annotation
+        
+    """
+    folder = 'raw_PCA'
+    path = os.path.join(file_dir, 'data','coarse_discourse',folder)
+   
+    infile_raw_post = open(file_dir+'\\data\\coarse_discourse\\'+'outfile_raw_post.txt','r')
+    count = 0
+    for line in infile_raw_post:
+        data_item = json.loads(line.decode('utf-8').replace('\0', '')) 
+        filename = path+"\\"+data_item['id']+'.txt'
+        if os.path.isfile(filename):
+            print filename
+        else:
+            file = open(filename,'w+')
+            file.write(line)
+            file.close()
+        count+=1
+    print count
+
+def Add_raw_Comments_to_PCA():
+    """
+        PCA: Post-Comments-Annotation
+        
+    """
+    folder = 'raw_PCA'
+    path = os.path.join(file_dir, 'data','coarse_discourse',folder)
+    infile_raw_comment = open(file_dir+'\\data\\coarse_discourse\\'+'outfile_raw_comment.txt','r')
+    out_dict_file =  open(file_dir+'\\data\\coarse_discourse\\'+'post_dict.json','w')
     
+    comment_count = 0
+    total_count = 0
+    post_dict={}
+    for line in infile_raw_comment:
+        data_item = json.loads(line.decode('utf-8').replace('\0', ''))
+        id = (data_item['link_id'].split('_', 1)[-1]).encode('utf-8')
+        filename = path+"\\"+id+'.txt'
+        if os.path.isfile(filename):
+            file = open(filename,'a+')
+            file.write(line)
+            file.close()
+            if not post_dict.has_key(id):
+                post_dict[id] = 1
+            else:
+                post_dict[id]+=1
+        else:
+            print filename
+        
+        total_count+=1
+    
+    out_dict_file.write(json.dumps(post_dict))
+    out_dict_file.close()
+    print len(post_dict)
+    print "Total Comments: " + str(total_count)
+
+
+def Add_raw_Annotation_to_PCA():
+    """
+        PCA: Post-Comments-Annotation
+        
+    """
+    folder = 'raw_PCA'
+    path = os.path.join(file_dir, 'data','coarse_discourse',folder)
+   
+    anno_filename='coarse_discourse_dataset.json'
+    anno_filepath_name = os.path.join(file_dir, 'data','coarse_discourse',anno_filename)
+    
+    count = 0
+    with open(anno_filepath_name,'r') as infile:
+        for line in infile:
+            data_item = json.loads(line, object_pairs_hook=OrderedDict) 
+            raw_id = data_item['posts'][0]['id'].encode('utf-8')
+            id = raw_id.split('_', 1)[-1]
+            filename = path+"\\"+id+'.txt'
+            
+            if os.path.isfile(filename):
+                file = open(filename,'a+')
+                file.write(line)
+                file.close()
+            else:
+                print filename
+        
+            count+=1
+    print count
+    
+    
+def Read_PCA():
+    """
+        PCA: Post-Comments-Annotation
+        
+    """
+    folder = 'raw_PCA'
+    path = os.path.join(file_dir, 'data','coarse_discourse',folder)
+    
+    files= os.listdir(path) 
+    s = []
+    for file in files: 
+        if not os.path.isdir(file):
+            f = open(path+"/"+file); 
+            iter_f = iter(f); 
+            str = ""
+            for line in iter_f:
+                print line
+                #str = str + line
+            #s.append(str)
+    print(s) 
+    
+def Stat():
+    """
+        PCA: Post-Comments-Annotation
+        
+    """
+    
+    infile_post_dict =  open(file_dir+'\\data\\coarse_discourse\\'+'post_dict.json','r')
+    post_dict = json.load(infile_post_dict)
+    #print post_dict
+    comment_count = post_dict.values()
+    
+    comment_count_dict = {}
+    for key in comment_count:
+        comment_count_dict[key] = comment_count_dict.get(key, 0) + 1
+   
+    sorted_dict= OrderedDict(sorted(comment_count_dict.items(),key = lambda t:-t[0]))
+    sorted_dict2= OrderedDict(sorted(post_dict.items(),key = lambda t:-t[1]))
+    for key,value in sorted_dict2.items():
+        print key,value
+
+
 if __name__ == '__main__':
     #argument_extr()
     #Post_ID_extr()
     #Post_ID_match()
     #Comment_ID_match()
-    test()
+    #test()
+    #Add_raw_post_to_PCA()
+    #Add_raw_Comments_to_PCA()
+    #Add_raw_Annotation_to_PCA()
+    Stat()
+    #Read_PCA()
