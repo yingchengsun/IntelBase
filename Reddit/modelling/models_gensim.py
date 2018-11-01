@@ -94,7 +94,7 @@ documents33 = ["Texas serial bomber made video confession before blowing himself
               
     ]
 
-documents3 = ["Texas serial bomber made video confession before blowing himself up",
+documents3_normal = ["Texas serial bomber made video confession before blowing himself up",
               "What are the chances we ever see the video?",
               "About the same as the chances of the Browns winning the Super Bowl.",
               "every morning.",
@@ -112,7 +112,7 @@ documents3 = ["Texas serial bomber made video confession before blowing himself 
               
     ]
 
-documents3 = ["Texas serial bomber made video confession before blowing himself up",
+documents333 = ["Texas serial bomber made video confession before blowing himself up",
               "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video?",
               "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl.",
               "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning",
@@ -130,7 +130,7 @@ documents3 = ["Texas serial bomber made video confession before blowing himself 
               
     ]
 
-edges = {0:0,
+edges3 = {0:0,
          1:0,
          2:1,
          3:2,
@@ -164,9 +164,75 @@ document8= ["lBJ LBJ LBJ LBJ LBJ LBJ LBJ LBJ Warriors Championship basketball La
 
 document9= ["lBJ LBJ Lakers Lakers",
             "Warriors  Warriors Championship  Championship"]
+
+document10 =["What concept completely blows your mind?",
+             "The concept of the observable universe. The fact that the reason we can't see a certain range into the space being because the light hasn't had time to get to earth since the beginning of the universe is crazy to me.",
+             "So you mean the universe is buffering for us?",
+             "Wow, now your analogy blew my mind!",
+             "I want it now godamit! gluurrraAA grrraAAA",
+             "Nah it's more like the draw distance.",
+             "this comment literally made the whole observable universe thing actually make sense to me for the first time. cheers.",
+             "Your comment just blew my mind into milky way chunks.",
+             "Oh. Damn.",
+             "Holy shit o.o",
+             "I guarantee the universe is gonna put itself behind a paywall very soon",
+             "There is an horizon beyond which we will never be able to see no matter how long the universe runs for. It is one of the unsolved cosmological problems. If there are boundaries beyond which no information will ever pass then how did the universe end up homogeneous?",
+             "Not really.",
+             
+             "That until the invention of the train, no one had been able to travel faster than a horse on land.",
+             "Also, until trains no one really need a consistent time. The difference between 1:30 and 1:50 was largely inconsequential. Well, until you have several tons of steel hurtling down a track and two of them try to occupy the same space and time. It wasn't uncommon for different clocks in town to display different times until the rail road came through.EDIT: Yes, I get that maritime needed accurate clocks to navigate. That's not what I'm talking about. What I'm talking about is synchronized clocks. Clock A has the same time as place Clock B 200 miles away. For maritime stuff that doesn't matter as long as everyone can accurately judge that X amount of time has passed. Example: If my clock reads 10:10 and your's read 10:15 and 20 minutes later mine reads 10:30 and yours reads 10:35, you will not get lost at sea. Also fixed an auto correct word.",
+             "a lot of my friends apparently think the very same thing.",
+             "It seems to be cultural. My wife is a wedding photographer and some clients will tell her, oh, it says 1pm but nobody will show up until 1:45. We call it 'X people time.' X has been black, Latin, Indian, southern, Greek...probably a half dozen others.I couldn't stand that. I keep German people time.",
+             "German time is showing up 10 minutes early",
+             "Like working at a fast food joint. It's 2pm! Why are you just getting here?! Because I start at 2. You need to be 15 minutes early! Can I punch in 15 minutes early then? No! You sit in back and wait till your start time. Okay. Then I'll be here at my start time. Fuck your shit.",
+             "Yeah all I need to do is put my bag away and put my apron/hat on. I was once 2 minutes late and got bitched out because of it. So I wasn't even needed there if my manager had the time to delay me for another 3 minutes",
+             "You should wash your hands too.",
+             "Yeah I do usually but i don't make the food I just take orders"
+              
+    ]
+
+document11 =[            
+             "That until the invention of the train, no one had been able to travel faster than a horse on land.",
+             "Also, until trains no one really need a consistent time. The difference between 1:30 and 1:50 was largely inconsequential. Well, until you have several tons of steel hurtling down a track and two of them try to occupy the same space and time. It wasn't uncommon for different clocks in town to display different times until the rail road came through.EDIT: Yes, I get that maritime needed accurate clocks to navigate. That's not what I'm talking about. What I'm talking about is synchronized clocks. Clock A has the same time as place Clock B 200 miles away. For maritime stuff that doesn't matter as long as everyone can accurately judge that X amount of time has passed. Example: If my clock reads 10:10 and your's read 10:15 and 20 minutes later mine reads 10:30 and yours reads 10:35, you will not get lost at sea. Also fixed an auto correct word.",
+             "a lot of my friends apparently think the very same thing.",
+             "It seems to be cultural. My wife is a wedding photographer and some clients will tell her, oh, it says 1pm but nobody will show up until 1:45. We call it 'X people time.' X has been black, Latin, Indian, southern, Greek...probably a half dozen others.I couldn't stand that. I keep German people time.",
+             "German time is showing up 10 minutes early",
+             "Like working at a fast food joint. It's 2pm! Why are you just getting here?! Because I start at 2. You need to be 15 minutes early! Can I punch in 15 minutes early then? No! You sit in back and wait till your start time. Okay. Then I'll be here at my start time. Fuck your shit.",
+             "Yeah all I need to do is put my bag away and put my apron/hat on. I was once 2 minutes late and got bitched out because of it. So I wasn't even needed there if my manager had the time to delay me for another 3 minutes",
+             "You should wash your hands too.",
+             "Yeah I do usually but i don't make the food I just take orders"
+              
+    ]
+
+edges10 = {0:0,
+         1:0,
+         2:1,
+         3:2,
+         4:2,
+         5:2,
+         6:2,
+         7:2,
+         8:2,
+         9:2,
+         10:2,
+         11:2,
+         12:2,
+         
+         13:13,
+         14:13,
+         15:14,
+         16:15,
+         17:16,
+         18:17,
+         19:18,
+         20:19,
+         21:20
+         }
+
 #documents = documents1+documents2
 #documents= documents1
-documents = document9
+documents = documents3
+edges= edges3
 stop = set(stopwords.words('english'))
 exclude = set(string.punctuation)
 lemma = WordNetLemmatizer()
@@ -252,7 +318,8 @@ def topic_models(corpus,dictionary,num_topics=2,edges=None):
     topics =  LDA_model.show_topics( num_words=15, log=False, formatted=False)
     for t in topics:
         print t
-        
+    
+
     i=0
     for c in corpus:
         doc_t =  LDA_model.get_document_topics(c)
@@ -381,10 +448,10 @@ if __name__ == '__main__':
     corpus_tfidf = bow2tfidf(corpus)
     #doc="Human computer interaction"
     #print doc_similarity(doc, corpus)
-    num_topics = 5
+    num_topics = 3
     
     
-    lda_model = topic_models(corpus=corpus, dictionary=dictionary,num_topics=2,edges=edges)
+    lda_model = topic_models(corpus=corpus, dictionary=dictionary,num_topics=num_topics,edges=edges)
     
     #ldamodel_path = 'LDA.model'
     #lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
