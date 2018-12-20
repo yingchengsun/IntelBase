@@ -8,229 +8,36 @@ Created on Apr 16, 2018
 from gensim import corpora, models, similarities
 from pprint import pprint
 import matplotlib.pyplot as plt
-import math
+
 from nltk.corpus import stopwords 
 from nltk.stem.wordnet import WordNetLemmatizer
 import string
 import numpy as np
+from treelib import  Tree
 
 from gensim.models.coherencemodel import CoherenceModel
 
-import logging
-from textblob.classifiers import _get_document_tokens
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import LinearSVC
+from numpy.random.mtrand import RandomState
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+import os
+import networkx as nx
+from sklearn.metrics import accuracy_score,recall_score,roc_auc_score
+from datetime import datetime
+from collections import Counter
+
 
 #logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-documents0 = ["Human machine interface for lab abc computer applications",
-             "A survey of user opinion of computer system response time",
-            "The EPS user interface management system",
-            "System and human system engineering testing of EPS",
-            "Relation of user perceived response time to error measurement",
-            "The generation of random binary unordered trees",
-            "The intersection graph of paths in trees",
-            "Graph minors IV Widths of trees and well quasi ordering",
-            "Graph minors A survey"]
-
-documents1 = ["The concept of the observable universe. The fact that the reason we can't see a certain range into the space being because the light hasn't had time to get to earth since the beginning of the universe is crazy to me.",
-             "So you mean the universe is buffering for us?",
-             "Wow, now your analogy blew my mind!",
-             "I want it now godamit! gluurrraAA grrraAAA",
-             "Fucking pop-up.",
-             "Nah it's more like the draw distance.",
-             "this comment literally made the whole observable universe thing actually make sense to me for the first time. cheers.",
-             "Your comment just blew my mind into milky way chunks.",
-             "Oh. Damn.",
-             "Holy shit o.o",
-             "I guarantee the universe is gonna put itself behind a paywall very soon",
-             "There is an horizon beyond which we will never be able to see no matter how long the universe runs for. It is one of the unsolved cosmological problems. If there are boundaries beyond which no information will ever pass then how did the universe end up homogeneous?",
-             "Not really."]
-
-documents2 = ["Holy shit is that what that means? I never gave it much thought but always assumed 'observable universe' just to be the furthest we can accurately see before the information becomes too small or distorted by the great distance.",
-              "Its even crazier than that. Due to the expansion of the Universe, everthing outside the observable Universe is now moving faster than the speed of light away from us. That means that the light from the rest of the Universe will never reach us. We live in an ever shrinking bubble of local galaxies. Everything around us will literally fade out of existence (since by definition, if you can't ever observe it, it doesn't exist) as the relative speed between us and the rest of the galaxies passes the speed of light. EDIT There is a ton of responses to this thread. I've posted this link elsewhere, but I figured I'd put here as well. It explained this way, way better than I could ever hope to.https://www.youtube.com/watch?v=XBr4GkRnY04 There are differences between what we can see, how far away those objects currently are, how long its been going on, how wide our visible universe is, etc. But the basic point is the same. Outside some radius about our place in the universe, the rest of the universe is expanding away from us greater than the speed of light. Not only will the light from that part of the universe never reach us, we can never reach them. We are forever isolated in our bubble. If you think about the simulation theory of the universe, it's an ingenious way to contain us without having walls.",
-              "This baffles me. My knowledge of this stuff is severely limited to things I've only been told/ read/ watched, but I remember on this one episode of Cosmos (the new one), NDT mentioned that nothing could ever go faster than light. I think the situation they portrayed was if you could travel to 99.9999~% the speed of light on a bike, then switch on the headlight, the light leaving the headlight would still be traveling at the speed of light. Since you brought this up though, I was wondering about it as well. If the universe is expanding more rapidly, could it expand at such a rate where light couldn't overcome the rate of expansion? And if it could, what happens to the light traveling in the opposite direction? I mean if I'm in a car going at 25 mph and throw a ball out the window going 25 mph in the opposite direction, it'd appear like the ball is standing still to someone on the outside, right (not taking gravity into account)? So could light theoretically be standing still somewhere in the universe? I'm sorry for the babbling on my part, but this screws with my mind in all sorts of ways. EDIT: Holy expletive, this is why I love the reddit community. Thanks for all the helpful answers everyone!",
-              "The galaxies and other things that are 'moving faster than the speed of light away from us' are not moving through space/time faster than the speed of light, but are moving that fast because of space/time itself expanding. The individual stars, planets, asteroids and such aren't moving through space at a faster than light speed, the very fabric of space/time is expanding faster than light. Although I'm not entirely sure if space actually IS expanding that fast right now, I just know that it is continually increasing its rate of expansion and will eventually (if it hasn't already) break that barrier. So the 'nothing travels faster than light' rule still holds, because that rule is talking about things moving through space, not space itself. Hopefully I explained that adequately.",
-              "Very informative and detailed answer. I think I understand your explanation of space being the container, which is itself expanding. The light, or contents in the container still adhere to the rules of the inside of the container, but different rules apply to the container itself? Sorry I keep reverting to comparisons, only way I can sort of make sense of things.",
-              "Yeah, you pretty much have it. The analogy that gets used lots is to blow up a balloon and draw dots on it. With the dots representing galaxies and the balloon surface representing space itself. If you blow the balloon up further, it expands, and the dots (galaxies) get farther away from one another. However, the dots themselves haven't actually moved."
-              ]
-
-d1 = ["The concept of the observable universe. The fact that the reason we can't see a certain range into the space being because the light hasn't had time to get to earth since the beginning of the universe is crazy to me. So you mean the universe is buffering for us? Wow, now your analogy blew my mind! I want it now godamit! gluurrraAA grrraAAA. Fucking pop-up.Nah it's more like the draw distance. this comment literally made the whole observable universe thing actually make sense to me for the first time. cheers.Your comment just blew my mind into milky way chunks. Oh. Damn. Holy shit o.o I guarantee the universe is gonna put itself behind a paywall very soon There is an horizon beyond which we will never be able to see no matter how long the universe runs for. It is one of the unsolved cosmological problems. If there are boundaries beyond which no information will ever pass then how did the universe end up homogeneous? Not really."]
-
-d2 = ["Holy shit is that what that means? I never gave it much thought but always assumed 'observable universe' just to be the furthest we can accurately see before the information becomes too small or distorted by the great distance. Its even crazier than that. Due to the expansion of the Universe, everthing outside the observable Universe is now moving faster than the speed of light away from us. That means that the light from the rest of the Universe will never reach us. We live in an ever shrinking bubble of local galaxies. Everything around us will literally fade out of existence (since by definition, if you can't ever observe it, it doesn't exist) as the relative speed between us and the rest of the galaxies passes the speed of light. EDIT There is a ton of responses to this thread. I've posted this link elsewhere, but I figured I'd put here as well. It explained this way, way better than I could ever hope to.https://www.youtube.com/watch?v=XBr4GkRnY04 There are differences between what we can see, how far away those objects currently are, how long its been going on, how wide our visible universe is, etc. But the basic point is the same. Outside some radius about our place in the universe, the rest of the universe is expanding away from us greater than the speed of light. Not only will the light from that part of the universe never reach us, we can never reach them. We are forever isolated in our bubble. If you think about the simulation theory of the universe, it's an ingenious way to contain us without having walls. This baffles me. My knowledge of this stuff is severely limited to things I've only been told/ read/ watched, but I remember on this one episode of Cosmos (the new one), NDT mentioned that nothing could ever go faster than light. I think the situation they portrayed was if you could travel to 99.9999~% the speed of light on a bike, then switch on the headlight, the light leaving the headlight would still be traveling at the speed of light. Since you brought this up though, I was wondering about it as well. If the universe is expanding more rapidly, could it expand at such a rate where light couldn't overcome the rate of expansion? And if it could, what happens to the light traveling in the opposite direction? I mean if I'm in a car going at 25 mph and throw a ball out the window going 25 mph in the opposite direction, it'd appear like the ball is standing still to someone on the outside, right (not taking gravity into account)? So could light theoretically be standing still somewhere in the universe? I'm sorry for the babbling on my part, but this screws with my mind in all sorts of ways. EDIT: Holy expletive, this is why I love the reddit community. Thanks for all the helpful answers everyone! The galaxies and other things that are 'moving faster than the speed of light away from us' are not moving through space/time faster than the speed of light, but are moving that fast because of space/time itself expanding. The individual stars, planets, asteroids and such aren't moving through space at a faster than light speed, the very fabric of space/time is expanding faster than light. Although I'm not entirely sure if space actually IS expanding that fast right now, I just know that it is continually increasing its rate of expansion and will eventually (if it hasn't already) break that barrier. So the 'nothing travels faster than light' rule still holds, because that rule is talking about things moving through space, not space itself. Hopefully I explained that adequately. Very informative and detailed answer. I think I understand your explanation of space being the container, which is itself expanding. The light, or contents in the container still adhere to the rules of the inside of the container, but different rules apply to the container itself? Sorry I keep reverting to comparisons, only way I can sort of make sense of things. Yeah, you pretty much have it. The analogy that gets used lots is to blow up a balloon and draw dots on it. With the dots representing galaxies and the balloon surface representing space itself. If you blow the balloon up further, it expands, and the dots (galaxies) get farther away from one another. However, the dots themselves haven't actually moved."
-              ]
-
-documents3 = ["Texas serial bomber made video confession before blowing himself up",
-              "What are the chances we ever see the video?",
-              "About the same as the chances of the Browns winning the Super Bowl.",
-              "I take the browns to the super bowl every morning.",
-              "I have to applaud your regularity",
-              "I thought at first you meant he posts that comment regularly. But now I get it. Healthy colon.",
-              "Pshh I'm taking the browns to the super bowl as we speak",
-              "Consistency is the key.",
-              "Seriously. Well done.",
-              "Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
-              "Holy fuck, here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very fucking bad.",
-              "I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived a fucking explosion?!",
-              "Nokia brick",
-              "God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now).",
-              "Yes but the old phones had the drawback of having to be charged every two weeks."
-              
-    ]
-
-documents33 = ["Texas serial bomber made video confession before blowing himself up",
-              "What are the chances we ever see the video?",
-              "About the same as the chances of the Browns winning the Super Bowl.",
-              "I take the browns to the super bowl every morning.",
-              "I have to applaud your regularity",
-              "I thought at first you meant he posts that comment regularly. But now I get it. Healthy colon.",
-              "Pshh I'm taking the browns to the super bowl as we speak",
-              "Consistency is the key.",
-              "Seriously. Well done.",
-              "Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
-              "here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very bad.",
-              "I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?!",
-              "Nokia brick",
-              "God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now).",
-              "Yes but the old phones had the drawback of having to be charged every two weeks."
-              
-    ]
-
-documents3_normal = ["Texas serial bomber made video confession before blowing himself up",
-              "What are the chances we ever see the video?",
-              "About the same as the chances of the Browns winning the Super Bowl.",
-              "every morning.",
-              "I have to applaud your regularity",
-              "I thought at first you meant he posts that comment regularly. But now I get it. Healthy colon.",
-              "Pshh I'm taking the browns to the super bowl as we speak",
-              "Consistency is the key.",
-              "Seriously. Well done.",
-              "Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
-              "here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very bad.",
-              "I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?!",
-              "Nokia brick",
-              "God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now).",
-              "Yes but the old phones had the drawback of having to be charged every two weeks."
-              
-    ]
-
-documents333 = ["Texas serial bomber made video confession before blowing himself up",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video?",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl.",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity I thought at first you meant he posts that comment regularly. But now I get it. Healthy colon.",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity Pshh I'm taking the browns to the super bowl as we speak",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity Consistency is the key.",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? About the same as the chances of the Browns winning the Super Bowl. I take the browns to the super bowl every morning I have to applaud your regularity Seriously. Well done.",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
-              "Texas serial bomber made video confession before blowing himself up What are the chances we ever see the video? Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile. here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very bad.",
-              "Texas serial bomber made video confession before blowing himself up I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?!",
-              "Texas serial bomber made video confession before blowing himself up I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?! Nokia brick",
-              "Texas serial bomber made video confession before blowing himself up I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?! Nokia brick God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now).",
-              "Texas serial bomber made video confession before blowing himself up I want to know what kind of phone he has. I have had one break from a 3 foot fall, and his survived an explosion?! Nokia brick God those old analog phones from the 90's were amazingly durable. They also had great reception (Way better than what I have now). Yes but the old phones had the drawback of having to be charged every two weeks."
-              
-    ]
-
-edges3 = {0:0,
-         1:0,
-         2:1,
-         3:2,
-         4:3,
-         5:4,
-         6:4,
-         7:4,
-         8:4,
-         9:1,
-         10:9,
-         11:0,
-         12:11,
-         13:12,
-         14:13
-         }
-
-#document4= ["Parents can help their children be successful in school by encouraging them. Children usually enjoy playing games instead of studying their boring lessons, so parents have to take the responsibility to monitor their studying and to remind them to do their homework at home after school.  Parents should also encourage their children to study by buying story books with pictures, or they can buy text books or tapes that help children learn to spell or read.  The best way to encourage children to study efficiently is to spell or read.  The best way to encourage children to study efficiently is to reward them when they get an 'A.'  As a child, I experienced this.  My parents gave me a gift if I had studied well, and then I was very excited.  So, if parents really want their children to succeed in school, they need to pay attention to their children's studies and encourage them."]
-document4= ["Parents can help their children be successful in school by encouraging them. Children usually enjoy playing games instead of studying their boring lessons, so parents have to take the responsibility to monitor their studying and to remind them to do their homework at home after school.Parents should also encourage their children to study by buying story books with pictures, or they can buy text books or tapes that help children learn to spell or read. The best way to encourage children to study efficiently is to spell or read."]
-
-document5= ["lBJ LBJ LBJ LBJ LBJ Lakers Lakers Lakers Lakers Lakers",
-            "Warriors Warriors Warriors Warriors Warriors Championship Championship Championship Championship Championship"]
-
-document6= ["lBJ LBJ LBJ LBJ LBJ Warriors Warriors Warriors Warriors Warriors Lakers Lakers Lakers Lakers Lakers Championship Championship Championship Championship Championship "]
-document7= ["lBJ LBJ LBJ LBJ LBJ",
-            " Lakers Lakers Lakers Lakers Lakers",
-            " Warriors Warriors Warriors Warriors Warriors",
-            " Championship Championship Championship Championship Championship "]
-
-#document6= ["lBJ LBJ LBJ LBJ LBJ Lakers Lakers Lakers Lakers Lakers"]
-document8= ["lBJ LBJ LBJ LBJ LBJ LBJ LBJ LBJ Warriors Championship basketball Lakers Lakers Lakers Lakers Lakers Lakers Lakers Lakers curry"]
-
-document9= ["lBJ LBJ Lakers Lakers",
-            "Warriors  Warriors Championship  Championship"]
-
-document10 =["What concept completely blows your mind?",
-             "The concept of the observable universe. The fact that the reason we can't see a certain range into the space being because the light hasn't had time to get to earth since the beginning of the universe is crazy to me.",
-             "So you mean the universe is buffering for us?",
-             "Wow, now your analogy blew my mind!",
-             "I want it now godamit! gluurrraAA grrraAAA",
-             "Nah it's more like the draw distance.",
-             "this comment literally made the whole observable universe thing actually make sense to me for the first time. cheers.",
-             "Your comment just blew my mind into milky way chunks.",
-             "Oh. Damn.",
-             "Holy shit o.o",
-             "I guarantee the universe is gonna put itself behind a paywall very soon",
-             "There is an horizon beyond which we will never be able to see no matter how long the universe runs for. It is one of the unsolved cosmological problems. If there are boundaries beyond which no information will ever pass then how did the universe end up homogeneous?",
-             "Not really.",
-             
-             "That until the invention of the train, no one had been able to travel faster than a horse on land.",
-             "Also, until trains no one really need a consistent time. The difference between 1:30 and 1:50 was largely inconsequential. Well, until you have several tons of steel hurtling down a track and two of them try to occupy the same space and time. It wasn't uncommon for different clocks in town to display different times until the rail road came through.EDIT: Yes, I get that maritime needed accurate clocks to navigate. That's not what I'm talking about. What I'm talking about is synchronized clocks. Clock A has the same time as place Clock B 200 miles away. For maritime stuff that doesn't matter as long as everyone can accurately judge that X amount of time has passed. Example: If my clock reads 10:10 and your's read 10:15 and 20 minutes later mine reads 10:30 and yours reads 10:35, you will not get lost at sea. Also fixed an auto correct word.",
-             "a lot of my friends apparently think the very same thing.",
-             "It seems to be cultural. My wife is a wedding photographer and some clients will tell her, oh, it says 1pm but nobody will show up until 1:45. We call it 'X people time.' X has been black, Latin, Indian, southern, Greek...probably a half dozen others.I couldn't stand that. I keep German people time.",
-             "German time is showing up 10 minutes early",
-             "Like working at a fast food joint. It's 2pm! Why are you just getting here?! Because I start at 2. You need to be 15 minutes early! Can I punch in 15 minutes early then? No! You sit in back and wait till your start time. Okay. Then I'll be here at my start time. Fuck your shit.",
-             "Yeah all I need to do is put my bag away and put my apron/hat on. I was once 2 minutes late and got bitched out because of it. So I wasn't even needed there if my manager had the time to delay me for another 3 minutes",
-             "You should wash your hands too.",
-             "Yeah I do usually but i don't make the food I just take orders"
-              
-    ]
-
-document11 =[            
-             "That until the invention of the train, no one had been able to travel faster than a horse on land.",
-             "Also, until trains no one really need a consistent time. The difference between 1:30 and 1:50 was largely inconsequential. Well, until you have several tons of steel hurtling down a track and two of them try to occupy the same space and time. It wasn't uncommon for different clocks in town to display different times until the rail road came through.EDIT: Yes, I get that maritime needed accurate clocks to navigate. That's not what I'm talking about. What I'm talking about is synchronized clocks. Clock A has the same time as place Clock B 200 miles away. For maritime stuff that doesn't matter as long as everyone can accurately judge that X amount of time has passed. Example: If my clock reads 10:10 and your's read 10:15 and 20 minutes later mine reads 10:30 and yours reads 10:35, you will not get lost at sea. Also fixed an auto correct word.",
-             "a lot of my friends apparently think the very same thing.",
-             "It seems to be cultural. My wife is a wedding photographer and some clients will tell her, oh, it says 1pm but nobody will show up until 1:45. We call it 'X people time.' X has been black, Latin, Indian, southern, Greek...probably a half dozen others.I couldn't stand that. I keep German people time.",
-             "German time is showing up 10 minutes early",
-             "Like working at a fast food joint. It's 2pm! Why are you just getting here?! Because I start at 2. You need to be 15 minutes early! Can I punch in 15 minutes early then? No! You sit in back and wait till your start time. Okay. Then I'll be here at my start time. Fuck your shit.",
-             "Yeah all I need to do is put my bag away and put my apron/hat on. I was once 2 minutes late and got bitched out because of it. So I wasn't even needed there if my manager had the time to delay me for another 3 minutes",
-             "You should wash your hands too.",
-             "Yeah I do usually but i don't make the food I just take orders"
-              
-    ]
-
-edges10 = {0:0,
-         1:0,
-         2:1,
-         3:2,
-         4:2,
-         5:2,
-         6:2,
-         7:2,
-         8:2,
-         9:2,
-         10:2,
-         11:2,
-         12:2,
-         
-         13:13,
-         14:13,
-         15:14,
-         16:15,
-         17:16,
-         18:17,
-         19:18,
-         20:19,
-         21:20
-         }
-
-#documents = documents1+documents2
-#documents= documents1
+file_dir = 'E:\\Reddit\\data'
 
 
 simple0= ["lBJ Lakers",
@@ -245,30 +52,306 @@ simple2= ["lBJ LBJ Lakers Lakers",
 simple3= ["lBJ LBJ Lakers Lakers LBJ LBJ Lakers Lakers",
             "Warriors  Warriors Championship  Championship"]
 
-documents = simple3
-edges= edges3
+simple4 = ["Texas serial bomber made video confession before blowing himself up",
+              "What are the chances we ever see the video?",
+              "About the same as the chances of the Browns winning the Super Bowl.",
+              "every morning.",
+              "I have to applaud your regularity",
+              "Pshh I'm taking the browns to the super bowl as we speak",
+              "Consistency is the key.",
+              "Seriously. Well done.",
+              "Zero, videos like this are locked down and used for training purposes. There are a host of confessions and tapes of crimes the public will never see and some have caused agents in training to kill themselves because they are so vile.",
+              "here I am thinking 'just transcripts? How bad can it be' Bad, guys. Very bad."
+              
+            ]
+
+simple6= [  "Warriors got the Championship",
+            "Yeah, they deserve it!",
+            "lBJ went to Lakers",
+            "shit, that's so bad. I cannot believe it.",
+            "Oh my gosh, I will not watch Cavs's game"]
+
+edges6 = {0:0,
+          1:0,
+          2:2,
+          3:2,
+          4:2
+         }
+
+edges66 = [(0,0),(1,0),(2,0),(3,2),(4,2)]
+lable66= [1,0,1,0,0]
+         
+lable666= [2,1,0,2,0]
+#edges6_pairswitch = dict((value,key) for key,value in edges6.iteritems())
+
+edges= edges66
+label = lable666
+#documents = simple6
+
+
 stop = set(stopwords.words('english'))
 exclude = set(string.punctuation)
 lemma = WordNetLemmatizer()
 
-print 'got', len(documents), 'documents'    # got 9 documents
+#print 'got', len(documents), 'documents'    # got 9 documents
 #pprint(documents)
 
+def prefix_time():
+    prefix_time = datetime.now().strftime('%Y%m%d%H%M%S')
+    return prefix_time
+
+def file_reader(file_ID):
+    filename = file_ID + '.txt'
+    filepath_name = os.path.join(file_dir+'\\labeled data\\', filename)
+    
+    ndtype = 'i, i, i, S100, S2000' 
+    names = 'Idx, Pidx, label, Topic, Content'
+    ps = np.genfromtxt(filepath_name, dtype=ndtype, names=names, delimiter='\t', encoding='utf_8_sig')
+
+    edges = zip(ps['Idx'], ps['Pidx'])
+   
+    label = ps['label']
+    order =  ps['Idx']
+    content = ps['Content']
+
+    d=[]
+    
+    for item in edges:
+        d.append(item)
+        g = nx.Graph(d)
+        
+        #pos = nx.shell_layout(g)
+    #nx.draw(g)
+        nx.draw_networkx(g)
+        
+        #plt.pause(0.5)
+        plt.clf()
+    #plt.show()
+
+    return edges, label, content
+
+def Normalization(x):
+    return [(float(i)-min(x))/float(max(x)-min(x)) for i in x]
+    #return [(float(i))/float(max(x)) for i in x]
+    #return [0.1+ (float(i)-min(x))/float(max(x)-min(x))*(0.9-0.1) for i in x]
+
+def get_degree_height(edges, label):
+    tree = Tree()
+    tree.create_node(edges[0][0], edges[0][0], data = label[0])  # root node
+    parents = []
+    parents.append(0)
+    for i in range(len(edges[1:])):
+        tree.create_node(tag=edges[1:][i][0], identifier = edges[1:][i][0], parent=edges[1:][i][1], data = label[i+1])
+        if tree.parent(i):
+            parents.append(tree.parent(i).identifier)
+    parents.append(tree.parent(len(edges[1:])).identifier)
+    
+    #tree.show()
+    
+    #tree_height = max([len(item) for item in tree.paths_to_leaves()])-1
+
+    node_heights = []
+    node_degrees = []
+    
+    for i in range(len(edges)):
+        node_height = max([len(item) for item in tree.subtree(i).paths_to_leaves()])
+        node_heights.append(node_height)
+        node_degree  = len(tree.subtree(i).nodes) +1
+        node_degrees.append(node_degree)
+
+    '''
+    for edge in edges:
+        node_heights.append(tree_height- tree.level(edge[0]))
+        node_degrees.append(len(tree.get_node(edge[0]).fpointer))
+    '''
+    
+    node_degrees = Normalization(np.array(node_degrees))
+    node_heights = Normalization(np.array(node_heights))
+
+    print node_degrees
+    
+    #X = zip(node_degrees,node_heights)
+    X =  [[i] for i in node_degrees]
+    #X = node_degrees
+    #X = zip(node_degrees,order)
+
+    #extension = 0.66*np.array(node_heights)+0.34*np.array(node_degrees)
+    #print node_degrees
+    #print node_heights
+    #extension = 0.5*np.array(node_heights)+0.5*np.array(node_degrees)
+    
+    return X, parents
+
+def train_with_degree_height(X,y):
+    #clf = LinearSVC(random_state= 0)
+    
+    X = X
+    y = y
+
+    '''
+    x1 = np.random.randn(100)
+    x2 = 4*np.random.randn(100)
+    x3 = 0.5*np.random.randn(100)
+    y = (3 + x1 + x2 + x3 + 0.2*np.random.randn()) > 0
+    X = np.column_stack([x1, x2, x3])
+    '''
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
+    #print X_train
+    #print OneVsRestClassifier(clf).fit(X_train, y_train).predict(X_test)
+   
+    model = LogisticRegression()
+    model.fit(X_train, y_train)
+    y_predict = model.predict(X_test)
+    
+    print "LogisticRegression:"
+    
+    prob_y_2 = model.predict_proba(X_test)
+    # Keep only the positive class
+    prob_y_2 = [p[1] for p in prob_y_2]
+    print "roc_auc_score:", ( roc_auc_score(y_test, prob_y_2) )
+    
+    print "accuracy:" + str(accuracy_score(y_test, y_predict))
+    # The estimated coefficients will all be around 1:
+    print(model.coef_)
+  
+    
+    model = DecisionTreeClassifier()
+    model.fit(X_train, y_train)
+    y_predict = model.predict(X_test)
+    print "DecisionTreeClassifier:"
+    
+    prob_y_2 = model.predict_proba(X_test)
+    # Keep only the positive class
+    prob_y_2 = [p[1] for p in prob_y_2]
+    print "roc_auc_score:",  ( roc_auc_score(y_test, prob_y_2) )
+    
+    print "accuracy:" + str(accuracy_score(y_test, y_predict))
+    print(model.feature_importances_)
+    
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+    y_predict = model.predict(X_test)
+    print "RandomForestClassifier:"
+    
+    prob_y_2 = model.predict_proba(X_test)
+    # Keep only the positive class
+    prob_y_2 = [p[1] for p in prob_y_2]
+    print "roc_auc_score:",  ( roc_auc_score(y_test, prob_y_2) )
+    
+    print "accuracy:" + str(accuracy_score(y_test, y_predict))
+    print(model.feature_importances_)
+    
+    model = ExtraTreesClassifier()
+    model.fit(X_train, y_train)
+    y_predict = model.predict(X_test)
+    print "ExtraTreesClassifier:"
+    
+    prob_y_2 = model.predict_proba(X_test)
+    # Keep only the positive class
+    prob_y_2 = [p[1] for p in prob_y_2]
+    print "roc_auc_score:",  ( roc_auc_score(y_test, prob_y_2) )
+    
+    print "accuracy:" + str(accuracy_score(y_test, y_predict))
+    print(model.feature_importances_)
+
+    model = LinearSVC(random_state= 0, class_weight="balanced")
+    model.fit(X_train, y_train)
+    y_predict = model.predict(X_test)
+    print "LinearSVC:"
+    
+    print "accuracy:" + str(accuracy_score(y_test, y_predict))
+    print(model.coef_)
+
+
+   
+
+    '''
+    clf.fit(X_train, y_train)  
+    print clf.predict(X_test)
+    print y_test
+    '''
+'''
+def cross_training(X1,y1,X2,y2):
+    clf = LinearSVC(random_state= 0)
+    X = np.array(X1)
+    y = np.array(y1)
+    #X_train, X_test, y_train, y_test = train_test_split(X1, y1, test_size=0.5)
+    #print X_train
+    #print OneVsRestClassifier(clf).fit(X_train, y_train).predict(X_test)
+    y_predict = clf.fit(X1, y1).predict(X2)
+    print clf.coef_
+    print y2
+    print y_predict
+    
+    print "accuracy:" + str(accuracy_score(y2, y_predict))
+'''
+def cross_training(X1,y1,X2,y2):
+    
+    X = X1
+    y = y1
+    #X_train, X_test, y_train, y_test = train_test_split(X1, y1, test_size=0.5)
+    #print X_train
+    #print OneVsRestClassifier(clf).fit(X_train, y_train).predict(X_test)
+   
+    print "------------------------------------------------"
+    model = LogisticRegression()
+    model.fit(X1, y1)
+    y_predict = model.fit(X1, y1).predict(X2)
+    print "LogisticRegression:"
+    print "accuracy:" + str(accuracy_score(y2, y_predict))
+    # The estimated coefficients will all be around 1:
+    print(model.coef_)
+  
+    
+    model = DecisionTreeClassifier()
+    model.fit(X1, y1)
+    # display the relative importance of each attribute
+    y_predict = model.fit(X1, y1).predict(X2)
+    print "DecisionTreeClassifier:"
+    print "accuracy:" + str(accuracy_score(y2, y_predict))
+    print(model.feature_importances_)
+    
+    model = RandomForestClassifier()
+    model.fit(X1, y1)
+    # display the relative importance of each attribute
+    y_predict = model.fit(X1, y1).predict(X2)
+    print "RandomForestClassifier:"
+    print "accuracy:" + str(accuracy_score(y2, y_predict))
+    print(model.feature_importances_)
+    
+    model = ExtraTreesClassifier()
+    model.fit(X1, y1)
+    # display the relative importance of each attribute
+    y_predict = model.fit(X1, y1).predict(X2)
+    print "ExtraTreesClassifier:"
+    print "accuracy:" + str(accuracy_score(y2, y_predict))
+    print(model.feature_importances_)
+
+    model = LinearSVC(random_state= 0)
+    model.fit(X1, y1)
+    y_predict = model.fit(X1, y1).predict(X2)
+    print "LinearSVC:"
+    print "accuracy:" + str(accuracy_score(y2, y_predict))
+    print(model.coef_)
+
+    
 class MyTexts(object):
     """Construct generator to avoid loading all docs
     
     """
-    def __init__(self):
+    def __init__(self, documents):
         #stop word list
         #self.stoplist = set('for a of the and to in'.split())
-        pass
+        self.documents = documents
+        print 'got', len(documents), 'documents'  
 
     def __iter__(self):
-        for doc in documents:
+        for doc in self.documents:
             #remove stop words from docs
             stop_free = [i for i in doc.lower().split() if i not in stop]
             punc_free = [ch for ch in stop_free if ch not in exclude]
             normalized = [lemma.lemmatize(word) for word in punc_free]
+            normalized2 = [w for w in normalized if w != "would" and w != "people"]
         
             #yield [word for word in doc.lower().split() if word not in stop]
             yield  normalized
@@ -296,12 +379,6 @@ def corpus2bow(texts,dictionary):
     
     """
     corpus=[dictionary.doc2bow(text) for text in texts]
-    #pprint(corpus)
-    
-    # save corpus
-    #corpora.MmCorpus.serialize('corpus.mm', corpus)
-    # load corpus
-    #corpus = corpora.MmCorpus('corpus.mm')
     
     return corpus
 
@@ -312,13 +389,6 @@ def bow2tfidf(corpus):
     tfidf = models.TfidfModel(corpus)
     corpus_tfidf = tfidf[corpus] # wrap the old corpus to tfidf
     
-    #print tfidf, '\n' # TfidfModel(num_docs=9, num_nnz=51) 
-    #print corpus_tfidf, '\n'
-    #print tfidf[corpus[0]], '\n' # convert first doc from bow to tfidf
-    
-    #for doc in corpus_tfidf: # convert the whole corpus on the fly
-    #    print doc
-    
     return corpus_tfidf
         
 def topic_models(corpus,dictionary,num_topics=2,edges=None):
@@ -326,10 +396,9 @@ def topic_models(corpus,dictionary,num_topics=2,edges=None):
     
     """
 
-    LDA_model = models.LdaModel(corpus = corpus, id2word = dictionary, num_topics=num_topics,edges = edges)
-    #LDA_model.save('LDA.model')
-    #LDA_model = models.LdaModel.load('LDA.model')
-    topics =  LDA_model.show_topics( num_words=15, log=False, formatted=False)
+    LDA_model = models.LdaModel(corpus = corpus, id2word = dictionary, num_topics=num_topics,edges=None)
+
+    topics =  LDA_model.show_topics(num_words=15, log=False, formatted=False)
     for t in topics:
         print t
     
@@ -339,116 +408,134 @@ def topic_models(corpus,dictionary,num_topics=2,edges=None):
         doc_t =  LDA_model.get_document_topics(c)
         print i, doc_t
         i+=1
-    
-    #LDA_model.bound(corpus, gamma, subsample_ratio)
-    
-    #In order to compare perplexities you need to convert gensim's perplexity
-    #np.exp(-1. * LDA_model.log_perplexity(train_corpus)).
-    '''
-    hdp = models.HdpModel(corpus_tfidf, T=100,id2word=dictionary)
-    hdp.save("HDP.model")
 
-    # initialize a fold-in LSI transformation
-    lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=num_topics) 
 
-    # create a double wrapper over the original corpus:bow->tfidf->fold-in-lsi
-    corpus_lsi = lsi[corpus_tfidf] 
-
-    # save model
-    lsi.save('model.lsi')
-    # load model
-    lsi = models.LsiModel.load('model.lsi')
     
     '''
-    
+    parent = LDA_model.get_document_topics(corpus[0])
+    inherit = 0.3
+    LDA_model.
+    index = 0
+    for c in corpus:
+        doc_t =  LDA_model.get_document_topics(c)
+        parent = tree.parent(index).identifier
+        result = [(p[0], inherit * p[1]) for p in parent]
+        for i in range(len(doc_t)):
+            result[i] = ((doc_t[i][0],  (1-inherit) * doc_t[i][1] + inherit * parent[i][1]))
+        
+        print index, result
+        index+=1  
     '''
-    nodes = list(corpus_lsi)
-    print nodes
+ 
+        
+    '''
+    #Plot nodes to see clustering status
+    
+    nodes = list(LDA_model[corpus] )
     ax0 = [x[0][1] for x in nodes] 
     ax1 = [x[1][1] for x in nodes]
     
     plt.plot(ax0,ax1,'o')
     plt.show()
+    
     '''
+
     
     return LDA_model
 
+def word_distribution(text):
+  
+    dict = {}
+    for t in  texts:
+        for word in t:
+            if dict.has_key(word):
+                dict[word] += 1
+            else:
+                dict[word] = 1
+    #print dict
+    
+    keys=[]
+    values=[]
 
-def doc_similarity(doc, corpus):
+    for key,value in sorted(dict.iteritems(),key=lambda (k,v): (v,k), reverse  = True ):
+        #print "%s: %s" % (key, value)
+        keys.append(key)
+        values.append(value) 
+    
+    
+    x = range(len(keys))
+    y = values
+    
+    plt.bar(x, y,  color='b') 
+    plt.xticks(x, keys, rotation = 45)
+    
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+file_name+'_word distribution'+'.png')
+    plt.title('Word Distribution')
+    plt.show()
+    
+    c = Counter(values)
+    total = np.sum(np.array(c.values()))
+    print total
+    x= np.array(c.values())/float(total)
 
+    labels1= c.keys()
+    #s_length = len(x)
+    #explode1=[0]*s_length
+    plt.pie(x,autopct='%.0f%%',shadow=True,  labels=labels1, textprops = {'fontsize':14, 'color':'k'})
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+file_name+'_word frequency'+'.png')
+    plt.title('Word Frequency')
+    plt.show()
     
-    ver_bow=dictionary.doc2bow(doc.lower().split())#return bags-of-word[(tokenid,count)....]
-    print(ver_bow)
+def node_distribution(nodes):
+    nodes = sorted(nodes, reverse  =True)
     
-    lsi = models.LsiModel.load('model.lsi')        
-    vec_lsi=lsi[ver_bow]
-    print(vec_lsi)
-    
-    index = similarities.MatrixSimilarity(lsi[corpus]) # transform corpus to LSI space and index it
-    
-    sims=index[vec_lsi]
-    sims = sorted(enumerate(sims), key=lambda item: -item[1])
-    return (sims)
+    x = range(len(nodes))
+    y = nodes
 
-def perplexity(ldamodel, testset, dictionary, size_dictionary, num_topics):
-    """calculate the perplexity of a lda-model
+    plt.bar(x, y,  color='r') 
+    plt.xticks(x, y, rotation = 45)
     
-    """
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+file_name+'_node distribution'+'.png')
+    plt.title('Node Distribution')
+    plt.show()
     
-    # dictionary : {7822:'deferment', 1841:'circuitry',19202:'fabianism'...]
-    #print ('the info of this ldamodel: \n')
-    print ('num of testset: %s; size_dictionary: %s; num of topics: %s'%(len(testset), size_dictionary, num_topics))
-    prep = 0.0
-    prob_doc_sum = 0.0
-    topic_word_list = [] # store the probablity of topic-word:[(u'business', 0.010020942661849608),(u'family', 0.0088027946271537413)...]
-    for topic_id in range(num_topics):
-        topic_word = ldamodel.show_topic(topic_id, size_dictionary)
-        
-        dic = {}
-        for word, probability in topic_word:
-            dic[word] = probability
-        topic_word_list.append(dic)
-    doc_topics_ist = [] #store the doc-topic tuples:[(0, 0.0006211180124223594),(1, 0.0006211180124223594),...]
-    for doc in testset: 
-        #doc_topics_ist.append(ldamodel.get_document_topics(doc, minimum_probability=0))
-        doc_topics_ist.append(ldamodel[doc])
-    testset_word_num = 0
-   
-    for i in range(len(testset)):
-        prob_doc = 0.0 # the probablity of the doc
-        doc = testset[i]
-        doc_word_num = 0 # the num of words in the doc
-        for word_id, num in doc:
-            prob_word = 0.0 # the probablity of the word 
-            doc_word_num += num
-            word = dictionary[word_id]
-            for topic_id in range(num_topics):
-                # cal p(w) : p(w) = sumz(p(z)*p(w|z))
-                prob_topic = doc_topics_ist[i][topic_id][1]
-                prob_topic_word = topic_word_list[topic_id][word]
-                prob_word += prob_topic*prob_topic_word
-            prob_doc += math.log(prob_word) # p(d) = sum(log(p(w)))
-        prob_doc_sum += prob_doc
-        testset_word_num += doc_word_num
-    prep = math.exp(-prob_doc_sum/testset_word_num) # perplexity = exp(-sum(p(d)/sum(Nd))
-    print ("the perplexity of this ldamodel is : %s"%prep)
-    return prep
+    dict = Counter(nodes)
+    
+    total = np.sum(np.array(dict.values()))
+    print total
+    x= np.array(dict.values())/float(total)
 
-def test_perplexity(testset,num_topics):
-    
-    ldamodel_path = 'LDA.model'
-    dictionary = corpora.Dictionary.load('docs.dict')
-    lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
-    hdp = models.hdpmodel.HdpModel.load("HDP.model")
-    # sample 1/300
-    #for i in range(corpus.num_docs/300):
-    #    testset.append(corpus[i*300])
-
-    return perplexity(lda_model, testset, dictionary, len(dictionary.keys()), num_topics)
+    labels1= dict.keys()
+    #s_length = len(x)
+    #explode1=[0]*s_length
+    plt.pie(x,autopct='%.0f%%',shadow=True,  labels=labels1, textprops = {'fontsize':14, 'color':'k'})
+    plt.savefig(file_dir+'\\graphs\\'+prefix_time()+file_name+'_node frequency'+'.png')
+    plt.title('Node Frequency')
+    plt.show()
     
 if __name__ == '__main__':
-    texts = MyTexts()
     
+    file_name = "867njq_new"
+    edges1, label1, documents1 = file_reader(file_name)
+    #edges2, label2, documents2 = file_reader("8sk1ue") 867njq_new
+    
+    simple2= ["lBJ Lakers ",
+              "Warriors Championship",
+              "money in the wallet to buy ticket",
+              "Oh my gosh",
+              "I will not watch Cavs's game",
+              "Texas serial bomber made video confession before blowing himself up"
+              ]
+    
+    texts = MyTexts(documents1)
+    #word_distribution(texts)
+   
+    
+    tree_degree_height1, parents = get_degree_height(edges1, label1)
+    #tree_degree_height2 = get_degree_height(edges2, label2)
+    #train_with_degree_height(tree_degree_height1,label1)
+    #cross_training(tree_degree_height1, label1, tree_degree_height2, label2)
+
     dictionary = get_dictionary(texts, min_count=1)
   
     # save and load dictionary
@@ -458,15 +545,101 @@ if __name__ == '__main__':
     print dictionary
     '''
     corpus = corpus2bow(texts,dictionary)
-
+    
+    
     corpus_tfidf = bow2tfidf(corpus)
     #doc="Human computer interaction"
     #print doc_similarity(doc, corpus)
-    num_topics = 2
+    num_topics = 4
+    
+    magnification = 1
+    #base too large is not good, it should be close to 0
+    base = 0.000
+    
+    #867njq_new
+    #node_degrees = [1.0, 0.99, 0.49, 0.23, 0.04, 0.0, 0.0, 0.0, 0.0, 0.1, 0.05, 0.03, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.08, 0.0, 0.0, 0.03, 0.02, 0.0, 0.0, 0.01, 0.0, 0.01, 0.0, 0.03, 0.02, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.48, 0.37, 0.33, 0.06, 0.01, 0.0, 0.03, 0.02, 0.01, 0.0, 0.0, 0.03, 0.01, 0.0, 0.0, 0.0, 0.03, 0.02, 0.01, 0.0, 0.06, 0.05, 0.04, 0.02, 0.01, 0.0, 0.0, 0.03, 0.01, 0.0, 0.0, 0.01, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.09, 0.08, 0.05, 0.04, 0.01, 0.0, 0.0, 0.0, 0.01, 0.0]
+    #node_heights = [1.0, 0.9, 0.6, 0.5, 0.1, 0.0, 0.0, 0.0, 0.0, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.0, 0.0, 0.2, 0.1, 0.0, 0.0, 0.1, 0.0, 0.1, 0.0, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.8, 0.7, 0.6, 0.4, 0.1, 0.0, 0.3, 0.2, 0.1, 0.0, 0.0, 0.2, 0.1, 0.0, 0.0, 0.0, 0.3, 0.2, 0.1, 0.0, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.2, 0.1, 0.0, 0.0, 0.1, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.1, 0.0]
+    
+    #raw
+    #node_degrees = [101, 100, 50, 24, 5, 1, 1, 1, 1, 11, 6, 4, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 1, 1, 4, 3, 1, 1, 2, 1, 2, 1, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 49, 38, 34, 7, 2, 1, 4, 3, 2, 1, 1, 4, 2, 1, 1, 1, 4, 3, 2, 1, 7, 6, 5, 3, 2, 1, 1, 4, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 10, 9, 6, 5, 2, 1, 1, 1, 2, 1]
+   
+    #node_degrees = [50, 50, 50, 24, 5, 1, 1, 1, 1, 11, 6, 4, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 1, 1, 4, 3, 1, 1, 2, 1, 2, 1, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 49, 38, 34, 7, 2, 1, 4, 3, 2, 1, 1, 4, 2, 1, 1, 1, 4, 3, 2, 1, 7, 6, 5, 3, 2, 1, 1, 4, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 10, 9, 6, 5, 2, 1, 1, 1, 2, 1]
+    #node_heights = [11, 10, 7, 6, 2, 1, 1, 1, 1, 5, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 3, 2, 1, 1, 2, 1, 2, 1, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 8, 7, 5, 2, 1, 4, 3, 2, 1, 1, 3, 2, 1, 1, 1, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 1, 3, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 6, 5, 4, 3, 2, 1, 1, 1, 2, 1]
+    
+    #single feature
+    #node_degrees = [0.9, 0.892, 0.492, 0.28400000000000003, 0.132, 0.1, 0.1, 0.1, 0.1, 0.18000000000000002, 0.14, 0.124, 0.116, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.164, 0.1, 0.1, 0.124, 0.116, 0.1, 0.1, 0.10800000000000001, 0.1, 0.10800000000000001, 0.1, 0.124, 0.116, 0.10800000000000001, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.484, 0.396, 0.364, 0.14800000000000002, 0.10800000000000001, 0.1, 0.124, 0.116, 0.10800000000000001, 0.1, 0.1, 0.124, 0.10800000000000001, 0.1, 0.1, 0.1, 0.124, 0.116, 0.10800000000000001, 0.1, 0.14800000000000002, 0.14, 0.132, 0.116, 0.10800000000000001, 0.1, 0.1, 0.124, 0.10800000000000001, 0.1, 0.1, 0.10800000000000001, 0.1, 0.10800000000000001, 0.1, 0.1, 0.1, 0.1, 0.1, 0.172, 0.164, 0.14, 0.132, 0.10800000000000001, 0.1, 0.1, 0.1, 0.10800000000000001, 0.1]
+    #node_degrees = [1.0, 0.99, 0.49, 0.23, 0.04, 0.0, 0.0, 0.0, 0.0, 0.1, 0.05, 0.03, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.08, 0.0, 0.0, 0.03, 0.02, 0.0, 0.0, 0.01, 0.0, 0.01, 0.0, 0.03, 0.02, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.48, 0.37, 0.33, 0.06, 0.01, 0.0, 0.03, 0.02, 0.01, 0.0, 0.0, 0.03, 0.01, 0.0, 0.0, 0.0, 0.03, 0.02, 0.01, 0.0, 0.06, 0.05, 0.04, 0.02, 0.01, 0.0, 0.0, 0.03, 0.01, 0.0, 0.0, 0.01, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.09, 0.08, 0.05, 0.04, 0.01, 0.0, 0.0, 0.0, 0.01, 0.0]
+    #node_heights = [1.0, 0.9, 0.6, 0.5, 0.1, 0.0, 0.0, 0.0, 0.0, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.0, 0.0, 0.2, 0.1, 0.0, 0.0, 0.1, 0.0, 0.1, 0.0, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.8, 0.7, 0.6, 0.4, 0.1, 0.0, 0.3, 0.2, 0.1, 0.0, 0.0, 0.2, 0.1, 0.0, 0.0, 0.0, 0.3, 0.2, 0.1, 0.0, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.2, 0.1, 0.0, 0.0, 0.1, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.1, 0.0]
+    
+    #scaled_weigths
+    node_degrees = [30.452645802354127, 31.622776601683793, 18.89822365046136, 9.797958971132713, 3.5355339059327373, 1.0, 1.0, 1.0, 1.0, 4.919349550499537, 3.0, 2.3094010767585034, 2.1213203435596424, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 4.5, 1.0, 1.0, 2.3094010767585034, 2.1213203435596424, 1.0, 1.0, 1.414213562373095, 1.0, 1.414213562373095, 1.0, 2.0, 1.7320508075688774, 1.414213562373095, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 16.333333333333332, 13.435028842544401, 12.850792082313726, 3.1304951684997055, 1.414213562373095, 1.0, 2.0, 1.7320508075688774, 1.414213562373095, 1.0, 1.0, 2.3094010767585034, 1.414213562373095, 1.0, 1.0, 1.0, 2.0, 1.7320508075688774, 1.414213562373095, 1.0, 2.8577380332470415, 2.6832815729997477, 2.5, 1.7320508075688774, 1.414213562373095, 1.0, 1.0, 2.3094010767585034, 1.414213562373095, 1.0, 1.0, 1.414213562373095, 1.0, 1.414213562373095, 1.0, 1.0, 1.0, 1.0, 1.0, 4.08248290463863, 4.024922359499621, 3.0, 2.886751345948129, 1.414213562373095, 1.0, 1.0, 1.0, 1.414213562373095, 1.0]
+
+    
+    #8sk1ue
+    #node_degrees = [1, 0.58, 0.53, 0.11, 0.0, 0.04, 0.03, 0.02, 0.01, 0.0, 0.03, 0.0, 0.01, 0.0, 0.0, 0.36, 0.11, 0.07, 0.05, 0.04, 0.03, 0.02, 0.01, 0.0, 0.0, 0.02, 0.0, 0.0, 0.22, 0.12, 0.11, 0.07, 0.01, 0.0, 0.02, 0.01, 0.0, 0.01, 0.0, 0.0, 0.01, 0.0, 0.08, 0.05, 0.0, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.39, 0.0, 0.36, 0.16, 0.15, 0.14, 0.13, 0.12, 0.09, 0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02, 0.01, 0.0, 0.01, 0.0, 0.01, 0.0, 0.02, 0.0, 0.13, 0.0, 0.04, 0.03, 0.02, 0.01, 0.0, 0.03, 0.02, 0.0, 0.0, 0.02, 0.01, 0.0, 0.0, 0.0]
+    #node_heights = [1, 0.5882352941176471, 0.5294117647058824, 0.29411764705882354, 0.0, 0.23529411764705882, 0.17647058823529413, 0.11764705882352941, 0.058823529411764705, 0.0, 0.11764705882352941, 0.0, 0.058823529411764705, 0.0, 0.0, 0.47058823529411764, 0.4117647058823529, 0.35294117647058826, 0.29411764705882354, 0.23529411764705882, 0.17647058823529413, 0.11764705882352941, 0.058823529411764705, 0.0, 0.0, 0.058823529411764705, 0.0, 0.0, 0.35294117647058826, 0.29411764705882354, 0.23529411764705882, 0.17647058823529413, 0.058823529411764705, 0.0, 0.11764705882352941, 0.058823529411764705, 0.0, 0.058823529411764705, 0.0, 0.0, 0.058823529411764705, 0.0, 0.17647058823529413, 0.11764705882352941, 0.0, 0.058823529411764705, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.058823529411764705, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.9411764705882353, 0.0, 0.8823529411764706, 0.8235294117647058, 0.7647058823529411, 0.7058823529411765, 0.6470588235294118, 0.5882352941176471, 0.5294117647058824, 0.47058823529411764, 0.4117647058823529, 0.35294117647058826, 0.29411764705882354, 0.23529411764705882, 0.17647058823529413, 0.11764705882352941, 0.058823529411764705, 0.0, 0.058823529411764705, 0.0, 0.058823529411764705, 0.0, 0.058823529411764705, 0.0, 0.29411764705882354, 0.0, 0.23529411764705882, 0.17647058823529413, 0.11764705882352941, 0.058823529411764705, 0.0, 0.11764705882352941, 0.058823529411764705, 0.0, 0.0, 0.11764705882352941, 0.058823529411764705, 0.0, 0.0, 0.0]
+    
+    #0.1-0.9
+    #node_degrees = [0.9, 0.564, 0.524, 0.188, 0.1, 0.132, 0.124, 0.116, 0.10800000000000001, 0.1, 0.124, 0.1, 0.10800000000000001, 0.1, 0.1, 0.388, 0.188, 0.15600000000000003, 0.14, 0.132, 0.124, 0.116, 0.10800000000000001, 0.1, 0.1, 0.116, 0.1, 0.1, 0.276, 0.196, 0.188, 0.15600000000000003, 0.10800000000000001, 0.1, 0.116, 0.10800000000000001, 0.1, 0.10800000000000001, 0.1, 0.1, 0.10800000000000001, 0.1, 0.164, 0.14, 0.1, 0.116, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.10800000000000001, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.41200000000000003, 0.1, 0.388, 0.228, 0.22, 0.21200000000000002, 0.20400000000000001, 0.196, 0.172, 0.164, 0.15600000000000003, 0.14800000000000002, 0.14, 0.132, 0.124, 0.116, 0.10800000000000001, 0.1, 0.10800000000000001, 0.1, 0.10800000000000001, 0.1, 0.116, 0.1, 0.20400000000000001, 0.1, 0.132, 0.124, 0.116, 0.10800000000000001, 0.1, 0.124, 0.116, 0.1, 0.1, 0.116, 0.10800000000000001, 0.1, 0.1, 0.1]
+    #node_heights = [0.9, 0.5705882352941177, 0.5235294117647059, 0.33529411764705885, 0.1, 0.28823529411764703, 0.24117647058823533, 0.19411764705882353, 0.14705882352941177, 0.1, 0.19411764705882353, 0.1, 0.14705882352941177, 0.1, 0.1, 0.4764705882352941, 0.4294117647058824, 0.3823529411764707, 0.33529411764705885, 0.28823529411764703, 0.24117647058823533, 0.19411764705882353, 0.14705882352941177, 0.1, 0.1, 0.14705882352941177, 0.1, 0.1, 0.3823529411764707, 0.33529411764705885, 0.28823529411764703, 0.24117647058823533, 0.14705882352941177, 0.1, 0.19411764705882353, 0.14705882352941177, 0.1, 0.14705882352941177, 0.1, 0.1, 0.14705882352941177, 0.1, 0.24117647058823533, 0.19411764705882353, 0.1, 0.14705882352941177, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.14705882352941177, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.8529411764705882, 0.1, 0.8058823529411765, 0.7588235294117647, 0.711764705882353, 0.6647058823529413, 0.6176470588235294, 0.5705882352941177, 0.5235294117647059, 0.4764705882352941, 0.4294117647058824, 0.3823529411764707, 0.33529411764705885, 0.28823529411764703, 0.24117647058823533, 0.19411764705882353, 0.14705882352941177, 0.1, 0.14705882352941177, 0.1, 0.14705882352941177, 0.1, 0.14705882352941177, 0.1, 0.33529411764705885, 0.1, 0.28823529411764703, 0.24117647058823533, 0.19411764705882353, 0.14705882352941177, 0.1, 0.19411764705882353, 0.14705882352941177, 0.1, 0.1, 0.19411764705882353, 0.14705882352941177, 0.1, 0.1, 0.1]
+    
+    #raw data
+    #node_degrees =[101, 59, 54, 12, 1, 5, 4, 3, 2, 1, 4, 1, 2, 1, 1, 37, 12, 8, 6, 5, 4, 3, 2, 1, 1, 3, 1, 1, 23, 13, 12, 8, 2, 1, 3, 2, 1, 2, 1, 1, 2, 1, 9, 6, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 40, 1, 37, 17, 16, 15, 14, 13, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 1, 2, 1, 3, 1, 14, 1, 5, 4, 3, 2, 1, 4, 3, 1, 1, 3, 2, 1, 1, 1]
+    #node_heights =[18, 11, 10, 6, 1, 5, 4, 3, 2, 1, 3, 1, 2, 1, 1, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 1, 1, 7, 6, 5, 4, 2, 1, 3, 2, 1, 2, 1, 1, 2, 1, 4, 3, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 17, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 1, 2, 1, 2, 1, 6, 1, 5, 4, 3, 2, 1, 3, 2, 1, 1, 3, 2, 1, 1, 1]
+    
+    #node_degrees = [1.0, 0.5841584158415841, 0.5346534653465347, 0.1188118811881188, 0.009900990099009901, 0.04950495049504951, 0.039603960396039604, 0.0297029702970297, 0.019801980198019802, 0.009900990099009901, 0.039603960396039604, 0.009900990099009901, 0.019801980198019802, 0.009900990099009901, 0.009900990099009901, 0.36633663366336633, 0.1188118811881188, 0.07920792079207921, 0.0594059405940594, 0.04950495049504951, 0.039603960396039604, 0.0297029702970297, 0.019801980198019802, 0.009900990099009901, 0.009900990099009901, 0.0297029702970297, 0.009900990099009901, 0.009900990099009901, 0.22772277227722773, 0.12871287128712872, 0.1188118811881188, 0.07920792079207921, 0.019801980198019802, 0.009900990099009901, 0.0297029702970297, 0.019801980198019802, 0.009900990099009901, 0.019801980198019802, 0.009900990099009901, 0.009900990099009901, 0.019801980198019802, 0.009900990099009901, 0.0891089108910891, 0.0594059405940594, 0.009900990099009901, 0.0297029702970297, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.019801980198019802, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901, 0.39603960396039606, 0.009900990099009901, 0.36633663366336633, 0.16831683168316833, 0.15841584158415842, 0.1485148514851485, 0.13861386138613863, 0.12871287128712872, 0.09900990099009901, 0.0891089108910891, 0.07920792079207921, 0.06930693069306931, 0.0594059405940594, 0.04950495049504951, 0.039603960396039604, 0.0297029702970297, 0.019801980198019802, 0.009900990099009901, 0.019801980198019802, 0.009900990099009901, 0.019801980198019802, 0.009900990099009901, 0.0297029702970297, 0.009900990099009901, 0.13861386138613863, 0.009900990099009901, 0.04950495049504951, 0.039603960396039604, 0.0297029702970297, 0.019801980198019802, 0.009900990099009901, 0.039603960396039604, 0.0297029702970297, 0.009900990099009901, 0.009900990099009901, 0.0297029702970297, 0.019801980198019802, 0.009900990099009901, 0.009900990099009901, 0.009900990099009901]
+    #node_heights = [1.0, 0.6111111111111112, 0.5555555555555556, 0.3333333333333333, 0.05555555555555555, 0.2777777777777778, 0.2222222222222222, 0.16666666666666666, 0.1111111111111111, 0.05555555555555555, 0.16666666666666666, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.05555555555555555, 0.5, 0.4444444444444444, 0.3888888888888889, 0.3333333333333333, 0.2777777777777778, 0.2222222222222222, 0.16666666666666666, 0.1111111111111111, 0.05555555555555555, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.05555555555555555, 0.3888888888888889, 0.3333333333333333, 0.2777777777777778, 0.2222222222222222, 0.1111111111111111, 0.05555555555555555, 0.16666666666666666, 0.1111111111111111, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.2222222222222222, 0.16666666666666666, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555, 0.9444444444444444, 0.05555555555555555, 0.8888888888888888, 0.8333333333333334, 0.7777777777777778, 0.7222222222222222, 0.6666666666666666, 0.6111111111111112, 0.5555555555555556, 0.5, 0.4444444444444444, 0.3888888888888889, 0.3333333333333333, 0.2777777777777778, 0.2222222222222222, 0.16666666666666666, 0.1111111111111111, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.1111111111111111, 0.05555555555555555, 0.3333333333333333, 0.05555555555555555, 0.2777777777777778, 0.2222222222222222, 0.16666666666666666, 0.1111111111111111, 0.05555555555555555, 0.16666666666666666, 0.1111111111111111, 0.05555555555555555, 0.05555555555555555, 0.16666666666666666, 0.1111111111111111, 0.05555555555555555, 0.05555555555555555, 0.05555555555555555]
+    
+    #scaled_weigths
+    #node_degrees = [23.8059282999471, 17.789169330088054, 17.076299364909246, 4.898979485566357, 1.0, 2.23606797749979, 2.0, 1.7320508075688774, 1.414213562373095, 1.0, 2.3094010767585034, 1.0, 1.414213562373095, 1.0, 1.0, 12.333333333333334, 4.242640687119285, 3.0237157840738176, 2.4494897427831783, 2.23606797749979, 2.0, 1.7320508075688774, 1.414213562373095, 1.0, 1.0, 2.1213203435596424, 1.0, 1.0, 8.693182879212225, 5.30722777603022, 5.366563145999495, 4.0, 1.414213562373095, 1.0, 1.7320508075688774, 1.414213562373095, 1.0, 1.414213562373095, 1.0, 1.0, 1.414213562373095, 1.0, 4.5, 3.464101615137755, 1.0, 2.1213203435596424, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.414213562373095, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 9.70142500145332, 1.0, 9.25, 4.389381125701739, 4.27617987059879, 4.160251471689219, 4.041451884327381, 3.9196474795109273, 3.162277660168379, 3.0, 2.82842712474619, 2.6457513110645903, 2.4494897427831783, 2.23606797749979, 2.0, 1.7320508075688774, 1.414213562373095, 1.0, 1.414213562373095, 1.0, 1.414213562373095, 1.0, 2.1213203435596424, 1.0, 5.715476066494083, 1.0, 2.23606797749979, 2.0, 1.7320508075688774, 1.414213562373095, 1.0, 2.3094010767585034, 2.1213203435596424, 1.0, 1.0, 1.7320508075688774, 1.414213562373095, 1.0, 1.0, 1.0]
+
+    #3dtyke_new
+    #node_degrees = [1.0, 0.99, 0.11, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.54, 0.43, 0.27, 0.02, 0.01, 0.0, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.04, 0.03, 0.02, 0.01, 0.0, 0.09, 0.02, 0.01, 0.0, 0.01, 0.0, 0.03, 0.02, 0.0, 0.01, 0.0, 0.03, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.07, 0.06, 0.03, 0.02, 0.0, 0.0, 0.01, 0.0, 0.01, 0.0, 0.21, 0.08, 0.02, 0.0, 0.0, 0.04, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.04, 0.03, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    #node_heights = [1.0, 0.9, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.8, 0.7, 0.6, 0.2, 0.1, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, 0.4, 0.2, 0.1, 0.0, 0.1, 0.0, 0.3, 0.2, 0.0, 0.1, 0.0, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.1, 0.0, 0.1, 0.0, 0.3, 0.2, 0.1, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    
+    #node_distribution(node_degrees)
+    #node_distribution(node_heights)
     
     
+    #extension = 0.55*np.array(node_degrees) + 0.45*np.array(node_heights)
+    extension = np.array(node_degrees)
+    #extension = [1,0.8,0.9,0,0,0]
+    
+    extension_dist = []
+    for i in range(len(extension)):
+        extension_dist += [doc[1]/doc[1]*(1 * magnification*(base +extension[i])) for doc in corpus[i]]
+    
+    #extension_dist = [101.0, 101.0, 101.0, 101.0, 101.0, 101.0, 101.0, 100.0, 100.0, 100.0, 100.0, 50.0, 50.0, 50.0, 50.0, 50.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 5.0, 5.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 6.0, 4.0, 4.0, 4.0, 4.0, 4.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 3.0, 3.0, 3.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 4.0, 4.0, 4.0, 4.0, 4.0, 3.0, 3.0, 3.0, 3.0, 3.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 34.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 4.0, 4.0, 4.0, 3.0, 3.0, 3.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 3.0, 3.0, 3.0, 3.0, 3.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 10.0, 10.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    node_distribution(extension_dist)
+    
+    print extension_dist
+
+    for i in range(len(extension)):
+        corpus[i] = [(doc[0], doc[1]*(1 * magnification*(base +extension[i]))) for doc in corpus[i]]
+
     lda_model = topic_models(corpus=corpus, dictionary=dictionary,num_topics=num_topics,edges=edges)
+    '''
+    topic_comment = []
+    for comment in corpus:
+        topic_comment.append(lda_model.get_document_topics(comment))
     
+    inherit = 0.3
+    
+    result = []
+    index = 0
+    for index in range(len(topic_comment)):
+        parent = topic_comment[parents[index]]
+        
+        result = [(p[0], inherit * p[1]) for p in parent]
+        for i in range(len(topic_comment[index])):
+            result[i] = ((topic_comment[index][i][0],  (1-inherit) * topic_comment[index][i][1] + inherit * parent[i][1]))
+          
+        print index, topic_comment[index]
+        print index, result
+         
+        topic_comment[index] = result
+    '''
     #ldamodel_path = 'LDA.model'
     #lda_model = models.ldamodel.LdaModel.load(ldamodel_path)
     #doc=['mean','universe' ,'buffering' ,'us']
