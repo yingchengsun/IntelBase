@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//IntelBase/amazon_visualization.py=utf-8
 encoding//Reddit/data_process/data_preprocessing.py=utf-8
+encoding//Reddit/modelling/Evaluation/misc5.py=utf-8
+encoding//Reddit/modelling/misc4.py=utf-8
 encoding//Reddit/modelling/models_gensim.py=utf-8
 encoding//Reddit/modelling/models_gensim_simpleExample.py=utf-8
 encoding//crawlers/amazon/amazon-reviews-scrapy-master/amazon-reviews-scrapy-master/amazon_reviews_scrapy/cmdline.py=UTF-8
